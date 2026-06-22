@@ -376,10 +376,10 @@
         </div>
       </div>
       <div class="wm">
-        <div class="wm-top"><span class="wm-name">Supply in Profit</span><span class="wm-read"><b id="spVal">—</b> · <span id="spZone">—</span></span></div>
+        <div class="wm-top"><span class="wm-name">Average Buy Price</span><span class="wm-read"><b id="spVal">—</b> · <span id="spZone">—</span></span></div>
         <div class="wm-track" id="spTrack">
-          <div class="gz gz-grn" style="width:40%"></div><div class="gz gz-gray" style="width:40%"></div>
-          <div class="gz gz-red" style="width:20%"></div>
+          <div class="gz gz-grn" style="width:20%"></div><div class="gz gz-gray" style="width:50%"></div>
+          <div class="gz gz-red" style="width:30%"></div>
           <div class="wm-marker" id="spMark" style="left:50%"></div>
         </div>
       </div>
@@ -526,10 +526,12 @@ function render(D){
   $('nuplVal').textContent=Number(d.nupl).toFixed(2); $('nuplZone').textContent=nz;
   $('nuplMark').style.left=clamp((d.nupl+0.1)/0.95*100,1,99)+"%";
 
-  // Supply in profit watch
-  const spZ=d.supplyProfit>=95?"NEAR-FULL · FROTHY":d.supplyProfit>=75?"HEALTHY":"MANY UNDERWATER";
-  $('spVal').textContent=d.supplyProfit+"%"; $('spZone').textContent=spZ;
-  $('spMark').style.left=clamp((d.supplyProfit-45)/55*100,1,99)+"%";
+  // Average buy price (aggregate realized price) watch — read price vs cost basis
+  const abp=d.avgBuyPrice, abpDev=abp?(d.price/abp-1)*100:0;
+  const abpZ=abpDev<0?"UNDERWATER · capitulation":abpDev>100?"DEEP PROFIT · frothy":"IN PROFIT";
+  $('spVal').textContent=abp?money(abp):"—";
+  $('spZone').textContent=(abpDev>=0?"price +":"price ")+Math.round(abpDev)+"% · "+abpZ;
+  $('spMark').style.left=clamp((abpDev+40)/200*100,1,99)+"%";
 
   // breakdown — technical row
   let tech=`<span class="brow-lab tech">Price &amp; Structure — summed, then × 50W regime</span>`;
@@ -577,7 +579,7 @@ const FALLBACK={
     "lth": 58000,
     "mvrvZ": 2.2,
     "nupl": 0.55,
-    "supplyProfit": 95,
+    "avgBuyPrice": 72000,
     "event": {
       "type": "none",
       "weeks": 0

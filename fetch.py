@@ -54,16 +54,15 @@ ENDPOINTS = {
     "sth":           {"slug": "sth-realized-price", "value_key": None},
     "lth":           {"slug": "lth-realized-price", "value_key": None},
     "nupl":          {"slug": "nupl",               "value_key": None},
-    "supplyProfit":  {"slug": "supply-in-profit",   "value_key": None},
+    "avgBuyPrice":   {"slug": "realized-price",     "value_key": None},
 }
 
-# ---- cycle definition (drives VWAP anchor + year-in-cycle) ----
+# ---- cycle definition (drives year-in-cycle label only; VWAP is annual, see below) ----
 # Year is counted from the cycle-low YEAR: bottom year = 1 ... top year = 4,
 # matching "1st year bottom / 4th year top" (2018 low -> 2021 top, 2022 low -> 2025 top).
 # Update this list when a new cycle bottom confirms.
 CYCLE_LOW_YEARS = [2018, 2022]
-# VWAP re-anchors at each cycle-low DATE (the actual bottom week).
-CYCLE_ANCHORS = ["2018-12-16", "2022-11-20"]
+# VWAP re-anchors every Jan 1 of the current year (annual reset). No cycle anchor needed.
 
 # ---- moving averages ----
 MA_TYPE   = "SMA"              # "SMA" | "EMA" | "WMA". Default SMA (canonical 200W).
@@ -202,8 +201,8 @@ def compute_indicators(klines):
 
     # --- cycle-anchored VWAP + volume-weighted sigma ---
     now = df["open_time"].iloc[-1]
-    anchors = [pd.Timestamp(a, tz="UTC") for a in CYCLE_ANCHORS]
-    anchor = max([a for a in anchors if a <= now], default=anchors[0])
+    # Annual VWAP — re-anchors every Jan 1 (matches the TradingView setup).
+    anchor = pd.Timestamp(year=int(now.year), month=1, day=1, tz="UTC")
     sub = df[df["open_time"] >= anchor]
     tp = (sub["high"] + sub["low"] + sub["close"]) / 3
     vol = sub["volume"].replace(0, np.nan).ffill().fillna(1.0)
@@ -326,7 +325,7 @@ def build(raw_overrides=None):
         "lth": onchain.get("lth"),
         "mvrvZ": onchain.get("mvrvZ"),
         "nupl": onchain.get("nupl"),
-        "supplyProfit": onchain.get("supplyProfit"),
+        "avgBuyPrice": onchain.get("avgBuyPrice"),
         "event": event,
     }
 
@@ -370,7 +369,7 @@ DEMO = {
         "ma3550": "above", "p35": 12.9, "z35": 1.04, "p50": 22.6, "z50": 0.98,
         "_anchor": "2022-11-20",
     },
-    "onchain": {"mvrvZ": 2.2, "sth": 95000, "lth": 58000, "nupl": 0.55, "supplyProfit": 95},
+    "onchain": {"mvrvZ": 2.2, "sth": 95000, "lth": 58000, "nupl": 0.55, "avgBuyPrice": 72000},
 }
 
 
