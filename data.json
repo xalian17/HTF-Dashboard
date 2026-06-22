@@ -1,0 +1,76 @@
+{
+  "generated": "2026-06-22T17:40:15Z",
+  "meta": {
+    "anchor": "2022-11-20",
+    "maType": "SMA",
+    "zLookback": 200,
+    "provisional": true
+  },
+  "raw": {
+    "week": "Jun 22 2026",
+    "dayOfWeek": 4,
+    "year": 5,
+    "price": 118200,
+    "vwapSigma": 0.8,
+    "rsi": 58.0,
+    "dev200": 85.0,
+    "above50W": true,
+    "ma3550": "above",
+    "p35": 12.9,
+    "z35": 1.04,
+    "p50": 22.6,
+    "z50": 0.98,
+    "sth": 95000,
+    "lth": 58000,
+    "mvrvZ": 2.2,
+    "nupl": 0.55,
+    "supplyProfit": 95,
+    "event": {
+      "type": "none",
+      "weeks": 0
+    }
+  },
+  "scored": {
+    "v": {
+      "score": 1,
+      "zone": "BUILDING · BULL"
+    },
+    "r": {
+      "score": 0,
+      "zone": "NEUTRAL"
+    },
+    "m2": {
+      "score": 0
+    },
+    "cb": {
+      "score": 0,
+      "zone": "ABOVE STH · HEALTHY",
+      "sthPrem": 0.24421052631578946,
+      "lthPrem": 1.0379310344827586
+    },
+    "mz": {
+      "score": 0,
+      "zone": "FAIR VALUE"
+    },
+    "ev": {
+      "contrib": 0.0,
+      "potency": 0.0,
+      "type": "none",
+      "weeks": 0
+    },
+    "reBonus": 0,
+    "corePrice": 1,
+    "coreChain": 0,
+    "techPre": 1.0,
+    "mult": 1.2,
+    "multLabel": "Bull · tech buys ×1.2",
+    "techGated": 1.2,
+    "composite": 1.2,
+    "call": "NEUTRAL · BALANCE",
+    "callKind": "zero",
+    "cycle": "Building Value · Expansion",
+    "bull": true,
+    "reclaim": false,
+    "watching": false
+  }
+}

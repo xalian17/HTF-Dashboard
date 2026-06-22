@@ -1,0 +1,12 @@
+{
+  "event": { "type": "none", "weeks": 0 },
+
+  "_help": [
+    "Weekly MSB / BOS is marked by hand (your call from the prototype).",
+    "When you confirm a structure event on a weekly CLOSE, set:",
+    "  type  -> 'BOS' (bullish buy-in) or 'MSB' (bearish cycle-top warning)",
+    "  weeks -> how many weeks ago it printed (0 = this just-closed week)",
+    "Leave as {'type':'none','weeks':0} when there is no active event.",
+    "BOS decays to zero over 8 weeks; MSB over 2 weeks. Commit this file to update the dashboard."
+  ]
+}
