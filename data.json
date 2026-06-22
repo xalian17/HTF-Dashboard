@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-22T17:40:15Z",
+  "generated": "2026-06-22T17:57:09Z",
   "meta": {
     "anchor": "2022-11-20",
     "maType": "SMA",
@@ -8,23 +8,23 @@
   },
   "raw": {
     "week": "Jun 22 2026",
-    "dayOfWeek": 4,
+    "dayOfWeek": 1,
     "year": 5,
-    "price": 118200,
-    "vwapSigma": 0.8,
-    "rsi": 58.0,
-    "dev200": 85.0,
-    "above50W": true,
-    "ma3550": "above",
-    "p35": 12.9,
-    "z35": 1.04,
-    "p50": 22.6,
-    "z50": 0.98,
-    "sth": 95000,
-    "lth": 58000,
-    "mvrvZ": 2.2,
-    "nupl": 0.55,
-    "supplyProfit": 95,
+    "price": 64644.0,
+    "vwapSigma": 0.772,
+    "rsi": 37.3,
+    "dev200": 3.5,
+    "above50W": false,
+    "ma3550": "below",
+    "p35": -18.2,
+    "z35": -1.08,
+    "p50": -28.0,
+    "z50": -1.29,
+    "sth": 71552.15,
+    "lth": 49165.36,
+    "mvrvZ": 0.3782,
+    "nupl": 0.163,
+    "supplyProfit": null,
     "event": {
       "type": "none",
       "weeks": 0
@@ -36,21 +36,21 @@
       "zone": "BUILDING · BULL"
     },
     "r": {
-      "score": 0,
-      "zone": "NEUTRAL"
+      "score": 1,
+      "zone": "ACCUMULATE"
     },
     "m2": {
-      "score": 0
+      "score": 1
     },
     "cb": {
-      "score": 0,
-      "zone": "ABOVE STH · HEALTHY",
-      "sthPrem": 0.24421052631578946,
-      "lthPrem": 1.0379310344827586
+      "score": 1,
+      "zone": "BELOW STH · STACKING",
+      "sthPrem": -0.0965470639247038,
+      "lthPrem": 0.3148281635688216
     },
     "mz": {
-      "score": 0,
-      "zone": "FAIR VALUE"
+      "score": 1,
+      "zone": "CHEAP"
     },
     "ev": {
       "contrib": 0.0,
@@ -59,17 +59,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "corePrice": 1,
-    "coreChain": 0,
-    "techPre": 1.0,
-    "mult": 1.2,
-    "multLabel": "Bull · tech buys ×1.2",
-    "techGated": 1.2,
-    "composite": 1.2,
-    "call": "NEUTRAL · BALANCE",
-    "callKind": "zero",
+    "corePrice": 3,
+    "coreChain": 2,
+    "techPre": 3.0,
+    "mult": 0.7,
+    "multLabel": "Bear · tech buys ×0.7 (knife-catch discount)",
+    "techGated": 2.0999999999999996,
+    "composite": 4.1,
+    "call": "ACCUMULATE",
+    "callKind": "pos",
     "cycle": "Building Value · Expansion",
-    "bull": true,
+    "bull": false,
     "reclaim": false,
     "watching": false
   }
