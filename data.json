@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-22T22:56:17Z",
+  "generated": "2026-06-23T03:31:51Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -8,23 +8,23 @@
   },
   "raw": {
     "week": "Jun 22 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 63997.83,
-    "vwapSigma": -1.155,
-    "rsi": 36.4,
+    "price": 64031.2,
+    "vwapSigma": -1.15,
+    "rsi": 36.5,
     "dev200": 2.5,
     "above50W": false,
     "ma3550": "below",
-    "p35": -19.0,
-    "z35": -1.12,
+    "p35": -18.9,
+    "z35": -1.11,
     "p50": -28.7,
-    "z50": -1.32,
-    "sth": 71552.15,
-    "lth": 49165.36,
-    "mvrvZ": 0.3782,
-    "nupl": 0.163,
-    "avgBuyPrice": 52998.77,
+    "z50": -1.31,
+    "sth": 71512.34,
+    "lth": 49169.19,
+    "mvrvZ": 0.344,
+    "nupl": 0.1722,
+    "avgBuyPrice": 52994.83,
     "event": {
       "type": "none",
       "weeks": 0
@@ -45,8 +45,8 @@
     "cb": {
       "score": 1,
       "zone": "BELOW STH · STACKING",
-      "sthPrem": -0.10557781981393981,
-      "lthPrem": 0.3016853736045053
+      "sthPrem": -0.10461327373709209,
+      "lthPrem": 0.30226265675720904
     },
     "mz": {
       "score": 1,
