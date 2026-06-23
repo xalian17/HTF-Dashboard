@@ -1,56 +1,61 @@
 {
-  "generated": "2026-06-23T03:31:51Z",
+  "generated": "2026-06-23T12:23:12Z",
   "meta": {
-    "anchor": "2026-01-01",
+    "anchor": "2022-11-20",
     "maType": "SMA",
     "zLookback": 200,
     "provisional": true
   },
   "raw": {
     "week": "Jun 22 2026",
-    "dayOfWeek": 2,
+    "dayOfWeek": 4,
     "year": 5,
-    "price": 64031.2,
-    "vwapSigma": -1.15,
-    "rsi": 36.5,
-    "dev200": 2.5,
-    "above50W": false,
-    "ma3550": "below",
-    "p35": -18.9,
-    "z35": -1.11,
-    "p50": -28.7,
-    "z50": -1.31,
-    "sth": 71512.34,
-    "lth": 49169.19,
-    "mvrvZ": 0.344,
-    "nupl": 0.1722,
-    "avgBuyPrice": 52994.83,
+    "price": 118200,
+    "vwapSigma": 0.8,
+    "rsi": 58.0,
+    "dev200": 85.0,
+    "above50W": true,
+    "ma3550": "above",
+    "p35": 12.9,
+    "z35": 1.04,
+    "p50": 22.6,
+    "z50": 0.98,
+    "sth": 95000,
+    "lth": 58000,
+    "mvrvZ": 2.2,
+    "nupl": 0.55,
+    "avgBuyPrice": 72000,
     "event": {
       "type": "none",
       "weeks": 0
     }
   },
   "scored": {
-    "v": {
-      "score": 1,
-      "zone": "APPROACHING O/S"
+    "vwap": {
+      "score": 0,
+      "zone": "AT VALUE"
     },
-    "r": {
-      "score": 1,
-      "zone": "ACCUMULATE"
+    "w200": {
+      "score": 0,
+      "zone": "MID-CYCLE"
     },
-    "m2": {
-      "score": 1
+    "rsi": {
+      "score": 0,
+      "zone": "NEUTRAL"
     },
-    "cb": {
-      "score": 1,
-      "zone": "BELOW STH · STACKING",
-      "sthPrem": -0.10461327373709209,
-      "lthPrem": 0.30226265675720904
+    "mvrv": {
+      "score": 0,
+      "zone": "FAIR VALUE"
     },
-    "mz": {
-      "score": 1,
-      "zone": "CHEAP"
+    "lth": {
+      "score": 0,
+      "zone": "BULL-CYCLE EXPANSION",
+      "prem": 103.79310344827589
+    },
+    "sth": {
+      "score": -1,
+      "zone": "HEATED",
+      "prem": 24.421052631578945
     },
     "ev": {
       "contrib": 0.0,
@@ -59,17 +64,19 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "corePrice": 3,
-    "coreChain": 2,
-    "techPre": 3.0,
-    "mult": 0.7,
-    "multLabel": "Bear · tech buys ×0.7 (knife-catch discount)",
-    "techGated": 2.0999999999999996,
-    "composite": 4.1,
-    "call": "ACCUMULATE",
-    "callKind": "pos",
-    "cycle": "Building Value · Pullback",
-    "bull": false,
+    "valueCore": 0,
+    "trendCore": 0.0,
+    "trendGated": 0.0,
+    "chainCore": -0.5,
+    "sthWeighted": -0.5,
+    "mult": 1.15,
+    "multLabel": "Bull · trend buys ×1.15",
+    "composite": -0.5,
+    "call": "NEUTRAL",
+    "callKind": "zero",
+    "cycle": "Mid-Cycle · Neutral",
+    "cycleNote": "Cycle age: year 5 from last low · atypical / lower confidence",
+    "bull": true,
     "reclaim": false,
     "watching": false
   }

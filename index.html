@@ -56,7 +56,10 @@
   .scen button.on{background:var(--raised);color:var(--text);border-color:var(--gold-dim);box-shadow:inset 0 0 0 1px rgba(224,168,46,0.25)}
 
   /* HERO */
-  .hero{display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:16px;margin-bottom:8px}
+  .hero{margin-bottom:8px}
+  .hero-card{display:flex;flex-direction:column}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}
+  .hero-ctx{margin-top:0;flex-shrink:0;align-items:flex-end}
   .card{background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 140%);
     border:1px solid var(--line);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden}
   .verdict{display:flex;flex-direction:column}
@@ -78,17 +81,16 @@
   .pill.cyc{color:var(--gold);border-color:rgba(224,168,46,0.3);background:rgba(224,168,46,0.08)}
   .pill.cyc::before{background:var(--gold);box-shadow:0 0 8px var(--gold)}
 
-  .meter-card{display:flex;flex-direction:column}
-  .meter-card .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase;margin-bottom:26px;display:flex;justify-content:space-between}
-  .meter-card .eyebrow .raw{color:var(--text-2);letter-spacing:0.04em}
-  .meter-wrap{margin-top:auto}
+  .meter-wrap2{margin-top:auto}
   .meter-track{position:relative;height:14px;border-radius:7px;border:1px solid var(--line);
     background:linear-gradient(90deg,var(--red) 0%,rgba(229,72,77,0.4) 22%,var(--surface-2) 42%,var(--surface-2) 58%,rgba(63,182,139,0.4) 78%,var(--jade) 100%)}
   .meter-zero{position:absolute;top:-5px;bottom:-5px;left:50%;width:1px;background:var(--line-2)}
+  .meter-bound{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--line-2);opacity:0.6}
   .meter-marker{position:absolute;top:50%;width:3px;height:30px;border-radius:2px;background:var(--text);
     transform:translate(-50%,-50%);box-shadow:0 0 0 4px var(--ink),0 0 14px rgba(231,236,244,0.5);transition:left .5s cubic-bezier(.22,1,.36,1)}
-  .meter-scale{display:flex;justify-content:space-between;margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--text-3)}
-  .meter-scale .mid{color:var(--text-2)}
+  .meter-scale2{position:relative;height:14px;margin-top:13px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.05em;color:var(--text-3)}
+  .meter-scale2 span{position:absolute;white-space:nowrap}
+  .meter-scale2 .mid{color:var(--text-2)}
 
   /* SECTION LABELS */
   .section-label{display:flex;align-items:center;gap:13px;margin:24px 2px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase}
@@ -139,6 +141,7 @@
   .ma-row .ma-z{font-family:var(--mono);font-size:10.5px;font-weight:500;width:62px;text-align:center;flex-shrink:0;padding:3px 0;border-radius:5px}
   .ma-row .ma-state{font-family:var(--mono);font-size:9.5px;letter-spacing:0.04em;color:var(--text-3);flex:1;text-align:right;text-transform:uppercase}
   .z-hi{color:var(--red-bright);background:var(--red-faint)}.z-lo{color:var(--jade-bright);background:var(--jade-faint)}.z-mid{color:var(--text-2);background:rgba(148,162,184,0.1)}
+  .cycle-note{font-family:var(--mono);font-size:9.5px;color:var(--text-3);letter-spacing:0.03em;text-align:right;margin-top:3px;max-width:240px}
   .provisional{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;
     color:var(--gold);text-transform:uppercase;border:1px solid rgba(224,168,46,0.3);background:rgba(224,168,46,0.07);border-radius:5px;padding:3px 8px;margin:2px 0;cursor:help}
   .provisional::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
@@ -180,6 +183,16 @@
   .wm-read b{color:var(--text);font-size:14px;font-weight:600}
   .wm-track{position:relative;height:10px;border-radius:5px;overflow:hidden;border:1px solid var(--line);display:flex}
   .wm-marker{position:absolute;top:-3px;bottom:-3px;width:2.5px;background:var(--text);transform:translateX(-50%);z-index:3;box-shadow:0 0 0 3px var(--ink);transition:left .5s ease}
+  /* Average Buy Price widget */
+  .abp-pill{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:0.06em;padding:2px 8px;border-radius:5px}
+  .abp-vals{display:flex;justify-content:space-between;align-items:baseline;margin:3px 0 11px}
+  .abp-gap{font-family:var(--mono)}
+  .abp-basis{font-family:var(--mono);font-size:10.5px;color:var(--text-3)}
+  .abp-basis b{color:var(--text-2);font-weight:600;font-size:12px}
+  .abp-track{position:relative;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--line);display:flex}
+  .abp-be{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--gold);z-index:2;box-shadow:0 0 7px rgba(224,168,46,0.65)}
+  .abp-scale{position:relative;height:13px;margin-top:7px;font-family:var(--mono);font-size:8.5px;letter-spacing:0.06em;color:var(--text-3);text-transform:uppercase}
+  .abp-scale span{position:absolute;white-space:nowrap}
 
   /* BREAKDOWN */
   .breakdown{margin-top:16px;background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 160%);border:1px solid var(--line);border-radius:14px;padding:20px 24px}
@@ -198,7 +211,7 @@
   .note b{color:var(--text-2);font-weight:500}
 
   @media (max-width:760px){
-    .hero{grid-template-columns:1fr} .grid{grid-template-columns:1fr} .watch-grid{grid-template-columns:1fr;gap:18px}
+    .hero-top{flex-direction:column;gap:14px} .hero-ctx{align-items:flex-start} .grid{grid-template-columns:1fr} .watch-grid{grid-template-columns:1fr;gap:18px}
     .brand h1{font-size:23px} .verdict .call{font-size:26px} body{padding:20px 14px 48px}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none !important}}
@@ -222,32 +235,42 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="card verdict">
-      <div class="eyebrow">Composite Read</div>
-      <div class="call" id="vCall">—</div>
-      <div class="sub">composite <b id="vComposite">—</b></div>
-      <div class="split" id="vSplit">—</div>
-      <div class="ctx">
-        <div class="row"><span class="k">Regime</span><span class="pill" id="vRegime">—</span></div>
-        <div class="row"><span class="k">Cycle</span><span class="pill cyc" id="vCycle">—</span></div>
+    <div class="card hero-card">
+      <div class="hero-top">
+        <div class="verdict">
+          <div class="eyebrow">Composite Read</div>
+          <div class="call" id="vCall">—</div>
+          <div class="sub">composite <b id="vComposite">—</b></div>
+          <div class="split" id="vSplit">—</div>
+        </div>
+        <div class="ctx hero-ctx">
+          <div class="row"><span class="k">Regime</span><span class="pill" id="vRegime">—</span></div>
+          <div class="row"><span class="k">Cycle</span><span class="pill cyc" id="vCycle">—</span></div>
+          <div class="cycle-note" id="vCycleNote"></div>
+        </div>
       </div>
-    </div>
-    <div class="card meter-card">
-      <div class="eyebrow"><span>Tactical Meter</span><span class="raw" id="mRaw">—</span></div>
-      <div class="meter-wrap">
+      <div class="meter-wrap2">
         <div class="meter-track">
           <div class="meter-zero"></div>
+          <div class="meter-bound" style="left:16.7%"></div>
+          <div class="meter-bound" style="left:35.4%"></div>
+          <div class="meter-bound" style="left:64.6%"></div>
+          <div class="meter-bound" style="left:83.3%"></div>
           <div class="meter-marker" id="mMarker" style="left:50%"></div>
         </div>
-        <div class="meter-scale">
-          <span>AGGR. SELL</span><span>DISTRIBUTE</span><span class="mid">0</span><span>ACCUMULATE</span><span>AGGR. BUY</span>
+        <div class="meter-scale2">
+          <span style="left:8%;transform:translateX(-50%)">AGGR SELL</span>
+          <span style="left:26%;transform:translateX(-50%)">DISTRIBUTE</span>
+          <span class="mid" style="left:50%;transform:translateX(-50%)">NEUTRAL</span>
+          <span style="left:74%;transform:translateX(-50%)">ACCUMULATE</span>
+          <span style="left:92%;transform:translateX(-50%)">AGGR BUY</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- PRICE & STRUCTURE -->
-  <div class="section-label tech"><span>Price &amp; Structure</span><span class="ln"></span><span class="hint">gated by 50W regime</span></div>
+  <div class="section-label tech"><span>Price · Trend · Structure</span><span class="ln"></span><span class="hint">RSI &amp; structure gated · VWAP &amp; 200W are ungated value</span></div>
   <section class="grid">
     <!-- VWAP -->
     <div class="ind">
@@ -340,13 +363,13 @@
     <!-- Cost basis -->
     <div class="ind chain">
       <div class="ind-head">
-        <div class="name"><span class="t">STH / LTH Cost Basis</span><span class="s">REALIZED-PRICE BANDS · LEVEL READ</span></div>
-        <div class="val"><span class="scoretag" id="cbScore">—</span><span class="zone" id="cbZone" style="margin-top:5px">—</span></div>
+        <div class="name"><span class="t">STH / LTH Cost Basis</span><span class="s">SEPARATE LADDERS · STH SHOWN FULL, ½-WEIGHT IN SCORE</span></div>
+        <div class="val" style="flex-direction:row;gap:6px;align-items:center"><span class="scoretag" id="lthScore">LTH —</span><span class="scoretag" id="sthScore">STH —</span></div>
       </div>
       <div class="cb-vals">
         <div class="cb-val"><span class="cbk">Price</span><span class="cbv" id="cbPrice">—</span></div>
-        <div class="cb-val"><span class="cbk">STH basis</span><span class="cbv" id="cbSth">—</span></div>
-        <div class="cb-val"><span class="cbk">LTH basis</span><span class="cbv" id="cbLth">—</span></div>
+        <div class="cb-val"><span class="cbk">STH · <span id="sthPrem">—</span></span><span class="cbv" id="cbSth">—</span></div>
+        <div class="cb-val"><span class="cbk">LTH · <span id="lthPrem">—</span></span><span class="cbv" id="cbLth">—</span></div>
       </div>
       <div class="gauge">
         <div class="gauge-track" id="cbTrack">
@@ -376,21 +399,26 @@
         </div>
       </div>
       <div class="wm">
-        <div class="wm-top"><span class="wm-name">Average Buy Price</span><span class="wm-read"><b id="spVal">—</b> · <span id="spZone">—</span></span></div>
-        <div class="wm-track" id="spTrack">
-          <div class="gz gz-grn" style="width:20%"></div><div class="gz gz-gray" style="width:50%"></div>
-          <div class="gz gz-red" style="width:30%"></div>
-          <div class="wm-marker" id="spMark" style="left:50%"></div>
+        <div class="wm-top"><span class="wm-name">Average Buy Price</span><span class="abp-pill" id="abpPill">—</span></div>
+        <div class="abp-vals"><span class="abp-gap" id="abpGap">—</span><span class="abp-basis">avg cost <b id="abpBasis">—</b></span></div>
+        <div class="abp-track" id="spTrack">
+          <div class="gz gz-grn" style="width:25%"></div><div class="gz gz-gray" style="width:37.5%"></div>
+          <div class="gz gz-red" style="width:37.5%"></div>
+          <div class="abp-be" id="abpBE" style="left:25%"></div>
+          <div class="wm-marker" id="spMark" style="left:38%"></div>
         </div>
+        <div class="abp-scale"><span style="left:0">underwater</span><span style="left:25%;transform:translateX(-50%);color:var(--gold)">break-even</span><span style="right:0">frothy</span></div>
       </div>
     </div>
   </div>
 
   <!-- BREAKDOWN -->
   <section class="breakdown">
-    <div class="bh">How This Is Scored</div>
-    <div class="brow" id="rowTech"><span class="brow-lab tech">Price &amp; Structure — summed, then × 50W regime</span></div>
-    <div class="brow" id="rowChain"><span class="brow-lab chain">On-Chain Valuation — added after the gate</span></div>
+    <div class="bh">How This Is Scored — three axes</div>
+    <div class="brow" id="rowValue"><span class="brow-lab tech">Value (ungated)</span></div>
+    <div class="brow" id="rowTech"><span class="brow-lab tech">Trend &amp; Structure — × 50W regime gate</span></div>
+    <div class="brow" id="rowChain"><span class="brow-lab chain">On-Chain Cycle (ungated) — STH at ½ weight</span></div>
+    <div class="brow" id="rowTotal"><span class="brow-lab" style="color:var(--gold)">Composite</span></div>
     <div class="note" id="bNote"></div>
   </section>
 
@@ -436,23 +464,23 @@ function render(D){
   $('vCall').textContent=A.call;
   $('vCall').style.color=A.callKind==="pos"?"var(--jade-bright)":A.callKind==="neg"?"var(--red-bright)":"var(--text)";
   $('vComposite').textContent=sgn(A.composite);
-  $('vSplit').innerHTML=`<span class="tg">technical (gated) ${sgn(A.techGated)}</span> &nbsp;+&nbsp; <span class="cg">on-chain ${sgn(A.coreChain)}</span>`;
+  $('vSplit').innerHTML=`<span class="tg">value ${sgn(A.valueCore)}</span> · <span class="tg">trend (gated) ${sgn(A.trendGated)}</span> · <span class="cg">on-chain ${sgn(A.chainCore)}</span>`;
   const reg=$('vRegime'); reg.className="pill "+(A.bull?"bull":"bear");
   reg.textContent=A.bull?"BULL · above 50W":"BEAR · below 50W";
   $('vCycle').textContent=A.cycle;
+  $('vCycleNote').textContent=A.cycleNote||'';
 
   // tactical meter (-12..+12)
   $('mMarker').style.left=clamp((A.composite+12)/24*100,2,98)+"%";
-  $('mRaw').textContent="composite "+sgn(A.composite);
 
   // VWAP
-  $('vwapVal').textContent=sgn(d.vwapSigma)+"σ"; $('vwapVal').style.color=col(A.v.score);
-  $('vwapZone').textContent=A.v.zone; $('vwapZone').style.color=colZ(A.v.score);
+  $('vwapVal').textContent=sgn(d.vwapSigma)+"σ"; $('vwapVal').style.color=col(A.vwap.score);
+  $('vwapZone').textContent=A.vwap.zone; $('vwapZone').style.color=colZ(A.vwap.score);
   $('vwapMark').style.left=clamp((d.vwapSigma+2.5)/5*100,1,99)+"%";
 
   // RSI
-  $('rsiVal').textContent=Math.round(d.rsi); $('rsiVal').style.color=col(A.r.score);
-  $('rsiZone').textContent=A.r.zone; $('rsiZone').style.color=colZ(A.r.score);
+  $('rsiVal').textContent=Math.round(d.rsi); $('rsiVal').style.color=col(A.rsi.score);
+  $('rsiZone').textContent=A.rsi.zone; $('rsiZone').style.color=colZ(A.rsi.score);
   $('rsiMark').style.left=clamp(d.rsi,1,99)+"%";
 
   // MAs — % distance + z (precomputed in data.json), 200W score
@@ -465,7 +493,7 @@ function render(D){
   const z50el=$('ma50z'); z50el.textContent="z "+sgn(d.z50); z50el.className="ma-z "+zClass(d.z50);
   const dev=d.dev200;
   $('ma200pct').textContent=pctStr(dev); $('ma200pct').style.color=dev<=0?"var(--jade-bright)":dev>=150?"var(--red-bright)":"var(--text)";
-  const sc200=$('ma200sc'); sc200.textContent=sgn(A.m2.score); sc200.className="ma-z "+(A.m2.score>0?"z-lo":A.m2.score<0?"z-hi":"z-mid");
+  const sc200=$('ma200sc'); sc200.textContent=sgn(A.w200.score); sc200.className="ma-z "+(A.w200.score>0?"z-lo":A.w200.score<0?"z-hi":"z-mid");
   $('ma50state').textContent=A.bull?"above · bull regime":"below · bear regime";
   $('ma50state').style.color=A.bull?"var(--jade-bright)":"var(--red-bright)";
   $('ma200state').textContent=dev<=0?"at / below floor":dev>=150?"stretched":"—";
@@ -498,24 +526,28 @@ function render(D){
   $('msbScore').outerHTML=`<span class="scoretag ${cls(msbS)}" id="msbScore">${sgn(msbS)}</span>`;
 
   // MVRV Z (scale -1..+8 → 0..100%)
-  $('mzVal').textContent=Math.round(d.mvrvZ*10)/10; $('mzVal').style.color=col(A.mz.score);
-  $('mzZone').textContent=A.mz.zone; $('mzZone').style.color=colZ(A.mz.score);
+  $('mzVal').textContent=Math.round(d.mvrvZ*10)/10; $('mzVal').style.color=col(A.mvrv.score);
+  $('mzZone').textContent=A.mvrv.zone; $('mzZone').style.color=colZ(A.mvrv.score);
   $('mzMark').style.left=clamp((d.mvrvZ+1)/9*100,1,99)+"%";
 
-  // Cost basis
-  $('cbScore').outerHTML=`<span class="scoretag ${cls(A.cb.score)}" id="cbScore">${sgn(A.cb.score)}</span>`;
-  $('cbZone').textContent=A.cb.zone; $('cbZone').style.color=colZ(A.cb.score);
-  $('cbPrice').textContent=money(d.price); $('cbPrice').style.color=col(A.cb.score);
+  // Cost basis — separate LTH + STH sub-scores (STH shown full, half-weight in composite)
+  $('lthScore').outerHTML=`<span class="scoretag ${cls(A.lth.score)}" id="lthScore">LTH ${sgn(A.lth.score)}</span>`;
+  $('sthScore').outerHTML=`<span class="scoretag ${cls(A.sth.score)}" id="sthScore">STH ${sgn(A.sth.score)}</span>`;
+  $('cbPrice').textContent=money(d.price);
   $('cbSth').textContent=money(d.sth); $('cbLth').textContent=money(d.lth);
-  const gMin=d.lth*0.85, gMax=d.sth*1.75, gR=gMax-gMin;
+  const pctTxt=p=>(p>=0?"+":"")+Math.round(p)+"%";
+  $('sthPrem').textContent=pctTxt(A.sth.prem); $('sthPrem').style.color=colZ(A.sth.score);
+  $('lthPrem').textContent=pctTxt(A.lth.prem); $('lthPrem').style.color=colZ(A.lth.score);
+  // gauge: price vs LTH/STH on a price axis; zones reflect deep-value (below LTH) → STH heat ladder
+  const gMin=d.lth*0.85, gMax=d.sth*1.5, gR=gMax-gMin;
   const pp=x=>clamp((x-gMin)/gR*100,0,100);
-  const zL=pp(d.lth), z95=pp(d.sth*0.95), z110=pp(d.sth*1.10), z160=pp(d.sth*1.60);
+  const zL=pp(d.lth), s10=pp(d.sth*1.10), s20=pp(d.sth*1.20), s40=pp(d.sth*1.40);
   $('cbTrack').style.background=`linear-gradient(90deg,
     var(--zgreen) 0%, var(--zgreen) ${zL}%,
-    var(--zgreenL) ${zL}%, var(--zgreenL) ${z95}%,
-    var(--zgold) ${z95}%, var(--zgold) ${z110}%,
-    var(--zgray) ${z110}%, var(--zgray) ${z160}%,
-    var(--zred) ${z160}%, var(--zred) 100%)`;
+    var(--zgray) ${zL}%, var(--zgray) ${s10}%,
+    var(--zgold) ${s10}%, var(--zgold) ${s20}%,
+    var(--zredL) ${s20}%, var(--zredL) ${s40}%,
+    var(--zred) ${s40}%, var(--zred) 100%)`;
   $('cbLthMark').style.left=zL+"%"; $('cbSthMark').style.left=pp(d.sth)+"%";
   $('cbLthTick').style.left=zL+"%"; $('cbSthTick').style.left=pp(d.sth)+"%";
   $('cbMark').style.left=pp(d.price)+"%";
@@ -526,30 +558,42 @@ function render(D){
   $('nuplVal').textContent=Number(d.nupl).toFixed(2); $('nuplZone').textContent=nz;
   $('nuplMark').style.left=clamp((d.nupl+0.1)/0.95*100,1,99)+"%";
 
-  // Average buy price (aggregate realized price) watch — read price vs cost basis
+  // Average buy price (aggregate realized price) — profit cushion vs break-even
   const abp=d.avgBuyPrice, abpDev=abp?(d.price/abp-1)*100:0;
-  const abpZ=abpDev<0?"UNDERWATER · capitulation":abpDev>100?"DEEP PROFIT · frothy":"IN PROFIT";
-  $('spVal').textContent=abp?money(abp):"—";
-  $('spZone').textContent=(abpDev>=0?"price +":"price ")+Math.round(abpDev)+"% · "+abpZ;
-  $('spMark').style.left=clamp((abpDev+40)/200*100,1,99)+"%";
+  let abpState,abpCol,abpBg;
+  if (abpDev<0){ abpState="CAPITULATION"; abpCol="var(--jade-bright)"; abpBg="var(--jade-faint)"; }
+  else if (abpDev>60){ abpState="FROTHY"; abpCol="var(--red-bright)"; abpBg="var(--red-faint)"; }
+  else { abpState="IN PROFIT"; abpCol="var(--text-2)"; abpBg="rgba(148,162,184,0.1)"; }
+  const abpPill=$('abpPill'); abpPill.textContent=abpState; abpPill.style.color=abpCol; abpPill.style.background=abpBg;
+  $('abpBasis').textContent=abp?money(abp):"—";
+  const cushion=abpDev<0?"underwater":"profit cushion";
+  $('abpGap').innerHTML=`<b style="color:${abpCol};font-size:17px">${abpDev>=0?'+':''}${Math.round(abpDev)}%</b> <span style="color:var(--text-3);font-size:10px">${cushion}</span>`;
+  $('spMark').style.left=clamp((abpDev+40)/160*100,1,99)+"%";
 
-  // breakdown — technical row
-  let tech=`<span class="brow-lab tech">Price &amp; Structure — summed, then × 50W regime</span>`;
-  tech+=term("VWAP",A.v.score)+op("+")+term("RSI",A.r.score)+op("+")+term("200W",A.m2.score)+op("+")
-       +term("Reclaim",A.reBonus)+op("+")+term("MSB/BOS",Math.round(A.ev.contrib*10)/10)+op("=")
-       +term("Subtotal",A.techPre,"sub")+op("×")
-       +`<div class="term sub"><span class="tk">Regime</span><span class="tv" style="color:var(--text)">${A.mult}</span></div>`+op("=")
-       +term("Gated",A.techGated,"sub");
-  $('rowTech').innerHTML=tech;
+  // breakdown — three axes
+  let rv=`<span class="brow-lab tech">Value (ungated)</span>`;
+  rv+=term("VWAP",A.vwap.score)+op("+")+term("200W",A.w200.score)+op("=")+term("value_core",A.valueCore,"sub");
+  $('rowValue').innerHTML=rv;
 
-  // breakdown — chain row
-  let chain=`<span class="brow-lab chain">On-Chain Valuation — added after the gate</span>`;
-  chain+=`<div class="term sub"><span class="tk">Tech gated</span><span class="tv">${sgn(A.techGated)}</span></div>`+op("+")
-        +term("Cost-Basis",A.cb.score)+op("+")+term("MVRV-Z",A.mz.score)+op("=")
-        +term("Composite",A.composite,"result");
-  $('rowChain').innerHTML=chain;
+  let rt=`<span class="brow-lab tech">Trend &amp; Structure — × 50W regime gate</span>`;
+  rt+=term("RSI",A.rsi.score)+op("+")+term("MSB/BOS",Math.round(A.ev.contrib*10)/10)+op("+")+term("Reclaim",A.reBonus)+op("=")
+     +term("trend_core",A.trendCore,"sub")+op("×")
+     +`<div class="term sub"><span class="tk">Regime</span><span class="tv" style="color:var(--text)">${A.mult}</span></div>`+op("=")
+     +term("gated",A.trendGated,"sub");
+  $('rowTech').innerHTML=rt;
 
-  $('bNote').innerHTML=`<b>Why on-chain bypasses the gate:</b> price-stretch buys below the 50W are knife-catches and get discounted (×0.7). But on-chain deep value — price below LTH cost basis, MVRV in the green — <b>is</b> the cycle-bottom signal precisely when price sits under the 50W, so it is added after the gate.<br><br><b>Cadence:</b> gauges, z-bands and the composite refresh <b>daily</b> on the week-to-date candle (gold badge = provisional). The discrete triggers — MSB break and the 35-reclaim — only lock on the <b>weekly close</b>.`;
+  let rc=`<span class="brow-lab chain">On-Chain Cycle (ungated) — STH at ½ weight</span>`;
+  rc+=term("MVRV",A.mvrv.score)+op("+")+term("LTH",A.lth.score)+op("+")
+     +`<div class="term"><span class="tk">STH ½</span><span class="tv" style="color:${A.sthWeighted>0?'var(--jade-bright)':A.sthWeighted<0?'var(--red-bright)':'var(--text-2)'}">${sgn(A.sthWeighted)}</span></div>`+op("=")
+     +term("chain_core",A.chainCore,"sub");
+  $('rowChain').innerHTML=rc;
+
+  let rtot=`<span class="brow-lab" style="color:var(--gold)">Composite</span>`;
+  rtot+=term("value",A.valueCore,"sub")+op("+")+term("trend",A.trendGated,"sub")+op("+")+term("on-chain",A.chainCore,"sub")+op("=")
+       +term("Composite",A.composite,"result");
+  $('rowTotal').innerHTML=rtot;
+
+  $('bNote').innerHTML=`<b>Three axes:</b> <b>Value</b> (VWAP + 200W) and <b>On-Chain</b> (MVRV + LTH + ½·STH) are ungated — cheapness counts even below the 50W, which is where cycle bottoms live. Only <b>Trend</b> (RSI + structure + reclaim) is gated by the 50W (×1.15 bull / ×0.85 bear). STH shows its full score as a heat warning but contributes half to the composite, so it can't triple-count cost-basis extremes alongside LTH and MVRV.<br><br><b>This is a cycle/bias read, not an entry trigger.</b> Accumulate = conditions favor building exposure over time; Distribute = favor reducing risk. It reads cheap or extended early — often by months — and does not time entries.`;
 }
 
 // ---- load data.json; fall back to embedded sample for local file:// viewing ----
