@@ -91,6 +91,30 @@
   .meter-scale2{position:relative;height:14px;margin-top:13px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.05em;color:var(--text-3)}
   .meter-scale2 span{position:absolute;white-space:nowrap}
   .meter-scale2 .mid{color:var(--text-2)}
+  .phase-line{font-family:var(--mono);font-size:13px;color:var(--text);letter-spacing:0.01em;margin-bottom:24px}
+  .phase-line span{color:var(--gold);font-weight:600}
+  .interp{margin-bottom:8px}
+  .interp-grid{display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);gap:26px}
+  .ev-head,.sw-head{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .ev-rows{display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+  .ev-row{display:flex;align-items:center;gap:10px}
+  .ev-k{font-family:var(--mono);font-size:11px;color:var(--text-2);width:66px;flex-shrink:0;letter-spacing:0.03em}
+  .ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .ev-v{font-family:var(--mono);font-size:12px;color:var(--text)}
+  .agree-bar{display:flex;gap:3px;margin-bottom:14px}
+  .agree-seg{flex:1;height:6px;border-radius:3px;background:var(--surface-2);transition:background .4s ease}
+  .conf-line{display:flex;align-items:center;gap:9px;padding-top:13px;border-top:1px solid var(--line)}
+  .conf-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .conf-tier{font-family:var(--disp);font-size:14px;font-weight:600}
+  .conf-qual{font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .interp-right{display:flex;flex-direction:column;gap:16px}
+  .sw-head.sw-up{color:var(--jade)}
+  .sw-head.sw-down{color:var(--red)}
+  .sw-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+  .sw-list li{font-family:var(--mono);font-size:11px;color:var(--text-2);background:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:5px 10px}
+  .sw-list.up li{border-color:rgba(63,182,139,0.22)}
+  .sw-list.down li{border-color:rgba(229,72,77,0.22)}
+  @media (max-width:760px){.interp-grid{grid-template-columns:1fr;gap:18px}}
 
   /* SECTION LABELS */
   .section-label{display:flex;align-items:center;gap:13px;margin:24px 2px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase}
@@ -245,10 +269,10 @@
         </div>
         <div class="ctx hero-ctx">
           <div class="row"><span class="k">Regime</span><span class="pill" id="vRegime">—</span></div>
-          <div class="row"><span class="k">Cycle</span><span class="pill cyc" id="vCycle">—</span></div>
           <div class="cycle-note" id="vCycleNote"></div>
         </div>
       </div>
+      <div class="phase-line">Macro phase&nbsp;·&nbsp;<span id="vPhase">—</span></div>
       <div class="meter-wrap2">
         <div class="meter-track">
           <div class="meter-zero"></div>
@@ -264,6 +288,34 @@
           <span class="mid" style="left:50%;transform:translateX(-50%)">NEUTRAL</span>
           <span style="left:74%;transform:translateX(-50%)">ACCUMULATE</span>
           <span style="left:92%;transform:translateX(-50%)">AGGR BUY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- READ QUALITY / INTERPRETATION -->
+  <section class="interp">
+    <div class="card">
+      <div class="interp-grid">
+        <div class="interp-left">
+          <div class="ev-head">Evidence</div>
+          <div class="ev-rows">
+            <div class="ev-row"><span class="ev-k">Value</span><span class="ev-dot" id="evValDot"></span><span class="ev-v" id="evVal">—</span></div>
+            <div class="ev-row"><span class="ev-k">Trend</span><span class="ev-dot" id="evTrendDot"></span><span class="ev-v" id="evTrend">—</span></div>
+            <div class="ev-row"><span class="ev-k">On-chain</span><span class="ev-dot" id="evChainDot"></span><span class="ev-v" id="evChain">—</span></div>
+          </div>
+          <div class="agree-bar"><div class="agree-seg" id="agV"></div><div class="agree-seg" id="agT"></div><div class="agree-seg" id="agC"></div></div>
+          <div class="conf-line"><span class="conf-dot" id="confDot"></span><span class="conf-tier" id="confTier">—</span><span class="conf-qual" id="confQual">—</span></div>
+        </div>
+        <div class="interp-right">
+          <div class="sw-block">
+            <div class="sw-head sw-up">What would strengthen this read</div>
+            <ul class="sw-list up" id="swStrengthen"></ul>
+          </div>
+          <div class="sw-block">
+            <div class="sw-head sw-down">What would weaken this read</div>
+            <ul class="sw-list down" id="swWeaken"></ul>
+          </div>
         </div>
       </div>
     </div>
@@ -467,8 +519,27 @@ function render(D){
   $('vSplit').innerHTML=`<span class="tg">value ${sgn(A.valueCore)}</span> · <span class="tg">trend (gated) ${sgn(A.trendGated)}</span> · <span class="cg">on-chain ${sgn(A.chainCore)}</span>`;
   const reg=$('vRegime'); reg.className="pill "+(A.bull?"bull":"bear");
   reg.textContent=A.bull?"BULL · above 50W":"BEAR · below 50W";
-  $('vCycle').textContent=A.cycle;
+  $('vPhase').textContent=A.phase;
   $('vCycleNote').textContent=A.cycleNote||'';
+
+  // --- interpretation layer: evidence chips, agreement bar, confidence, strengthen/weaken ---
+  const dotColor=c=>c==="green"?"var(--jade-bright)":c==="amber"?"var(--gold)":c==="red"?"var(--red-bright)":"var(--text-3)";
+  const ax=A.axisStates||{};
+  function setAxis(dotId,vId,segId,st){
+    if(!st){st={label:"—",color:"grey"};}
+    $(dotId).style.background=dotColor(st.color);
+    $(vId).textContent=st.label; $(vId).style.color=st.color==="grey"?"var(--text-2)":dotColor(st.color);
+    $(segId).style.background=dotColor(st.color);
+  }
+  setAxis('evValDot','evVal','agV',ax.value);
+  setAxis('evTrendDot','evTrend','agT',ax.trend);
+  setAxis('evChainDot','evChain','agC',ax.chain);
+  const cf=A.confidence||{tier:"—",qualifier:"",dot:"grey"};
+  $('confDot').style.background=dotColor(cf.dot);
+  $('confTier').textContent=cf.tier; $('confTier').style.color=dotColor(cf.dot);
+  $('confQual').textContent=cf.qualifier?("· "+cf.qualifier):"";
+  $('swStrengthen').innerHTML=(A.strengthen&&A.strengthen.length?A.strengthen:["—"]).map(s=>`<li>${s}</li>`).join("");
+  $('swWeaken').innerHTML=(A.weaken&&A.weaken.length?A.weaken:["—"]).map(s=>`<li>${s}</li>`).join("");
 
   // tactical meter (-12..+12)
   $('mMarker').style.left=clamp((A.composite+12)/24*100,2,98)+"%";
@@ -598,7 +669,7 @@ function render(D){
 
 // ---- load data.json; fall back to embedded sample for local file:// viewing ----
 const FALLBACK={
-  "generated": "2026-06-23T18:02:31Z",
+  "generated": "2026-06-23T19:12:32Z",
   "meta": {
     "anchor": "2022-11-20",
     "maType": "SMA",
@@ -673,8 +744,36 @@ const FALLBACK={
     "composite": -0.5,
     "call": "NEUTRAL",
     "callKind": "zero",
-    "cycle": "Mid-Cycle · Neutral",
+    "phase": "Mid-Cycle Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
+    "confidence": {
+      "tier": "Low",
+      "qualifier": "evidence mixed · no clear edge",
+      "dot": "red"
+    },
+    "axisStates": {
+      "value": {
+        "label": "Neutral",
+        "color": "grey"
+      },
+      "trend": {
+        "label": "Neutral",
+        "color": "grey"
+      },
+      "chain": {
+        "label": "Weak",
+        "color": "amber"
+      }
+    },
+    "strengthen": [
+      "price holds above the 50W",
+      "on-chain value turns supportive"
+    ],
+    "weaken": [
+      "price loses the 200W decisively",
+      "MVRV deteriorates without stabilizing",
+      "a manual MSB activates"
+    ],
     "bull": true,
     "reclaim": false,
     "watching": false
