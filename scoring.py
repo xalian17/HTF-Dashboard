@@ -189,9 +189,9 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     elif d["mvrvZ"] >= 5 or d["vwapSigma"] >= 3.5 or lth["prem"] > 300:
         cycle = "Euphoria · Distribution Risk"
     elif value_core >= 3 and chain_core >= 2:
-        cycle = "Cycle Bottom Zone"
+        cycle = "Cycle Bottom Conditions"
     elif value_core <= -2 and chain_core <= -2:
-        cycle = "Cycle Top Zone"
+        cycle = "Cycle Top Conditions"
     elif composite > 0 and bull:
         cycle = "Building Value · Expansion"
     elif composite > 0:
@@ -204,9 +204,9 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     if yr is None:
         cycle_note = ""
     elif yr >= 4:
-        cycle_note = f"Cycle age: year {yr} from last low · atypical / lower confidence"
+        cycle_note = "Cycle timing: convention-dependent · atypical / lower confidence"
     else:
-        cycle_note = f"Cycle age: year {yr} from last low · typical window"
+        cycle_note = "Cycle timing: convention-dependent"
 
     return {
         # per-indicator (each has .score and .zone; lth/sth also .prem)

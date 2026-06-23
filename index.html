@@ -598,7 +598,7 @@ function render(D){
 
 // ---- load data.json; fall back to embedded sample for local file:// viewing ----
 const FALLBACK={
-  "generated": "2026-06-22T13:11:59Z",
+  "generated": "2026-06-23T18:02:31Z",
   "meta": {
     "anchor": "2022-11-20",
     "maType": "SMA",
@@ -630,26 +630,31 @@ const FALLBACK={
     }
   },
   "scored": {
-    "v": {
-      "score": 1,
-      "zone": "BUILDING · BULL"
+    "vwap": {
+      "score": 0,
+      "zone": "AT VALUE"
     },
-    "r": {
+    "w200": {
+      "score": 0,
+      "zone": "MID-CYCLE"
+    },
+    "rsi": {
       "score": 0,
       "zone": "NEUTRAL"
     },
-    "m2": {
-      "score": 0
-    },
-    "cb": {
-      "score": 0,
-      "zone": "ABOVE STH · HEALTHY",
-      "sthPrem": 0.24421052631578946,
-      "lthPrem": 1.0379310344827586
-    },
-    "mz": {
+    "mvrv": {
       "score": 0,
       "zone": "FAIR VALUE"
+    },
+    "lth": {
+      "score": 0,
+      "zone": "BULL-CYCLE EXPANSION",
+      "prem": 103.79310344827589
+    },
+    "sth": {
+      "score": -1,
+      "zone": "HEATED",
+      "prem": 24.421052631578945
     },
     "ev": {
       "contrib": 0.0,
@@ -658,16 +663,18 @@ const FALLBACK={
       "weeks": 0
     },
     "reBonus": 0,
-    "corePrice": 1,
-    "coreChain": 0,
-    "techPre": 1.0,
-    "mult": 1.2,
-    "multLabel": "Bull · tech buys ×1.2",
-    "techGated": 1.2,
-    "composite": 1.2,
-    "call": "NEUTRAL · BALANCE",
+    "valueCore": 0,
+    "trendCore": 0.0,
+    "trendGated": 0.0,
+    "chainCore": -0.5,
+    "sthWeighted": -0.5,
+    "mult": 1.15,
+    "multLabel": "Bull · trend buys ×1.15",
+    "composite": -0.5,
+    "call": "NEUTRAL",
     "callKind": "zero",
-    "cycle": "Building Value · Expansion",
+    "cycle": "Mid-Cycle · Neutral",
+    "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "bull": true,
     "reclaim": false,
     "watching": false
