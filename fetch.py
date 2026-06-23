@@ -398,7 +398,7 @@ def main():
     s = payload["scored"]
     tag = " (DEMO)" if args.demo else ""
     print(f"Wrote {OUT_PATH}{tag} — {s['call']} (composite {s['composite']:+.1f}), "
-          f"cycle: {s['cycle']}, regime: {'BULL' if s['bull'] else 'BEAR'}")
+          f"phase: {s['phase']}, regime: {'BULL' if s['bull'] else 'BEAR'}")
 
 
 if __name__ == "__main__":

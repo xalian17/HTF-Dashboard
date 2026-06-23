@@ -183,21 +183,118 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     else:
         call, kind = "AGGRESSIVE SELL", "neg"
 
-    # --- cycle phase from EVIDENCE ONLY (no cycle-year gate) ---
-    if d["mvrvZ"] < 0 or lth["prem"] < 0:
-        cycle = "Deep Value · Generational"
-    elif d["mvrvZ"] >= 5 or d["vwapSigma"] >= 3.5 or lth["prem"] > 300:
-        cycle = "Euphoria · Distribution Risk"
-    elif value_core >= 3 and chain_core >= 2:
-        cycle = "Cycle Bottom Conditions"
-    elif value_core <= -2 and chain_core <= -2:
-        cycle = "Cycle Top Conditions"
-    elif composite > 0 and bull:
-        cycle = "Building Value · Expansion"
-    elif composite > 0:
-        cycle = "Building Value · Pullback"
+    # ============================================================
+    # INTERPRETATION LAYER — reads computed scores only.
+    # Does NOT affect composite, verdict, or any score. Pure restatement.
+    # ============================================================
+    lth_prem = lth["prem"]
+    trend_ok = bull or reclaim
+
+    # --- macro phase: finer ladder, compound labels at seams (evidence only, no year) ---
+    if d["mvrvZ"] >= 5 or d["vwapSigma"] >= 3.0 or lth_prem > 300:
+        phase = "Cycle Euphoria"
+    elif d["mvrvZ"] < 0 or lth_prem < 0:
+        phase = "Deep Value / Capitulation"
+    elif value_core <= -1 and chain_core <= -1:
+        phase = "Distribution Risk"
+    elif value_core <= -1:
+        phase = "Late Expansion / Distribution Risk"
+    elif value_core >= 2 and chain_core >= 1 and not trend_ok:
+        phase = "Bottoming Conditions / Accumulation"
+    elif value_core >= 2 and chain_core >= 1 and trend_ok:
+        phase = "Accumulation / Early Expansion"
+    elif trend_ok and value_core >= 1:
+        phase = "Early Expansion"
+    elif trend_ok:
+        phase = "Mid-Cycle Expansion"
+    elif value_core >= 1 or chain_core >= 1:
+        phase = "Accumulation"
     else:
-        cycle = "Mid-Cycle · Neutral"
+        phase = "Mid-Cycle · Neutral"
+
+    # --- confidence / agreement: how aligned the three axes are with the headline ---
+    # Trend confirmation is REGIME-driven (the 50W), not a mild gated score: below the
+    # 50W, trend does not confirm a bullish read even if RSI nudges it slightly positive.
+    def _sign(x):
+        return 1 if x > 0.5 else (-1 if x < -0.5 else 0)
+
+    cdir = _sign(composite)
+    if abs(composite) < 2 or cdir == 0:
+        confidence = {"tier": "Low", "qualifier": "evidence mixed · no clear edge", "dot": "red"}
+    else:
+        confirms, holdouts = [], []
+        for name, v in (("value", value_core), ("on-chain", chain_core)):
+            if _sign(v) == cdir:
+                confirms.append(name)
+            elif _sign(v) == -cdir:
+                holdouts.append((name, abs(v)))       # active dissent, by magnitude
+            else:
+                holdouts.append((name, 0))            # neutral
+        trend_confirms = bull if cdir > 0 else (not bull)
+        if trend_confirms:
+            confirms.append("trend")
+        else:
+            holdouts.append(("trend", 2.0))           # regime not confirming = hard holdout
+        n = len(confirms)
+        if n == 3:
+            confidence = {"tier": "High", "qualifier": "all axes aligned", "dot": "green"}
+        elif n == 2:
+            nm, sev = holdouts[0]
+            if nm == "trend":
+                confidence = {"tier": "Moderate-high", "qualifier": "trend not confirmed", "dot": "amber"}
+            elif sev > 1.5:
+                confidence = {"tier": "Moderate", "qualifier": f"{nm} not confirmed", "dot": "amber"}
+            elif sev > 0:
+                confidence = {"tier": "Moderate-high", "qualifier": f"{nm} lagging", "dot": "amber"}
+            else:
+                confidence = {"tier": "Moderate-high", "qualifier": f"{nm} neutral", "dot": "green"}
+        else:
+            confidence = {"tier": "Low", "qualifier": "evidence mixed", "dot": "red"}
+
+    def _axis_state(v):
+        if v >= 3:    return {"label": "Strong", "color": "green"}
+        if v >= 0.5:  return {"label": "Supportive", "color": "green"}
+        if v > -0.5:  return {"label": "Neutral", "color": "grey"}
+        if v > -3:    return {"label": "Weak", "color": "amber"}
+        return {"label": "Negative", "color": "red"}
+
+    if bull:
+        trend_state = _axis_state(trend_gated)
+    elif trend_gated <= -3:
+        trend_state = {"label": "Negative · below 50W", "color": "red"}
+    else:
+        trend_state = {"label": "Weak · below 50W", "color": "amber"}
+    axis_states = {"value": _axis_state(value_core), "trend": trend_state, "chain": _axis_state(chain_core)}
+
+    # --- what would strengthen / weaken this read (scored-state changes, never price levels) ---
+    strengthen, weaken = [], []
+    # strengthen = would push the read more constructive
+    strengthen.append("BTC reclaims the 50W" if not bull else "price holds above the 50W")
+    if d["ma3550"] in ("below", "watching"):
+        strengthen.append("BTC reclaims the 35W")
+    if d["rsi"] < 45:
+        strengthen.append("RSI recovers toward 45–50")
+    if d["vwapSigma"] < 0:
+        strengthen.append("VWAP σ improves toward neutral")
+    strengthen.append("on-chain value stays supportive" if chain_core >= 0 else "on-chain value turns supportive")
+
+    # weaken = would push the read more defensive (priority order)
+    if d["dev200"] > 0:
+        weaken.append("price loses the 200W decisively")
+    if d["mvrvZ"] >= 0:
+        weaken.append("MVRV deteriorates without stabilizing")
+    if ev["type"] == "none":
+        weaken.append("a manual MSB activates")
+    if d["ma3550"] == "watching":
+        weaken.append("price fails repeated reclaim attempts")
+    if sth["prem"] < 0 and not bull:
+        weaken.append("STH stays underwater as trend weakens")
+    if d["vwapSigma"] >= 2.5:
+        weaken.append("VWAP σ pushes further into extension")
+    if not bull and len(weaken) < 3:
+        weaken.append("price keeps rejecting the 50W")
+
+    strengthen, weaken = strengthen[:4], weaken[:4]
 
     # --- cycle-year: CONTEXT NOTE ONLY. Does not touch score/verdict/label. ---
     yr = d.get("year")
@@ -218,8 +315,11 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
         "chainCore": chain_core, "sthWeighted": sth_weighted,
         "mult": mult, "multLabel": mult_label,
         "composite": composite,
-        # verdict + labels
-        "call": call, "callKind": kind, "cycle": cycle, "cycleNote": cycle_note,
+        # verdict + interpretation layer
+        "call": call, "callKind": kind,
+        "phase": phase, "cycleNote": cycle_note,
+        "confidence": confidence, "axisStates": axis_states,
+        "strengthen": strengthen, "weaken": weaken,
         "bull": bull, "reclaim": reclaim, "watching": watching,
     }
 
@@ -242,4 +342,4 @@ if __name__ == "__main__":
         a = aggregate(d)
         print(f"{k:16s} comp={a['composite']:+6.2f}  {a['call']:<22s}  "
               f"value={a['valueCore']:+d} trendG={a['trendGated']:+.2f} chain={a['chainCore']:+.1f}  "
-              f"| LTH {a['lth']['score']:+d} STH {a['sth']['score']:+d}(½→{a['sthWeighted']:+.1f})  | {a['cycle']}")
+              f"| LTH {a['lth']['score']:+d} STH {a['sth']['score']:+d}(½→{a['sthWeighted']:+.1f})  | {a['phase']}")
