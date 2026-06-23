@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-23T19:17:52Z",
+  "generated": "2026-06-23T19:29:07Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -10,13 +10,13 @@
     "week": "Jun 22 2026",
     "dayOfWeek": 2,
     "year": 5,
-    "price": 62338.15,
-    "vwapSigma": -1.363,
+    "price": 62411.99,
+    "vwapSigma": -1.353,
     "rsi": 34.8,
-    "dev200": -0.2,
+    "dev200": -0.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -21.0,
+    "p35": -20.9,
     "z35": -1.19,
     "p50": -30.5,
     "z50": -1.37,
@@ -50,12 +50,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 26.78295086821645
+      "prem": 26.933126211759827
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -12.828820872034107
+      "prem": -12.725565965258578
     },
     "ev": {
       "contrib": 0.0,
@@ -74,8 +74,38 @@
     "composite": 6.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "cycle": "Cycle Bottom Conditions",
+    "phase": "Bottoming Conditions / Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
+    "confidence": {
+      "tier": "Moderate-high",
+      "qualifier": "trend not confirmed",
+      "dot": "amber"
+    },
+    "axisStates": {
+      "value": {
+        "label": "Strong",
+        "color": "green"
+      },
+      "trend": {
+        "label": "Weak · below 50W",
+        "color": "amber"
+      },
+      "chain": {
+        "label": "Supportive",
+        "color": "green"
+      }
+    },
+    "strengthen": [
+      "BTC reclaims the 50W",
+      "BTC reclaims the 35W",
+      "RSI recovers toward 45–50",
+      "VWAP σ improves toward neutral"
+    ],
+    "weaken": [
+      "MVRV deteriorates without stabilizing",
+      "a manual MSB activates",
+      "STH stays underwater as trend weakens"
+    ],
     "bull": false,
     "reclaim": false,
     "watching": false
