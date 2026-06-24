@@ -1,25 +1,30 @@
 {
-  "generated": "2026-06-24T03:33:08Z",
+  "generated": "2026-06-24T12:09:47Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
     "zLookback": 200,
-    "provisional": true
+    "provisional": true,
+    "dataQuality": {
+      "price": "live",
+      "onchain": "live"
+    },
+    "fallbackMetrics": []
   },
   "raw": {
     "week": "Jun 22 2026",
     "dayOfWeek": 3,
     "year": 5,
-    "price": 62764.73,
-    "vwapSigma": -1.305,
-    "rsi": 35.1,
-    "dev200": 0.5,
+    "price": 62911.27,
+    "vwapSigma": -1.284,
+    "rsi": 35.2,
+    "dev200": 0.7,
     "above50W": false,
     "ma3550": "below",
-    "p35": -20.5,
+    "p35": -20.3,
     "z35": -1.17,
-    "p50": -30.1,
-    "z50": -1.36,
+    "p50": -29.9,
+    "z50": -1.35,
     "sth": 71317.74,
     "lth": 49156.21,
     "mvrvZ": 0.3673,
@@ -50,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 27.68423358920471
+      "prem": 27.98234444844303
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -11.992822543170888
+      "prem": -11.787347720216612
     },
     "ev": {
       "contrib": 0.0,
