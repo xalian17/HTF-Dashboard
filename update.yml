@@ -2,11 +2,13 @@ name: Update BTC Compass
 
 on:
   schedule:
-    # Runs once per hour. GitHub cron can lag under load.
+    # Top of every hour (UTC). GitHub cron is not second-precise (can lag 0–15 min under
+    # load) — fine for an hourly macro refresh. The open dashboard polls every 5 min and
+    # re-renders when meta.generated changes, so it picks up each hourly build on its own.
     - cron: "0 * * * *"
-  workflow_dispatch:        # lets you trigger a run by hand from the Actions tab
+  workflow_dispatch:        # force an immediate refresh by hand from the Actions tab
   push:
-    branches: [main]        # rebuild on commits
+    branches: [main]        # rebuild on commits (e.g. after editing manual.json)
 
 permissions:
   contents: write           # to commit data.json

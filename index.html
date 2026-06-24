@@ -48,6 +48,17 @@
   .dq{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text-2);letter-spacing:0.02em;justify-content:flex-end}
   .dq-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--text-3)}
   .dq-sep{color:var(--text-3);margin:0 1px}
+  .dq-upd{color:var(--text-3)}
+  .dq-lead{color:var(--text-3)}
+  .livebtc{display:flex;align-items:center;gap:6px;justify-content:flex-end;font-family:var(--mono);margin-bottom:3px}
+  .lb-dot{width:7px;height:7px;border-radius:50%;background:var(--text-3);flex-shrink:0}
+  .lb-dot.pulse{animation:lbpulse 2.2s ease-in-out infinite}
+  @keyframes lbpulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .lb-label{font-size:10px;letter-spacing:0.1em;color:var(--text-3);text-transform:uppercase}
+  .lb-price{font-size:15px;font-weight:600;color:var(--text)}
+  .lb-time{font-size:9.5px;color:var(--text-3)}
+  .foot{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;padding:14px 0 4px;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:0.02em;text-align:center}
+  .foot-dot{width:6px;height:6px;border-radius:50%;background:var(--jade);flex-shrink:0;animation:lbpulse 2.2s ease-in-out infinite}
   .hist{margin-bottom:8px}
   .hist-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
   .hist-title{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3)}
@@ -265,9 +276,10 @@
       <h1>BTC <span>/ USD</span></h1>
     </div>
     <div class="asof">
+      <div class="livebtc" id="liveBtc"><span class="lb-dot" id="lbDot"></span><span class="lb-label" id="lbLabel">BTC</span><span class="lb-price" id="lbPrice">—</span><span class="lb-time" id="lbTime"></span></div>
       <div class="wk" id="asofWk">Week of —</div>
       <div class="provisional" id="provBadge" title="Continuous gauges refresh daily on the week-to-date candle. Discrete triggers (MSB break, 35-reclaim) lock only on the weekly close.">Day 4 / 7 · provisional</div>
-      <div class="dq" id="dqLine"><span class="dq-dot" id="dqPriceDot"></span><span id="dqPrice">price —</span><span class="dq-sep">·</span><span class="dq-dot" id="dqChainDot"></span><span id="dqChain">on-chain —</span></div>
+      <div class="dq" id="dqLine"><span class="dq-lead">generated</span> <span class="dq-upd" id="dqUpdated">—</span><span class="dq-sep">·</span><span class="dq-dot" id="dqPriceDot"></span><span id="dqPrice">price —</span><span class="dq-sep">·</span><span class="dq-dot" id="dqChainDot"></span><span id="dqChain">on-chain —</span></div>
     </div>
   </header>
 
@@ -500,6 +512,10 @@
     <div class="note" id="bNote"></div>
   </section>
 
+  <footer class="foot">
+    <span class="foot-dot"></span>Macro snapshot updates automatically when new GitHub data is available · Live BTC updates every 60s
+  </footer>
+
 </div>
 
 <script>
@@ -516,6 +532,8 @@ const money=n=>"$"+Math.round(n).toLocaleString("en-US");
 const cls=s=>s>0?"s-pos":s<0?"s-neg":"s-zero";
 const col=s=>s>0?"var(--jade-bright)":s<0?"var(--red-bright)":"var(--text)";
 const colZ=s=>s>0?"var(--jade)":s<0?"var(--red)":"var(--text-3)";
+let livePriceShown=false;   // true once a live browser price is displayed
+let currentGenerated=null;  // meta.generated of the currently-rendered data.json
 
 function term(k,v,extraClass){
   const c=v>0?"var(--jade-bright)":v<0?"var(--red-bright)":"var(--text-2)";
@@ -570,6 +588,19 @@ function render(D){
   $('dqChainDot').style.background=dqColor(dq.onchain);
   const fb=(meta.fallbackMetrics&&meta.fallbackMetrics.length)?` (${meta.fallbackMetrics.join(", ")})`:"";
   $('dqChain').textContent="on-chain "+dq.onchain+(dq.onchain!=="live"?fb:"");
+  // last-updated timestamp from meta.generated (ISO "2026-06-24T12:00:00Z" -> "2026-06-24 12:00 UTC")
+  const gen=meta.generated||D.generated||"";
+  const m=/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/.exec(gen);
+  $('dqUpdated').textContent=m?`${m[1]} ${m[2]} UTC`:"—";
+  // displayed price starts as the data.json SNAPSHOT (the price the score was built on);
+  // startLivePrice() upgrades it to a live browser-fetched price if reachable. On a
+  // macro re-render (poll), leave an already-live header price intact (no flicker).
+  if(!livePriceShown){
+    $('lbPrice').textContent=money(d.price);
+    $('lbLabel').textContent="BTC";
+    $('lbTime').textContent="· snapshot";
+    $('lbDot').style.background="var(--text-3)"; $('lbDot').classList.remove("pulse");
+  }
   const prov=$('provBadge');
   if (meta.provisional===false){
     prov.textContent="Weekly close · locked";
@@ -854,12 +885,67 @@ const FALLBACK={
   }
 };
 
-Promise.all([
-  fetch('data.json',{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('no data.json'); return r.json(); }),
-  fetch('history.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[])
-])
-  .then(([D,H])=>{ D._history=Array.isArray(H)?H:[]; render(D); })
-  .catch(()=>{ render(FALLBACK); const b=$('provBadge'); if(b){ b.textContent="sample data"; b.title="Showing embedded sample — data.json not found. Deploy the repo or run fetch.py to see live data."; } });
+// Live BTC price for DISPLAY ONLY — never feeds the macro score (that stays tied to data.json).
+// Coinbase first (US-accessible, CORS-ok), Kraken fallback. Binance is geo-blocked in the US.
+async function fetchLivePrice(){
+  const tries=[
+    ['https://api.coinbase.com/v2/prices/BTC-USD/spot', j=>parseFloat(j.data.amount)],
+    ['https://api.kraken.com/0/public/Ticker?pair=XBTUSD', j=>parseFloat(j.result[Object.keys(j.result)[0]].c[0])]
+  ];
+  for(const [url,pick] of tries){
+    try{
+      const r=await fetch(url,{cache:'no-store'});
+      if(!r.ok) continue;
+      const p=pick(await r.json());
+      if(p>0) return p;
+    }catch(e){}
+  }
+  return null;
+}
+function showLivePrice(p){
+  $('lbPrice').textContent=money(p);
+  $('lbLabel').textContent="Live BTC";
+  const n=new Date();
+  const z=x=>String(x).padStart(2,"0");
+  $('lbTime').textContent="· "+z(n.getUTCHours())+":"+z(n.getUTCMinutes())+":"+z(n.getUTCSeconds())+" UTC";
+  $('lbDot').style.background="var(--jade-bright)"; $('lbDot').classList.add("pulse");
+  livePriceShown=true;
+}
+function startLivePrice(){
+  const tick=()=>fetchLivePrice().then(p=>{ if(p) showLivePrice(p); });
+  tick(); setInterval(tick, 60000);   // refresh the displayed price every 60s
+}
+
+// Briefly highlight the generated timestamp when an auto-update lands.
+function flashUpdated(){
+  const el=$('dqUpdated'); if(!el) return;
+  el.style.transition="color .3s ease"; el.style.color="var(--jade-bright)";
+  setTimeout(()=>{ el.style.color=""; }, 1800);
+}
+
+// Fetch data.json (+history) cache-busted. On poll, only re-render if meta.generated changed.
+function loadData(isPoll){
+  return Promise.all([
+    fetch(`./data.json?v=${Date.now()}`,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('no data.json'); return r.json(); }),
+    fetch(`./history.json?v=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[])
+  ]).then(([D,H])=>{
+    const gen=(D.meta&&D.meta.generated)||D.generated||"";
+    if(isPoll && gen===currentGenerated) return false;   // nothing new — skip re-render
+    currentGenerated=gen;
+    D._history=Array.isArray(H)?H:[];
+    render(D);                                            // repaints every panel in place
+    if(isPoll) flashUpdated();
+    return true;
+  });
+}
+
+// initial load, then start the live-price ticker and the 5-minute macro poll
+loadData(false)
+  .catch(()=>{ render(FALLBACK); const b=$('provBadge'); if(b){ b.textContent="sample data"; b.title="Showing embedded sample — data.json not found. Deploy the repo or run fetch.py to see live data."; } })
+  .finally(()=>{
+    startLivePrice();
+    setInterval(()=>{ loadData(true).catch(()=>{}); }, 300000);   // poll data.json every 5 min
+  });
 
 </script>
 </body>
