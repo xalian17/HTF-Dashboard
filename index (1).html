@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTC · Weekly Cycle Compass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0E15; --ink-2:#0C111A; --surface:#121A27; --surface-2:#18222F; --raised:#1E2A3A;
+    --line:#243044; --line-2:#2E3C52;
+    --gold:#E0A82E; --gold-dim:#9A7726;
+    --jade:#3FB68B; --jade-bright:#54D89F; --jade-faint:rgba(63,182,139,0.14);
+    --red:#E5484D; --red-bright:#FF6166; --red-faint:rgba(229,72,77,0.14);
+    --text:#E7ECF4; --text-2:#94A2B8; --text-3:#5C6B82;
+    --zgreen:rgba(63,182,139,0.32); --zgreenL:rgba(63,182,139,0.15);
+    --zgold:rgba(224,168,46,0.34); --zgray:rgba(148,162,184,0.07);
+    --zredL:rgba(229,72,77,0.15); --zred:rgba(229,72,77,0.32);
+    --mono:'IBM Plex Mono','SF Mono','JetBrains Mono','Cascadia Code',ui-monospace,Menlo,Consolas,monospace;
+    --disp:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 78% -8%, rgba(224,168,46,0.06), transparent 60%),
+      radial-gradient(900px 500px at 8% 108%, rgba(63,182,139,0.05), transparent 55%),
+      var(--ink);
+    color:var(--text); font-family:var(--disp); line-height:1.5;
+    min-height:100vh; padding:28px 20px 60px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* HEADER */
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+    padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;flex-direction:column;gap:7px}
+  .brand .tick{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--gold);
+    text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:9px}
+  .brand .tick::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  .brand h1{font-size:27px;font-weight:600;letter-spacing:-0.01em;line-height:1.1}
+  .brand h1 span{color:var(--text-3);font-weight:400}
+  .asof{text-align:right;display:flex;flex-direction:column;gap:5px}
+  .asof .wk{font-family:var(--mono);font-size:14px;color:var(--text);font-weight:500}
+  .asof .yr{font-family:var(--mono);font-size:11px;color:var(--text-2);letter-spacing:0.04em}
+  .asof .yr b{color:var(--gold);font-weight:600}
+  .dq{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text-2);letter-spacing:0.02em;justify-content:flex-end}
+  .dq-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--text-3)}
+  .dq-sep{color:var(--text-3);margin:0 1px}
+  .dq-upd{color:var(--text-3)}
+  .hist{margin-bottom:8px}
+  .hist-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+  .hist-title{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3)}
+  .hist-trend{font-family:var(--disp);font-size:13px;font-weight:600}
+  .hist-strip{display:flex;align-items:flex-end;gap:6px}
+  .hist-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+  .hist-bar-wrap{height:58px;display:flex;align-items:flex-end;width:100%;justify-content:center}
+  .hist-bar{width:62%;max-width:24px;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s ease}
+  .hist-val{font-family:var(--mono);font-size:9px;color:var(--text-2)}
+  .hist-wk{font-family:var(--mono);font-size:8px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .hist-empty{font-family:var(--mono);font-size:11px;color:var(--text-3);padding:18px 0;text-align:center;width:100%}
+
+  /* SCENARIO */
+  .scen{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .scen .lab{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--text-3);text-transform:uppercase;margin-right:4px}
+  .scen button{font-family:var(--mono);font-size:11.5px;letter-spacing:0.03em;color:var(--text-2);
+    background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:7px 13px;cursor:pointer;transition:all .15s ease}
+  .scen button:hover{border-color:var(--line-2);color:var(--text)}
+  .scen button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .scen button.on{background:var(--raised);color:var(--text);border-color:var(--gold-dim);box-shadow:inset 0 0 0 1px rgba(224,168,46,0.25)}
+
+  /* HERO */
+  .hero{margin-bottom:8px}
+  .hero-card{display:flex;flex-direction:column}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}
+  .hero-ctx{margin-top:0;flex-shrink:0;align-items:flex-end}
+  .card{background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 140%);
+    border:1px solid var(--line);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden}
+  .verdict{display:flex;flex-direction:column}
+  .verdict .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase;margin-bottom:14px}
+  .verdict .call{font-size:31px;font-weight:700;letter-spacing:-0.02em;line-height:1.04;margin-bottom:5px}
+  .verdict .sub{font-family:var(--mono);font-size:12px;color:var(--text-2);margin-bottom:7px;font-weight:500}
+  .verdict .sub b{color:var(--text);font-size:13px}
+  .verdict .split{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-bottom:18px;letter-spacing:0.02em}
+  .verdict .split .tg{color:var(--text-2)} .verdict .split .cg{color:var(--gold)}
+  .ctx{display:flex;flex-direction:column;gap:9px;margin-top:auto}
+  .ctx .row{display:flex;align-items:center;gap:10px}
+  .ctx .k{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--text-3);text-transform:uppercase;width:58px;flex-shrink:0}
+  .pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.02em;padding:5px 11px;border-radius:6px;border:1px solid}
+  .pill::before{content:"";width:7px;height:7px;border-radius:2px}
+  .pill.bull{color:var(--jade-bright);border-color:rgba(63,182,139,0.35);background:var(--jade-faint)}
+  .pill.bull::before{background:var(--jade-bright);box-shadow:0 0 8px var(--jade)}
+  .pill.bear{color:var(--red-bright);border-color:rgba(229,72,77,0.35);background:var(--red-faint)}
+  .pill.bear::before{background:var(--red-bright);box-shadow:0 0 8px var(--red)}
+  .pill.cyc{color:var(--gold);border-color:rgba(224,168,46,0.3);background:rgba(224,168,46,0.08)}
+  .pill.cyc::before{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+
+  .meter-wrap2{margin-top:auto}
+  .meter-track{position:relative;height:14px;border-radius:7px;border:1px solid var(--line);
+    background:linear-gradient(90deg,var(--red) 0%,rgba(229,72,77,0.4) 22%,var(--surface-2) 42%,var(--surface-2) 58%,rgba(63,182,139,0.4) 78%,var(--jade) 100%)}
+  .meter-zero{position:absolute;top:-5px;bottom:-5px;left:50%;width:1px;background:var(--line-2)}
+  .meter-bound{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--line-2);opacity:0.6}
+  .meter-marker{position:absolute;top:50%;width:3px;height:30px;border-radius:2px;background:var(--text);
+    transform:translate(-50%,-50%);box-shadow:0 0 0 4px var(--ink),0 0 14px rgba(231,236,244,0.5);transition:left .5s cubic-bezier(.22,1,.36,1)}
+  .meter-scale2{position:relative;height:14px;margin-top:13px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.05em;color:var(--text-3)}
+  .meter-scale2 span{position:absolute;white-space:nowrap}
+  .meter-scale2 .mid{color:var(--text-2)}
+  .phase-line{font-family:var(--mono);font-size:13px;color:var(--text);letter-spacing:0.01em;margin-bottom:24px}
+  .phase-line span{color:var(--gold);font-weight:600}
+  .interp{margin-bottom:8px}
+  .interp-grid{display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);gap:26px}
+  .ev-head,.sw-head{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .ev-rows{display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+  .ev-row{display:flex;align-items:center;gap:10px}
+  .ev-k{font-family:var(--mono);font-size:11px;color:var(--text-2);width:66px;flex-shrink:0;letter-spacing:0.03em}
+  .ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .ev-v{font-family:var(--mono);font-size:12px;color:var(--text)}
+  .agree-bar{display:flex;gap:3px;margin-bottom:14px}
+  .agree-seg{flex:1;height:6px;border-radius:3px;background:var(--surface-2);transition:background .4s ease}
+  .conf-line{display:flex;align-items:center;gap:9px;padding-top:13px;border-top:1px solid var(--line)}
+  .conf-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .conf-tier{font-family:var(--disp);font-size:14px;font-weight:600}
+  .conf-qual{font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .interp-right{display:flex;flex-direction:column;gap:16px}
+  .sw-head.sw-up{color:var(--jade)}
+  .sw-head.sw-down{color:var(--red)}
+  .sw-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+  .sw-list li{font-family:var(--mono);font-size:11px;color:var(--text-2);background:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:5px 10px}
+  .sw-list.up li{border-color:rgba(63,182,139,0.22)}
+  .sw-list.down li{border-color:rgba(229,72,77,0.22)}
+  @media (max-width:760px){.interp-grid{grid-template-columns:1fr;gap:18px}}
+
+  /* SECTION LABELS */
+  .section-label{display:flex;align-items:center;gap:13px;margin:24px 2px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase}
+  .section-label .ln{flex:1;height:1px;background:var(--line)}
+  .section-label .hint{letter-spacing:0.04em;text-transform:none;font-size:10px;color:var(--text-3)}
+  .section-label.tech{color:var(--text-2)}
+  .section-label.chain{color:var(--gold)}
+  .section-label.chain .ln{background:linear-gradient(90deg,rgba(224,168,46,0.32),var(--line))}
+
+  /* INDICATOR GRID */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .ind{background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 160%);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .ind.chain{border-color:rgba(224,168,46,0.16)}
+  .ind-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+  .ind-head .name{display:flex;flex-direction:column;gap:5px}
+  .ind-head .name .t{font-size:15px;font-weight:600;letter-spacing:-0.01em}
+  .ind-head .name .s{font-family:var(--mono);font-size:10.5px;color:var(--text-3);letter-spacing:0.04em}
+  .ind-head .val{text-align:right;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+  .ind-head .val .big{font-family:var(--mono);font-size:21px;font-weight:600;line-height:1}
+  .ind-head .val .zone{font-family:var(--mono);font-size:10px;letter-spacing:0.07em;text-transform:uppercase}
+  .scoretag{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px;display:inline-block}
+  .s-pos{color:var(--jade-bright);background:var(--jade-faint)}
+  .s-neg{color:var(--red-bright);background:var(--red-faint)}
+  .s-zero{color:var(--text-2);background:rgba(148,162,184,0.1)}
+
+  .gauge{margin-top:6px}
+  .gauge-track{position:relative;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--line);display:flex}
+  .gz{height:100%}
+  .gz-grn{background:var(--zgreen)} .gz-grn-l{background:var(--zgreenL)} .gz-gray{background:var(--zgray)}
+  .gz-red-l{background:var(--zredL)} .gz-red{background:var(--zred)} .gz-gold{background:var(--zgold)}
+  .gauge-marker{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--text);transform:translateX(-50%);z-index:3;
+    box-shadow:0 0 0 3px var(--ink),0 0 12px rgba(231,236,244,0.55);transition:left .5s cubic-bezier(.22,1,.36,1)}
+  .gtickmark{position:absolute;top:-3px;bottom:-3px;width:2px;z-index:2;transform:translateX(-50%);transition:left .5s ease}
+  .gtickmark.gold{background:rgba(224,168,46,0.7)}
+  .gauge-ticks{display:flex;position:relative;margin-top:8px;height:14px;font-family:var(--mono);font-size:9.5px;color:var(--text-3);letter-spacing:0.04em}
+  .gtick{position:absolute;transform:translateX(-50%);white-space:nowrap;transition:left .5s ease}
+  .gtick.key{color:var(--text-2)}
+
+  /* MA rows */
+  .ma-colhead{display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:8.5px;letter-spacing:0.1em;color:var(--text-3);text-transform:uppercase}
+  .ma-colhead .c-k{width:40px}.ma-colhead .c-pct{width:72px;text-align:right}.ma-colhead .c-z{width:62px;text-align:center}.ma-colhead .c-st{flex:1;text-align:right}
+  .ma-rows{display:flex;flex-direction:column;margin-top:2px}
+  .ma-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .ma-row:last-child{border-bottom:none}
+  .ma-row .ma-k{font-family:var(--mono);font-size:12px;color:var(--text-2);width:40px;flex-shrink:0;font-weight:600;letter-spacing:0.03em}
+  .ma-row .ma-pct{font-family:var(--mono);font-size:16px;font-weight:600;width:72px;text-align:right;flex-shrink:0}
+  .ma-row .ma-z{font-family:var(--mono);font-size:10.5px;font-weight:500;width:62px;text-align:center;flex-shrink:0;padding:3px 0;border-radius:5px}
+  .ma-row .ma-state{font-family:var(--mono);font-size:9.5px;letter-spacing:0.04em;color:var(--text-3);flex:1;text-align:right;text-transform:uppercase}
+  .z-hi{color:var(--red-bright);background:var(--red-faint)}.z-lo{color:var(--jade-bright);background:var(--jade-faint)}.z-mid{color:var(--text-2);background:rgba(148,162,184,0.1)}
+  .cycle-note{font-family:var(--mono);font-size:9.5px;color:var(--text-3);letter-spacing:0.03em;text-align:right;margin-top:3px;max-width:240px}
+  .provisional{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;
+    color:var(--gold);text-transform:uppercase;border:1px solid rgba(224,168,46,0.3);background:rgba(224,168,46,0.07);border-radius:5px;padding:3px 8px;margin:2px 0;cursor:help}
+  .provisional::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+  /* cost basis readout */
+  .cb-vals{display:flex;gap:8px;margin-bottom:14px}
+  .cb-val{flex:1;background:var(--ink-2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
+  .cb-val .cbk{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--text-3);text-transform:uppercase}
+  .cb-val .cb-prem{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);line-height:1.1}
+  .cb-val .cb-dollar{font-family:var(--mono);font-size:10px;color:var(--text-3)}
+
+  /* MSB events */
+  .evt-list{display:flex;flex-direction:column;gap:13px;margin-top:2px}
+  .evt{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:var(--ink-2)}
+  .evt.live-bull{border-color:rgba(63,182,139,0.4)} .evt.live-bear{border-color:rgba(229,72,77,0.4)} .evt.idle{opacity:0.5}
+  .evt-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .evt-name{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:0.03em}
+  .evt-name.bull{color:var(--jade-bright)} .evt-name.bear{color:var(--red-bright)} .evt-name.off{color:var(--text-3)}
+  .evt-age{font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:0.04em}
+  .evt-desc{font-size:11.5px;color:var(--text-2);margin-bottom:11px;line-height:1.45}
+  .evt-pot{display:flex;align-items:center;gap:10px}
+  .evt-pot .pl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase}
+  .evt-pot .pbar{flex:1;height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+  .evt-pot .pfill{height:100%;border-radius:3px;transition:width .5s ease}
+  .evt-pot .pfill.bull{background:linear-gradient(90deg,#2A7E5F,var(--jade-bright))}
+  .evt-pot .pfill.bear{background:linear-gradient(90deg,#9A3034,var(--red-bright))}
+  .evt-pot .pv{font-family:var(--mono);font-size:10px;color:var(--text-2);width:34px;text-align:right}
+
+  /* WATCH strip */
+  .watch{margin-top:16px;background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 160%);
+    border:1px dashed var(--line-2);border-radius:14px;padding:18px 22px}
+  .watch-head{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--text-3);text-transform:uppercase;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+  .watch-head .tag{color:var(--gold-dim);letter-spacing:0.04em;text-transform:none;font-size:10px}
+  .watch-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .wm{display:flex;flex-direction:column;gap:9px}
+  .wm-top{display:flex;justify-content:space-between;align-items:baseline}
+  .wm-name{font-size:13px;font-weight:600}
+  .wm-read{font-family:var(--mono);font-size:12px;color:var(--text-2)}
+  .wm-read b{color:var(--text);font-size:14px;font-weight:600}
+  .wm-track{position:relative;height:10px;border-radius:5px;overflow:hidden;border:1px solid var(--line);display:flex}
+  .wm-marker{position:absolute;top:-3px;bottom:-3px;width:2.5px;background:var(--text);transform:translateX(-50%);z-index:3;box-shadow:0 0 0 3px var(--ink);transition:left .5s ease}
+  /* Average Buy Price widget */
+  .abp-pill{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:0.06em;padding:2px 8px;border-radius:5px}
+  .abp-vals{display:flex;justify-content:space-between;align-items:baseline;margin:3px 0 11px}
+  .abp-gap{font-family:var(--mono)}
+  .abp-basis{font-family:var(--mono);font-size:10.5px;color:var(--text-3)}
+  .abp-basis b{color:var(--text-2);font-weight:600;font-size:12px}
+  .abp-track{position:relative;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--line);display:flex}
+  .abp-be{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--gold);z-index:2;box-shadow:0 0 7px rgba(224,168,46,0.65)}
+  .abp-scale{position:relative;height:13px;margin-top:7px;font-family:var(--mono);font-size:8.5px;letter-spacing:0.06em;color:var(--text-3);text-transform:uppercase}
+  .abp-scale span{position:absolute;white-space:nowrap}
+
+  /* BREAKDOWN */
+  .breakdown{margin-top:16px;background:linear-gradient(180deg,var(--surface) 0%,var(--ink-2) 160%);border:1px solid var(--line);border-radius:14px;padding:20px 24px}
+  .breakdown .bh{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase;margin-bottom:16px}
+  .brow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+  .brow-lab{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;width:100%;margin-bottom:3px}
+  .brow-lab.tech{color:var(--text-2)} .brow-lab.chain{color:var(--gold)}
+  .term{background:var(--ink-2);border:1px solid var(--line);border-radius:9px;padding:9px 13px;display:flex;flex-direction:column;gap:5px;min-width:88px}
+  .term .tk{font-family:var(--mono);font-size:9px;letter-spacing:0.06em;color:var(--text-3);text-transform:uppercase}
+  .term .tv{font-family:var(--mono);font-size:17px;font-weight:600}
+  .op{display:flex;align-items:center;font-family:var(--mono);font-size:15px;color:var(--text-3);padding:0 1px}
+  .term.sub{background:rgba(148,162,184,0.05)}
+  .term.result{background:rgba(224,168,46,0.07);border-color:rgba(224,168,46,0.28)}
+  .term.result .tk{color:var(--gold)} .term.result .tv{color:var(--gold)}
+  .note{margin-top:14px;font-size:11.5px;color:var(--text-3);line-height:1.55;font-family:var(--mono);letter-spacing:0.01em}
+  .note b{color:var(--text-2);font-weight:500}
+
+  @media (max-width:760px){
+    .hero-top{flex-direction:column;gap:14px} .hero-ctx{align-items:flex-start} .grid{grid-template-columns:1fr} .watch-grid{grid-template-columns:1fr;gap:18px}
+    .brand h1{font-size:23px} .verdict .call{font-size:26px} body{padding:20px 14px 48px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="tick">Weekly Cycle Compass</div>
+      <h1>BTC <span>/ USD</span></h1>
+    </div>
+    <div class="asof">
+      <div class="wk" id="asofWk">Week of —</div>
+      <div class="provisional" id="provBadge" title="Continuous gauges refresh daily on the week-to-date candle. Discrete triggers (MSB break, 35-reclaim) lock only on the weekly close.">Day 4 / 7 · provisional</div>
+      <div class="dq" id="dqLine"><span class="dq-dot" id="dqPriceDot"></span><span id="dqPrice">price —</span><span class="dq-sep">·</span><span class="dq-dot" id="dqChainDot"></span><span id="dqChain">on-chain —</span><span class="dq-sep">·</span><span class="dq-upd" id="dqUpdated">updated —</span></div>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="card hero-card">
+      <div class="hero-top">
+        <div class="verdict">
+          <div class="eyebrow">Composite Read</div>
+          <div class="call" id="vCall">—</div>
+          <div class="sub">composite <b id="vComposite">—</b></div>
+          <div class="split" id="vSplit">—</div>
+        </div>
+        <div class="ctx hero-ctx">
+          <div class="row"><span class="k">Regime</span><span class="pill" id="vRegime">—</span></div>
+          <div class="cycle-note" id="vCycleNote"></div>
+        </div>
+      </div>
+      <div class="phase-line">Macro phase&nbsp;·&nbsp;<span id="vPhase">—</span></div>
+      <div class="meter-wrap2">
+        <div class="meter-track">
+          <div class="meter-zero"></div>
+          <div class="meter-bound" style="left:16.7%"></div>
+          <div class="meter-bound" style="left:35.4%"></div>
+          <div class="meter-bound" style="left:64.6%"></div>
+          <div class="meter-bound" style="left:83.3%"></div>
+          <div class="meter-marker" id="mMarker" style="left:50%"></div>
+        </div>
+        <div class="meter-scale2">
+          <span style="left:8%;transform:translateX(-50%)">AGGR SELL</span>
+          <span style="left:26%;transform:translateX(-50%)">DISTRIBUTE</span>
+          <span class="mid" style="left:50%;transform:translateX(-50%)">NEUTRAL</span>
+          <span style="left:74%;transform:translateX(-50%)">ACCUMULATE</span>
+          <span style="left:92%;transform:translateX(-50%)">AGGR BUY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- READ QUALITY / INTERPRETATION -->
+  <section class="interp">
+    <div class="card">
+      <div class="interp-grid">
+        <div class="interp-left">
+          <div class="ev-head">Evidence</div>
+          <div class="ev-rows">
+            <div class="ev-row"><span class="ev-k">Value</span><span class="ev-dot" id="evValDot"></span><span class="ev-v" id="evVal">—</span></div>
+            <div class="ev-row"><span class="ev-k">Trend</span><span class="ev-dot" id="evTrendDot"></span><span class="ev-v" id="evTrend">—</span></div>
+            <div class="ev-row"><span class="ev-k">On-chain</span><span class="ev-dot" id="evChainDot"></span><span class="ev-v" id="evChain">—</span></div>
+          </div>
+          <div class="agree-bar"><div class="agree-seg" id="agV"></div><div class="agree-seg" id="agT"></div><div class="agree-seg" id="agC"></div></div>
+          <div class="conf-line"><span class="conf-dot" id="confDot"></span><span class="conf-tier" id="confTier">—</span><span class="conf-qual" id="confQual">—</span></div>
+        </div>
+        <div class="interp-right">
+          <div class="sw-block">
+            <div class="sw-head sw-up">What would strengthen this read</div>
+            <ul class="sw-list up" id="swStrengthen"></ul>
+          </div>
+          <div class="sw-block">
+            <div class="sw-head sw-down">What would weaken this read</div>
+            <ul class="sw-list down" id="swWeaken"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE & STRUCTURE -->
+  <div class="section-label tech"><span>Price · Trend · Structure</span><span class="ln"></span><span class="hint">RSI &amp; structure gated · VWAP &amp; 200W are ungated value</span></div>
+  <section class="grid">
+    <!-- VWAP -->
+    <div class="ind">
+      <div class="ind-head">
+        <div class="name"><span class="t">W1 Anchored VWAP</span><span class="s">DEVIATION · σ BANDS · CYCLE-ANCHORED</span></div>
+        <div class="val"><span class="big" id="vwapVal">—</span><span class="zone" id="vwapZone">—</span></div>
+      </div>
+      <div class="gauge">
+        <div class="gauge-track">
+          <div class="gz gz-grn" style="width:20%"></div><div class="gz gz-grn-l" style="width:10%"></div>
+          <div class="gz gz-gray" style="width:20%"></div><div class="gz gz-grn-l" style="width:40%"></div>
+          <div class="gz gz-red" style="width:10%"></div>
+          <div class="gauge-marker" id="vwapMark" style="left:50%"></div>
+        </div>
+        <div class="gauge-ticks">
+          <span class="gtick" style="left:0%">-2.5</span><span class="gtick key" style="left:20%">-1.5</span>
+          <span class="gtick key" style="left:30%">-1.0</span><span class="gtick key" style="left:50%">0</span>
+          <span class="gtick key" style="left:90%">+2.0</span><span class="gtick" style="left:100%">+2.5</span>
+        </div>
+      </div>
+    </div>
+    <!-- MAs -->
+    <div class="ind">
+      <div class="ind-head">
+        <div class="name"><span class="t">W1 35 / 50 / 200</span><span class="s">Δ PRICE · Z-BANDS (35/50) · 200W FLOOR</span></div>
+        <div class="val"><span class="scoretag" id="maScore">—</span></div>
+      </div>
+      <div class="ma-colhead"><span class="c-k">MA</span><span class="c-pct">Δ price</span><span class="c-z">z / score</span><span class="c-st">state</span></div>
+      <div class="ma-rows">
+        <div class="ma-row"><span class="ma-k">35W</span><span class="ma-pct" id="ma35pct">—</span><span class="ma-z" id="ma35z">—</span><span class="ma-state" id="ma35state">—</span></div>
+        <div class="ma-row"><span class="ma-k">50W</span><span class="ma-pct" id="ma50pct">—</span><span class="ma-z" id="ma50z">—</span><span class="ma-state" id="ma50state">—</span></div>
+        <div class="ma-row"><span class="ma-k">200W</span><span class="ma-pct" id="ma200pct">—</span><span class="ma-z" id="ma200sc">—</span><span class="ma-state" id="ma200state">—</span></div>
+      </div>
+    </div>
+    <!-- RSI -->
+    <div class="ind">
+      <div class="ind-head">
+        <div class="name"><span class="t">W1 RSI</span><span class="s">MEAN-REVERSION · 30 / 50 / 70</span></div>
+        <div class="val"><span class="big" id="rsiVal">—</span><span class="zone" id="rsiZone">—</span></div>
+      </div>
+      <div class="gauge">
+        <div class="gauge-track">
+          <div class="gz gz-grn" style="width:30%"></div><div class="gz gz-grn-l" style="width:20%"></div>
+          <div class="gz gz-gray" style="width:20%"></div><div class="gz gz-red" style="width:30%"></div>
+          <div class="gauge-marker" id="rsiMark" style="left:50%"></div>
+        </div>
+        <div class="gauge-ticks">
+          <span class="gtick" style="left:0%">0</span><span class="gtick key" style="left:30%">30</span>
+          <span class="gtick key" style="left:50%">50</span><span class="gtick key" style="left:70%">70</span>
+          <span class="gtick" style="left:100%">100</span>
+        </div>
+      </div>
+    </div>
+    <!-- MSB -->
+    <div class="ind">
+      <div class="ind-head">
+        <div class="name"><span class="t">Weekly MSB</span><span class="s">MANUAL MARK · DECAY · CONFIRMS ON CLOSE</span></div>
+        <div class="val"><span class="scoretag" id="msbScore">—</span></div>
+      </div>
+      <div class="evt-list" id="evtList"></div>
+    </div>
+  </section>
+
+  <!-- ON-CHAIN VALUATION -->
+  <div class="section-label chain"><span>On-Chain Valuation</span><span class="ln"></span><span class="hint">demand-side · bypasses regime gate</span></div>
+  <section class="grid">
+    <!-- MVRV Z -->
+    <div class="ind chain">
+      <div class="ind-head">
+        <div class="name"><span class="t">MVRV Z-Score</span><span class="s">VALUATION OSCILLATOR · CHEAP ↔ EUPHORIA</span></div>
+        <div class="val"><span class="big" id="mzVal">—</span><span class="zone" id="mzZone">—</span></div>
+      </div>
+      <div class="gauge">
+        <div class="gauge-track">
+          <!-- scale -1 .. +8  →  zones at 0,1,3,5 -->
+          <div class="gz gz-grn" style="width:11.1%"></div>   <!-- -1..0 -->
+          <div class="gz gz-grn-l" style="width:11.1%"></div> <!-- 0..1 -->
+          <div class="gz gz-gray" style="width:22.2%"></div>  <!-- 1..3 -->
+          <div class="gz gz-red-l" style="width:22.2%"></div> <!-- 3..5 -->
+          <div class="gz gz-red" style="width:33.3%"></div>   <!-- 5..8 -->
+          <div class="gauge-marker" id="mzMark" style="left:50%"></div>
+        </div>
+        <div class="gauge-ticks">
+          <span class="gtick" style="left:0%">-1</span><span class="gtick key" style="left:11.1%">0</span>
+          <span class="gtick key" style="left:22.2%">1</span><span class="gtick key" style="left:44.4%">3</span>
+          <span class="gtick key" style="left:66.6%">5</span><span class="gtick" style="left:100%">8</span>
+        </div>
+      </div>
+    </div>
+    <!-- Cost basis -->
+    <div class="ind chain">
+      <div class="ind-head">
+        <div class="name"><span class="t">STH / LTH Cost Basis</span><span class="s">SEPARATE LADDERS · STH SHOWN FULL, ½-WEIGHT IN SCORE</span></div>
+        <div class="val" style="flex-direction:row;gap:6px;align-items:center"><span class="scoretag" id="lthScore">LTH —</span><span class="scoretag" id="sthScore">STH —</span></div>
+      </div>
+      <div class="cb-vals">
+        <div class="cb-val"><span class="cbk">Price</span><span class="cb-prem" id="cbPrice">—</span></div>
+        <div class="cb-val"><span class="cbk">vs STH basis</span><span class="cb-prem" id="sthPrem">—</span><span class="cb-dollar" id="cbSth">—</span></div>
+        <div class="cb-val"><span class="cbk">vs LTH basis</span><span class="cb-prem" id="lthPrem">—</span><span class="cb-dollar" id="cbLth">—</span></div>
+      </div>
+      <div class="gauge">
+        <div class="gauge-track" id="cbTrack">
+          <div class="gtickmark gold" id="cbLthMark" style="left:25%"></div>
+          <div class="gtickmark gold" id="cbSthMark" style="left:65%"></div>
+          <div class="gauge-marker" id="cbMark" style="left:50%"></div>
+        </div>
+        <div class="gauge-ticks">
+          <span class="gtick key" id="cbLthTick" style="left:25%">LTH</span>
+          <span class="gtick key" id="cbSthTick" style="left:65%">STH</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATCH -->
+  <div class="watch">
+    <div class="watch-head"><span>Watch · Sentiment</span><span class="tag">informs cycle read — not scored</span></div>
+    <div class="watch-grid">
+      <div class="wm">
+        <div class="wm-top"><span class="wm-name">NUPL</span><span class="wm-read"><b id="nuplVal">—</b> · <span id="nuplZone">—</span></span></div>
+        <div class="wm-track" id="nuplTrack">
+          <div class="gz gz-grn" style="width:18%"></div><div class="gz gz-grn-l" style="width:22%"></div>
+          <div class="gz gz-gray" style="width:25%"></div><div class="gz gz-red-l" style="width:20%"></div>
+          <div class="gz gz-red" style="width:15%"></div>
+          <div class="wm-marker" id="nuplMark" style="left:50%"></div>
+        </div>
+      </div>
+      <div class="wm">
+        <div class="wm-top"><span class="wm-name">Average Buy Price</span><span class="abp-pill" id="abpPill">—</span></div>
+        <div class="abp-vals"><span class="abp-gap" id="abpGap">—</span><span class="abp-basis">avg cost <b id="abpBasis">—</b></span></div>
+        <div class="abp-track" id="spTrack">
+          <div class="gz gz-grn" style="width:25%"></div><div class="gz gz-gray" style="width:37.5%"></div>
+          <div class="gz gz-red" style="width:37.5%"></div>
+          <div class="abp-be" id="abpBE" style="left:25%"></div>
+          <div class="wm-marker" id="spMark" style="left:38%"></div>
+        </div>
+        <div class="abp-scale"><span style="left:0">underwater</span><span style="left:25%;transform:translateX(-50%);color:var(--gold)">break-even</span><span style="right:0">frothy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY STRIP -->
+  <section class="hist">
+    <div class="card">
+      <div class="hist-head">
+        <span class="hist-title">Macro Read · recent weeks</span>
+        <span class="hist-trend" id="histTrend">—</span>
+      </div>
+      <div class="hist-strip" id="histStrip"></div>
+    </div>
+  </section>
+
+  <!-- BREAKDOWN -->
+  <section class="breakdown">
+    <div class="bh">How This Is Scored — three axes</div>
+    <div class="brow" id="rowValue"><span class="brow-lab tech">Value (ungated)</span></div>
+    <div class="brow" id="rowTech"><span class="brow-lab tech">Trend &amp; Structure — × 50W regime gate</span></div>
+    <div class="brow" id="rowChain"><span class="brow-lab chain">On-Chain Cycle (ungated) — STH at ½ weight</span></div>
+    <div class="brow" id="rowTotal"><span class="brow-lab" style="color:var(--gold)">Composite</span></div>
+    <div class="note" id="bNote"></div>
+  </section>
+
+</div>
+
+<script>
+// ============================================================
+//  BTC Weekly Cycle Compass — renderer.
+//  Reads data.json (produced by fetch.py). All scoring lives in
+//  scoring.py; this file only renders the view-model it receives.
+// ============================================================
+
+const $=id=>document.getElementById(id);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const sgn=n=>(n>0?"+":"")+(Math.round(n*10)/10);
+const money=n=>"$"+Math.round(n).toLocaleString("en-US");
+const cls=s=>s>0?"s-pos":s<0?"s-neg":"s-zero";
+const col=s=>s>0?"var(--jade-bright)":s<0?"var(--red-bright)":"var(--text)";
+const colZ=s=>s>0?"var(--jade)":s<0?"var(--red)":"var(--text-3)";
+
+function term(k,v,extraClass){
+  const c=v>0?"var(--jade-bright)":v<0?"var(--red-bright)":"var(--text-2)";
+  return `<div class="term ${extraClass||''}"><span class="tk">${k}</span><span class="tv" style="color:${c}">${sgn(v)}</span></div>`;
+}
+function op(sym){return `<div class="op">${sym}</div>`;}
+
+function renderHistory(hist){
+  const strip=$('histStrip'), trendEl=$('histTrend');
+  if(!strip||!trendEl) return;
+  if(!hist||hist.length===0){
+    strip.innerHTML='<div class="hist-empty">No history yet — this strip fills in weekly as the dashboard runs.</div>';
+    trendEl.textContent=''; return;
+  }
+  // item 3: improving / stable / weakening (slope of composite over recent weekly points)
+  const comps=hist.map(h=>typeof h.composite==="number"?h.composite:0);
+  let tLabel="building history…", tColor="var(--text-3)";
+  if(comps.length>=4){
+    const latest=comps[comps.length-1];
+    const prior=comps.slice(-4,-1);
+    const mean=prior.reduce((a,b)=>a+b,0)/prior.length;
+    const diff=latest-mean;
+    if(diff>1){tLabel="improving \u2197";tColor="var(--jade-bright)";}
+    else if(diff<-1){tLabel="weakening \u2198";tColor="var(--red-bright)";}
+    else{tLabel="stable \u2192";tColor="var(--text)";}
+  }
+  trendEl.textContent=tLabel; trendEl.style.color=tColor;
+  // bars: height by |composite|, color by verdict
+  const maxAbs=Math.max(4,...comps.map(c=>Math.abs(c)));
+  const kindColor=call=>/ACCUM/.test(call)?"var(--jade)":/(SELL|DISTRIB)/.test(call)?"var(--red)":"var(--text-3)";
+  strip.innerHTML=hist.map(h=>{
+    const c=typeof h.composite==="number"?h.composite:0;
+    const hpct=Math.round(Math.abs(c)/maxAbs*100);
+    const wk=(h.week||"").replace(/\s+\d{4}$/,"");
+    const sgnv=(c>=0?"+":"")+c;
+    return `<div class="hist-col" title="${h.week} · ${h.call||""} (${sgnv})">`
+      +`<div class="hist-bar-wrap"><div class="hist-bar" style="height:${hpct}%;background:${kindColor(h.call||"")}"></div></div>`
+      +`<div class="hist-val">${sgnv}</div><div class="hist-wk">${wk}</div></div>`;
+  }).join("");
+}
+
+function render(D){
+  const d=D.raw, A=D.scored, meta=D.meta||{};
+
+  // header + provisional badge
+  $('asofWk').textContent="Week of "+d.week;
+  // data-quality status (live / stale / fallback)
+  const dq=meta.dataQuality||{price:"live",onchain:"live"};
+  const dqColor=s=>s==="live"?"var(--jade-bright)":s==="stale"?"var(--gold)":"var(--red-bright)";
+  $('dqPriceDot').style.background=dqColor(dq.price);
+  $('dqPrice').textContent="price "+dq.price;
+  $('dqChainDot').style.background=dqColor(dq.onchain);
+  const fb=(meta.fallbackMetrics&&meta.fallbackMetrics.length)?` (${meta.fallbackMetrics.join(", ")})`:"";
+  $('dqChain').textContent="on-chain "+dq.onchain+(dq.onchain!=="live"?fb:"");
+  // last-updated timestamp from meta.generated (ISO "2026-06-24T12:00:00Z" -> "2026-06-24 12:00 UTC")
+  const gen=meta.generated||D.generated||"";
+  const m=/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/.exec(gen);
+  $('dqUpdated').textContent=m?`updated ${m[1]} ${m[2]} UTC`:"updated —";
+  const prov=$('provBadge');
+  if (meta.provisional===false){
+    prov.textContent="Weekly close · locked";
+    prov.style.color="var(--jade-bright)"; prov.style.borderColor="rgba(63,182,139,0.3)"; prov.style.background="var(--jade-faint)";
+  } else {
+    prov.textContent=`Day ${d.dayOfWeek} / 7 · provisional`;
+  }
+  if (D.generated){ prov.title="Generated "+D.generated+" UTC. Gauges refresh daily on the week-to-date candle; MSB and 35-reclaim lock only on the weekly close."; }
+
+  // verdict
+  $('vCall').textContent=A.call;
+  $('vCall').style.color=A.callKind==="pos"?"var(--jade-bright)":A.callKind==="neg"?"var(--red-bright)":"var(--text)";
+  $('vComposite').textContent=sgn(A.composite);
+  $('vSplit').innerHTML=`<span class="tg">value ${sgn(A.valueCore)}</span> · <span class="tg">trend (gated) ${sgn(A.trendGated)}</span> · <span class="cg">on-chain ${sgn(A.chainCore)}</span>`;
+  const reg=$('vRegime'); reg.className="pill "+(A.bull?"bull":"bear");
+  reg.textContent=A.bull?"BULL · above 50W":"BEAR · below 50W";
+  $('vPhase').textContent=A.phase;
+  $('vCycleNote').textContent=A.cycleNote||'';
+  $('vCycleNote').style.display=A.cycleNote?'':'none';
+  renderHistory(D._history||[]);
+
+  // --- interpretation layer: evidence chips, agreement bar, confidence, strengthen/weaken ---
+  const dotColor=c=>c==="green"?"var(--jade-bright)":c==="amber"?"var(--gold)":c==="red"?"var(--red-bright)":"var(--text-3)";
+  const ax=A.axisStates||{};
+  function setAxis(dotId,vId,segId,st){
+    if(!st){st={label:"—",color:"grey"};}
+    $(dotId).style.background=dotColor(st.color);
+    $(vId).textContent=st.label; $(vId).style.color=st.color==="grey"?"var(--text-2)":dotColor(st.color);
+    $(segId).style.background=dotColor(st.color);
+  }
+  setAxis('evValDot','evVal','agV',ax.value);
+  setAxis('evTrendDot','evTrend','agT',ax.trend);
+  setAxis('evChainDot','evChain','agC',ax.chain);
+  const cf=A.confidence||{tier:"—",qualifier:"",dot:"grey"};
+  $('confDot').style.background=dotColor(cf.dot);
+  $('confTier').textContent=cf.tier; $('confTier').style.color=dotColor(cf.dot);
+  $('confQual').textContent=cf.qualifier?("· "+cf.qualifier):"";
+  $('swStrengthen').innerHTML=(A.strengthen&&A.strengthen.length?A.strengthen:["—"]).map(s=>`<li>${s}</li>`).join("");
+  $('swWeaken').innerHTML=(A.weaken&&A.weaken.length?A.weaken:["—"]).map(s=>`<li>${s}</li>`).join("");
+
+  // tactical meter (-12..+12)
+  $('mMarker').style.left=clamp((A.composite+12)/24*100,2,98)+"%";
+
+  // VWAP
+  $('vwapVal').textContent=sgn(d.vwapSigma)+"σ"; $('vwapVal').style.color=col(A.vwap.score);
+  $('vwapZone').textContent=A.vwap.zone; $('vwapZone').style.color=colZ(A.vwap.score);
+  $('vwapMark').style.left=clamp((d.vwapSigma+2.5)/5*100,1,99)+"%";
+
+  // RSI
+  $('rsiVal').textContent=Math.round(d.rsi); $('rsiVal').style.color=col(A.rsi.score);
+  $('rsiZone').textContent=A.rsi.zone; $('rsiZone').style.color=colZ(A.rsi.score);
+  $('rsiMark').style.left=clamp(d.rsi,1,99)+"%";
+
+  // MAs — % distance + z (precomputed in data.json), 200W score
+  $('maScore').outerHTML=`<span class="scoretag ${A.bull?'s-pos':'s-neg'}" id="maScore">${A.bull?'BULL':'BEAR'}</span>`;
+  const pctStr=p=>(p>=0?"+":"")+(Math.round(p*10)/10)+"%";
+  const zClass=z=>z>=1.5?"z-hi":z<=-1.5?"z-lo":"z-mid";
+  $('ma35pct').textContent=pctStr(d.p35); $('ma35pct').style.color=d.p35>=0?"var(--text)":"var(--text-2)";
+  const z35el=$('ma35z'); z35el.textContent="z "+sgn(d.z35); z35el.className="ma-z "+zClass(d.z35);
+  $('ma50pct').textContent=pctStr(d.p50); $('ma50pct').style.color=d.p50>=0?"var(--text)":"var(--text-2)";
+  const z50el=$('ma50z'); z50el.textContent="z "+sgn(d.z50); z50el.className="ma-z "+zClass(d.z50);
+  const dev=d.dev200;
+  $('ma200pct').textContent=pctStr(dev); $('ma200pct').style.color=dev<=0?"var(--jade-bright)":dev>=150?"var(--red-bright)":"var(--text)";
+  const sc200=$('ma200sc'); sc200.textContent=sgn(A.w200.score); sc200.className="ma-z "+(A.w200.score>0?"z-lo":A.w200.score<0?"z-hi":"z-mid");
+  $('ma50state').textContent=A.bull?"above · bull regime":"below · bear regime";
+  $('ma50state').style.color=A.bull?"var(--jade-bright)":"var(--red-bright)";
+  $('ma200state').textContent=dev<=0?"at / below floor":dev>=150?"stretched":"—";
+  $('ma200state').style.color=dev<=0?"var(--jade-bright)":dev>=150?"var(--red-bright)":"var(--text-3)";
+  const bandState=d.ma3550, st35=$('ma35state');
+  if (bandState==="reclaim"){ st35.textContent="RECLAIM +1 · on close"; st35.style.color="var(--gold)"; }
+  else if (bandState==="watching"){ st35.textContent="in band · needs reclaim"; st35.style.color="var(--text-2)"; }
+  else if (bandState==="below"){ st35.textContent="below band"; st35.style.color="var(--red-bright)"; }
+  else { st35.textContent="above 35W"; st35.style.color="var(--text-3)"; }
+
+  // MSB events
+  const ev=d.event, bosLive=ev.type==="BOS", msbLive=ev.type==="MSB";
+  let eh="";
+  { const p=bosLive?Math.max(0,1-ev.weeks/8):0;
+    eh+=`<div class="evt ${bosLive?'live-bull':'idle'}"><div class="evt-top">
+      <span class="evt-name ${bosLive?'bull':'off'}">BOS · Break of Structure</span>
+      <span class="evt-age">${bosLive?ev.weeks+'w ago':'not active'}</span></div>
+      <div class="evt-desc">Bullish buy-in. First print has most potency — strength can take 4–8 wks.</div>
+      <div class="evt-pot"><span class="pl">Potency</span><div class="pbar"><div class="pfill bull" style="width:${Math.round(p*100)}%"></div></div>
+      <span class="pv">${bosLive?'+'+(Math.round(2*p*10)/10):'—'}</span></div></div>`; }
+  { const p=msbLive?Math.max(0,1-ev.weeks/2):0;
+    eh+=`<div class="evt ${msbLive?'live-bear':'idle'}"><div class="evt-top">
+      <span class="evt-name ${msbLive?'bear':'off'}">MSB · Market Structure Break</span>
+      <span class="evt-age">${msbLive?ev.weeks+'w ago':'not active'}</span></div>
+      <div class="evt-desc">Cycle-top warning — often the earliest signal. Weakness follows in 1–2 wks.</div>
+      <div class="evt-pot"><span class="pl">Potency</span><div class="pbar"><div class="pfill bear" style="width:${Math.round(p*100)}%"></div></div>
+      <span class="pv">${msbLive?(Math.round(-2*p*10)/10):'—'}</span></div></div>`; }
+  $('evtList').innerHTML=eh;
+  const msbS=Math.round(A.ev.contrib*10)/10;
+  $('msbScore').outerHTML=`<span class="scoretag ${cls(msbS)}" id="msbScore">${sgn(msbS)}</span>`;
+
+  // MVRV Z (scale -1..+8 → 0..100%)
+  $('mzVal').textContent=Math.round(d.mvrvZ*10)/10; $('mzVal').style.color=col(A.mvrv.score);
+  $('mzZone').textContent=A.mvrv.zone; $('mzZone').style.color=colZ(A.mvrv.score);
+  $('mzMark').style.left=clamp((d.mvrvZ+1)/9*100,1,99)+"%";
+
+  // Cost basis — separate LTH + STH sub-scores (STH shown full, half-weight in composite)
+  $('lthScore').outerHTML=`<span class="scoretag ${cls(A.lth.score)}" id="lthScore">LTH ${sgn(A.lth.score)}</span>`;
+  $('sthScore').outerHTML=`<span class="scoretag ${cls(A.sth.score)}" id="sthScore">STH ${sgn(A.sth.score)}</span>`;
+  $('cbPrice').textContent=money(d.price);
+  $('cbSth').textContent=money(d.sth); $('cbLth').textContent=money(d.lth);
+  const pctTxt=p=>(p>=0?"+":"")+Math.round(p)+"%";
+  $('sthPrem').textContent=pctTxt(A.sth.prem); $('sthPrem').style.color=colZ(A.sth.score);
+  $('lthPrem').textContent=pctTxt(A.lth.prem); $('lthPrem').style.color=colZ(A.lth.score);
+  // gauge: price vs LTH/STH on a price axis; zones reflect deep-value (below LTH) → STH heat ladder
+  const gMin=d.lth*0.85, gMax=d.sth*1.5, gR=gMax-gMin;
+  const pp=x=>clamp((x-gMin)/gR*100,0,100);
+  const zL=pp(d.lth), s10=pp(d.sth*1.10), s20=pp(d.sth*1.20), s40=pp(d.sth*1.40);
+  $('cbTrack').style.background=`linear-gradient(90deg,
+    var(--zgreen) 0%, var(--zgreen) ${zL}%,
+    var(--zgray) ${zL}%, var(--zgray) ${s10}%,
+    var(--zgold) ${s10}%, var(--zgold) ${s20}%,
+    var(--zredL) ${s20}%, var(--zredL) ${s40}%,
+    var(--zred) ${s40}%, var(--zred) 100%)`;
+  $('cbLthMark').style.left=zL+"%"; $('cbSthMark').style.left=pp(d.sth)+"%";
+  $('cbLthTick').style.left=zL+"%"; $('cbSthTick').style.left=pp(d.sth)+"%";
+  $('cbMark').style.left=pp(d.price)+"%";
+
+  // NUPL watch
+  const nuplZones=[[0,"CAPITULATION"],[0.25,"HOPE / FEAR"],[0.5,"OPTIMISM"],[0.75,"BELIEF"],[10,"EUPHORIA"]];
+  let nz="EUPHORIA"; for(const [t,l] of nuplZones){ if(d.nupl<t){nz=l;break;} }
+  $('nuplVal').textContent=Number(d.nupl).toFixed(2); $('nuplZone').textContent=nz;
+  $('nuplMark').style.left=clamp((d.nupl+0.1)/0.95*100,1,99)+"%";
+
+  // Average buy price (aggregate realized price) — profit cushion vs break-even
+  const abp=d.avgBuyPrice, abpDev=abp?(d.price/abp-1)*100:0;
+  let abpState,abpCol,abpBg;
+  if (abpDev<0){ abpState="CAPITULATION"; abpCol="var(--jade-bright)"; abpBg="var(--jade-faint)"; }
+  else if (abpDev>60){ abpState="FROTHY"; abpCol="var(--red-bright)"; abpBg="var(--red-faint)"; }
+  else { abpState="IN PROFIT"; abpCol="var(--text-2)"; abpBg="rgba(148,162,184,0.1)"; }
+  const abpPill=$('abpPill'); abpPill.textContent=abpState; abpPill.style.color=abpCol; abpPill.style.background=abpBg;
+  $('abpBasis').textContent=abp?money(abp):"—";
+  const cushion=abpDev<0?"underwater":"profit cushion";
+  $('abpGap').innerHTML=`<b style="color:${abpCol};font-size:17px">${abpDev>=0?'+':''}${Math.round(abpDev)}%</b> <span style="color:var(--text-3);font-size:10px">${cushion}</span>`;
+  $('spMark').style.left=clamp((abpDev+40)/160*100,1,99)+"%";
+
+  // breakdown — three axes
+  let rv=`<span class="brow-lab tech">Value (ungated)</span>`;
+  rv+=term("VWAP",A.vwap.score)+op("+")+term("200W",A.w200.score)+op("=")+term("value_core",A.valueCore,"sub");
+  $('rowValue').innerHTML=rv;
+
+  let rt=`<span class="brow-lab tech">Trend &amp; Structure — × 50W regime gate</span>`;
+  rt+=term("RSI",A.rsi.score)+op("+")+term("MSB/BOS",Math.round(A.ev.contrib*10)/10)+op("+")+term("Reclaim",A.reBonus)+op("=")
+     +term("trend_core",A.trendCore,"sub")+op("×")
+     +`<div class="term sub"><span class="tk">Regime</span><span class="tv" style="color:var(--text)">${A.mult}</span></div>`+op("=")
+     +term("gated",A.trendGated,"sub");
+  $('rowTech').innerHTML=rt;
+
+  let rc=`<span class="brow-lab chain">On-Chain Cycle (ungated) — STH at ½ weight</span>`;
+  rc+=term("MVRV",A.mvrv.score)+op("+")+term("LTH",A.lth.score)+op("+")
+     +`<div class="term"><span class="tk">STH ½</span><span class="tv" style="color:${A.sthWeighted>0?'var(--jade-bright)':A.sthWeighted<0?'var(--red-bright)':'var(--text-2)'}">${sgn(A.sthWeighted)}</span></div>`+op("=")
+     +term("chain_core",A.chainCore,"sub");
+  $('rowChain').innerHTML=rc;
+
+  let rtot=`<span class="brow-lab" style="color:var(--gold)">Composite</span>`;
+  rtot+=term("value",A.valueCore,"sub")+op("+")+term("trend",A.trendGated,"sub")+op("+")+term("on-chain",A.chainCore,"sub")+op("=")
+       +term("Composite",A.composite,"result");
+  $('rowTotal').innerHTML=rtot;
+
+  $('bNote').innerHTML=`<b>Three axes:</b> <b>Value</b> (VWAP + 200W) and <b>On-Chain</b> (MVRV + LTH + ½·STH) are ungated — cheapness counts even below the 50W, which is where cycle bottoms live. Only <b>Trend</b> (RSI + structure + reclaim) is gated by the 50W (×1.15 bull / ×0.85 bear). STH shows its full score as a heat warning but contributes half to the composite, so it can't triple-count cost-basis extremes alongside LTH and MVRV.<br><br><b>This is a cycle/bias read, not an entry trigger.</b> Accumulate = conditions favor building exposure over time; Distribute = favor reducing risk. It reads cheap or extended early — often by months — and does not time entries.`;
+}
+
+// ---- load data.json; fall back to embedded sample for local file:// viewing ----
+const FALLBACK={
+  "generated": "2026-06-24T12:05:35Z",
+  "meta": {
+    "anchor": "2022-11-20",
+    "maType": "SMA",
+    "zLookback": 200,
+    "provisional": true,
+    "dataQuality": {
+      "price": "live",
+      "onchain": "live"
+    },
+    "fallbackMetrics": []
+  },
+  "raw": {
+    "week": "Jun 22 2026",
+    "dayOfWeek": 4,
+    "year": 5,
+    "price": 118200,
+    "vwapSigma": 0.8,
+    "rsi": 58.0,
+    "dev200": 85.0,
+    "above50W": true,
+    "ma3550": "above",
+    "p35": 12.9,
+    "z35": 1.04,
+    "p50": 22.6,
+    "z50": 0.98,
+    "sth": 95000,
+    "lth": 58000,
+    "mvrvZ": 2.2,
+    "nupl": 0.55,
+    "avgBuyPrice": 72000,
+    "event": {
+      "type": "none",
+      "weeks": 0
+    }
+  },
+  "scored": {
+    "vwap": {
+      "score": 0,
+      "zone": "AT VALUE"
+    },
+    "w200": {
+      "score": 0,
+      "zone": "MID-CYCLE"
+    },
+    "rsi": {
+      "score": 0,
+      "zone": "NEUTRAL"
+    },
+    "mvrv": {
+      "score": 0,
+      "zone": "FAIR VALUE"
+    },
+    "lth": {
+      "score": 0,
+      "zone": "BULL-CYCLE EXPANSION",
+      "prem": 103.79310344827589
+    },
+    "sth": {
+      "score": -1,
+      "zone": "HEATED",
+      "prem": 24.421052631578945
+    },
+    "ev": {
+      "contrib": 0.0,
+      "potency": 0.0,
+      "type": "none",
+      "weeks": 0
+    },
+    "reBonus": 0,
+    "valueCore": 0,
+    "trendCore": 0.0,
+    "trendGated": 0.0,
+    "chainCore": -0.5,
+    "sthWeighted": -0.5,
+    "mult": 1.15,
+    "multLabel": "Bull · trend buys ×1.15",
+    "composite": -0.5,
+    "call": "NEUTRAL",
+    "callKind": "zero",
+    "phase": "Mid-Cycle Expansion",
+    "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
+    "confidence": {
+      "tier": "Low",
+      "qualifier": "evidence mixed · no clear edge",
+      "dot": "red"
+    },
+    "axisStates": {
+      "value": {
+        "label": "Neutral",
+        "color": "grey"
+      },
+      "trend": {
+        "label": "Neutral",
+        "color": "grey"
+      },
+      "chain": {
+        "label": "Weak",
+        "color": "amber"
+      }
+    },
+    "strengthen": [
+      "price holds above the 50W",
+      "on-chain value turns supportive"
+    ],
+    "weaken": [
+      "price loses the 200W decisively",
+      "MVRV deteriorates without stabilizing",
+      "a manual MSB activates"
+    ],
+    "bull": true,
+    "reclaim": false,
+    "watching": false
+  }
+};
+
+Promise.all([
+  fetch('data.json',{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('no data.json'); return r.json(); }),
+  fetch('history.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[])
+])
+  .then(([D,H])=>{ D._history=Array.isArray(H)?H:[]; render(D); })
+  .catch(()=>{ render(FALLBACK); const b=$('provBadge'); if(b){ b.textContent="sample data"; b.title="Showing embedded sample — data.json not found. Deploy the repo or run fetch.py to see live data."; } });
+
+</script>
+</body>
+</html>
