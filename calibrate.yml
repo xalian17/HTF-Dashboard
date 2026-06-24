@@ -1,0 +1,50 @@
+name: Calibration Audit
+
+# Manual only. Audit-only: prints metric distributions and band-firing rates from
+# the live data sources so you can see whether any scoring band is dead, constantly
+# firing, or unrealistic. It does NOT change any threshold — calibrate.py is read-only.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # `2>&1 | tee` writes the file AND streams to the Actions log. tee exits 0, so a
+      # non-zero exit from calibrate.py won't abort the job — we still capture output.
+      - name: Calibration — recent slice (full distribution + 2022+ slice)
+        run: |
+          echo "=== python calibrate.py --recent ==="
+          python calibrate.py --recent 2>&1 | tee calibration_recent.txt
+
+      - name: Calibration — full distribution
+        run: |
+          echo "=== python calibrate.py ==="
+          python calibrate.py 2>&1 | tee calibration_full.txt
+
+      - name: Upload calibration artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: calibration-output
+          path: |
+            calibration_recent.txt
+            calibration_full.txt
+          if-no-files-found: warn
+          retention-days: 90
