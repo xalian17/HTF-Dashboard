@@ -297,13 +297,12 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     strengthen, weaken = strengthen[:4], weaken[:4]
 
     # --- cycle-year: CONTEXT NOTE ONLY. Does not touch score/verdict/label. ---
+    # --- cycle-year: CONTEXT NOTE ONLY, shown only when atypical. Touches nothing else. ---
     yr = d.get("year")
-    if yr is None:
-        cycle_note = ""
-    elif yr >= 4:
+    if yr is not None and yr >= 4:
         cycle_note = "Cycle timing: convention-dependent · atypical / lower confidence"
     else:
-        cycle_note = "Cycle timing: convention-dependent"
+        cycle_note = ""
 
     return {
         # per-indicator (each has .score and .zone; lth/sth also .prem)

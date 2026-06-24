@@ -76,6 +76,8 @@ Z_LOOKBACK = 200              # trailing weeks for mean/sd of % distance
 RSI_PERIOD = 14
 
 OUT_PATH = "data.json"
+HISTORY_PATH = "history.json"
+HISTORY_MAX = 12              # weekly points kept in the history strip
 
 
 # ======================================================================
@@ -266,6 +268,7 @@ def compute_indicators(klines):
         "p35": round(p35, 1), "z35": round(z35, 2),
         "p50": round(p50, 1), "z50": round(z50, 2),
         "_anchor": anchor.strftime("%Y-%m-%d"),
+        "_priceStale": (pd.Timestamp.now(tz="UTC") - now).days > 8,
     }
 
 
@@ -295,14 +298,63 @@ def load_manual_event():
 # Assemble
 # ======================================================================
 
+def _load_prev_payload():
+    """Read the previously-committed data.json (for last-good fallback). None if absent."""
+    try:
+        with open(OUT_PATH) as f:
+            return json.load(f)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def update_history(payload):
+    """Append/update one WEEKLY entry (dedupe by week, keep last HISTORY_MAX).
+    Daily runs within the same week overwrite that week's provisional point."""
+    entry = {
+        "week": payload["raw"]["week"],
+        "date": payload["generated"],
+        "composite": round(payload["scored"]["composite"], 2),
+        "call": payload["scored"]["call"],
+        "phase": payload["scored"]["phase"],
+    }
+    try:
+        with open(HISTORY_PATH) as f:
+            hist = json.load(f)
+        if not isinstance(hist, list):
+            hist = []
+    except Exception:  # noqa: BLE001
+        hist = []
+    if hist and hist[-1].get("week") == entry["week"]:
+        hist[-1] = entry          # same weekly bucket → update the provisional read
+    else:
+        hist.append(entry)        # new week → append
+    hist = hist[-HISTORY_MAX:]
+    with open(HISTORY_PATH, "w") as f:
+        json.dump(hist, f, indent=2, ensure_ascii=False)
+    return hist
+
+
 def build(raw_overrides=None):
     """Assemble the full view-model. raw_overrides lets --demo inject mock values."""
     now = datetime.now(timezone.utc)
+    quality = {"price": "live", "onchain": "live"}
+    fallback = []
 
     if raw_overrides is None:
         klines = fetch_klines()
         ind = compute_indicators(klines)
         onchain = fetch_onchain()
+        if ind.get("_priceStale"):
+            quality["price"] = "stale"
+        # last-good fallback: reuse prior on-chain values for any source that failed,
+        # so the dashboard degrades with a flag instead of going blank.
+        prev_raw = (_load_prev_payload() or {}).get("raw", {})
+        for k in ("mvrvZ", "sth", "lth", "nupl", "avgBuyPrice"):
+            if onchain.get(k) is None and prev_raw.get(k) is not None:
+                onchain[k] = prev_raw[k]
+                fallback.append(k)
+        if fallback:
+            quality["onchain"] = "fallback"
     else:
         ind = raw_overrides["ind"]
         onchain = raw_overrides["onchain"]
@@ -352,6 +404,8 @@ def build(raw_overrides=None):
             "maType": MA_TYPE,
             "zLookback": Z_LOOKBACK,
             "provisional": raw["dayOfWeek"] < 7,
+            "dataQuality": quality,
+            "fallbackMetrics": fallback,
         },
         "raw": raw,
         "scored": scored,
@@ -395,10 +449,13 @@ def main():
     payload = build(raw_overrides=DEMO if args.demo else None)
     with open(OUT_PATH, "w") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
+    hist = update_history(payload)
     s = payload["scored"]
+    q = payload["meta"]["dataQuality"]
     tag = " (DEMO)" if args.demo else ""
     print(f"Wrote {OUT_PATH}{tag} — {s['call']} (composite {s['composite']:+.1f}), "
-          f"phase: {s['phase']}, regime: {'BULL' if s['bull'] else 'BEAR'}")
+          f"phase: {s['phase']}, regime: {'BULL' if s['bull'] else 'BEAR'} "
+          f"| data: price={q['price']} onchain={q['onchain']} | history points: {len(hist)}")
 
 
 if __name__ == "__main__":

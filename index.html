@@ -45,6 +45,20 @@
   .asof .wk{font-family:var(--mono);font-size:14px;color:var(--text);font-weight:500}
   .asof .yr{font-family:var(--mono);font-size:11px;color:var(--text-2);letter-spacing:0.04em}
   .asof .yr b{color:var(--gold);font-weight:600}
+  .dq{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text-2);letter-spacing:0.02em;justify-content:flex-end}
+  .dq-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--text-3)}
+  .dq-sep{color:var(--text-3);margin:0 1px}
+  .hist{margin-bottom:8px}
+  .hist-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+  .hist-title{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3)}
+  .hist-trend{font-family:var(--disp);font-size:13px;font-weight:600}
+  .hist-strip{display:flex;align-items:flex-end;gap:6px}
+  .hist-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+  .hist-bar-wrap{height:58px;display:flex;align-items:flex-end;width:100%;justify-content:center}
+  .hist-bar{width:62%;max-width:24px;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s ease}
+  .hist-val{font-family:var(--mono);font-size:9px;color:var(--text-2)}
+  .hist-wk{font-family:var(--mono);font-size:8px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .hist-empty{font-family:var(--mono);font-size:11px;color:var(--text-3);padding:18px 0;text-align:center;width:100%}
 
   /* SCENARIO */
   .scen{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}
@@ -175,7 +189,8 @@
   .cb-vals{display:flex;gap:8px;margin-bottom:14px}
   .cb-val{flex:1;background:var(--ink-2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
   .cb-val .cbk{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--text-3);text-transform:uppercase}
-  .cb-val .cbv{font-family:var(--mono);font-size:14px;font-weight:600}
+  .cb-val .cb-prem{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);line-height:1.1}
+  .cb-val .cb-dollar{font-family:var(--mono);font-size:10px;color:var(--text-3)}
 
   /* MSB events */
   .evt-list{display:flex;flex-direction:column;gap:13px;margin-top:2px}
@@ -252,7 +267,7 @@
     <div class="asof">
       <div class="wk" id="asofWk">Week of —</div>
       <div class="provisional" id="provBadge" title="Continuous gauges refresh daily on the week-to-date candle. Discrete triggers (MSB break, 35-reclaim) lock only on the weekly close.">Day 4 / 7 · provisional</div>
-      <div class="yr" id="asofYr">Cycle year <b>—</b> of 4</div>
+      <div class="dq" id="dqLine"><span class="dq-dot" id="dqPriceDot"></span><span id="dqPrice">price —</span><span class="dq-sep">·</span><span class="dq-dot" id="dqChainDot"></span><span id="dqChain">on-chain —</span></div>
     </div>
   </header>
 
@@ -419,9 +434,9 @@
         <div class="val" style="flex-direction:row;gap:6px;align-items:center"><span class="scoretag" id="lthScore">LTH —</span><span class="scoretag" id="sthScore">STH —</span></div>
       </div>
       <div class="cb-vals">
-        <div class="cb-val"><span class="cbk">Price</span><span class="cbv" id="cbPrice">—</span></div>
-        <div class="cb-val"><span class="cbk">STH · <span id="sthPrem">—</span></span><span class="cbv" id="cbSth">—</span></div>
-        <div class="cb-val"><span class="cbk">LTH · <span id="lthPrem">—</span></span><span class="cbv" id="cbLth">—</span></div>
+        <div class="cb-val"><span class="cbk">Price</span><span class="cb-prem" id="cbPrice">—</span></div>
+        <div class="cb-val"><span class="cbk">vs STH basis</span><span class="cb-prem" id="sthPrem">—</span><span class="cb-dollar" id="cbSth">—</span></div>
+        <div class="cb-val"><span class="cbk">vs LTH basis</span><span class="cb-prem" id="lthPrem">—</span><span class="cb-dollar" id="cbLth">—</span></div>
       </div>
       <div class="gauge">
         <div class="gauge-track" id="cbTrack">
@@ -464,6 +479,17 @@
     </div>
   </div>
 
+  <!-- HISTORY STRIP -->
+  <section class="hist">
+    <div class="card">
+      <div class="hist-head">
+        <span class="hist-title">Macro Read · recent weeks</span>
+        <span class="hist-trend" id="histTrend">—</span>
+      </div>
+      <div class="hist-strip" id="histStrip"></div>
+    </div>
+  </section>
+
   <!-- BREAKDOWN -->
   <section class="breakdown">
     <div class="bh">How This Is Scored — three axes</div>
@@ -497,12 +523,53 @@ function term(k,v,extraClass){
 }
 function op(sym){return `<div class="op">${sym}</div>`;}
 
+function renderHistory(hist){
+  const strip=$('histStrip'), trendEl=$('histTrend');
+  if(!strip||!trendEl) return;
+  if(!hist||hist.length===0){
+    strip.innerHTML='<div class="hist-empty">No history yet — this strip fills in weekly as the dashboard runs.</div>';
+    trendEl.textContent=''; return;
+  }
+  // item 3: improving / stable / weakening (slope of composite over recent weekly points)
+  const comps=hist.map(h=>typeof h.composite==="number"?h.composite:0);
+  let tLabel="building history…", tColor="var(--text-3)";
+  if(comps.length>=4){
+    const latest=comps[comps.length-1];
+    const prior=comps.slice(-4,-1);
+    const mean=prior.reduce((a,b)=>a+b,0)/prior.length;
+    const diff=latest-mean;
+    if(diff>1){tLabel="improving \u2197";tColor="var(--jade-bright)";}
+    else if(diff<-1){tLabel="weakening \u2198";tColor="var(--red-bright)";}
+    else{tLabel="stable \u2192";tColor="var(--text)";}
+  }
+  trendEl.textContent=tLabel; trendEl.style.color=tColor;
+  // bars: height by |composite|, color by verdict
+  const maxAbs=Math.max(4,...comps.map(c=>Math.abs(c)));
+  const kindColor=call=>/ACCUM/.test(call)?"var(--jade)":/(SELL|DISTRIB)/.test(call)?"var(--red)":"var(--text-3)";
+  strip.innerHTML=hist.map(h=>{
+    const c=typeof h.composite==="number"?h.composite:0;
+    const hpct=Math.round(Math.abs(c)/maxAbs*100);
+    const wk=(h.week||"").replace(/\s+\d{4}$/,"");
+    const sgnv=(c>=0?"+":"")+c;
+    return `<div class="hist-col" title="${h.week} · ${h.call||""} (${sgnv})">`
+      +`<div class="hist-bar-wrap"><div class="hist-bar" style="height:${hpct}%;background:${kindColor(h.call||"")}"></div></div>`
+      +`<div class="hist-val">${sgnv}</div><div class="hist-wk">${wk}</div></div>`;
+  }).join("");
+}
+
 function render(D){
   const d=D.raw, A=D.scored, meta=D.meta||{};
 
   // header + provisional badge
   $('asofWk').textContent="Week of "+d.week;
-  $('asofYr').innerHTML=`Cycle year <b>${d.year}</b>`;
+  // data-quality status (live / stale / fallback)
+  const dq=meta.dataQuality||{price:"live",onchain:"live"};
+  const dqColor=s=>s==="live"?"var(--jade-bright)":s==="stale"?"var(--gold)":"var(--red-bright)";
+  $('dqPriceDot').style.background=dqColor(dq.price);
+  $('dqPrice').textContent="price "+dq.price;
+  $('dqChainDot').style.background=dqColor(dq.onchain);
+  const fb=(meta.fallbackMetrics&&meta.fallbackMetrics.length)?` (${meta.fallbackMetrics.join(", ")})`:"";
+  $('dqChain').textContent="on-chain "+dq.onchain+(dq.onchain!=="live"?fb:"");
   const prov=$('provBadge');
   if (meta.provisional===false){
     prov.textContent="Weekly close · locked";
@@ -521,6 +588,8 @@ function render(D){
   reg.textContent=A.bull?"BULL · above 50W":"BEAR · below 50W";
   $('vPhase').textContent=A.phase;
   $('vCycleNote').textContent=A.cycleNote||'';
+  $('vCycleNote').style.display=A.cycleNote?'':'none';
+  renderHistory(D._history||[]);
 
   // --- interpretation layer: evidence chips, agreement bar, confidence, strengthen/weaken ---
   const dotColor=c=>c==="green"?"var(--jade-bright)":c==="amber"?"var(--gold)":c==="red"?"var(--red-bright)":"var(--text-3)";
@@ -669,12 +738,17 @@ function render(D){
 
 // ---- load data.json; fall back to embedded sample for local file:// viewing ----
 const FALLBACK={
-  "generated": "2026-06-23T19:12:32Z",
+  "generated": "2026-06-24T12:05:35Z",
   "meta": {
     "anchor": "2022-11-20",
     "maType": "SMA",
     "zLookback": 200,
-    "provisional": true
+    "provisional": true,
+    "dataQuality": {
+      "price": "live",
+      "onchain": "live"
+    },
+    "fallbackMetrics": []
   },
   "raw": {
     "week": "Jun 22 2026",
@@ -780,9 +854,11 @@ const FALLBACK={
   }
 };
 
-fetch('data.json',{cache:'no-store'})
-  .then(r=>{ if(!r.ok) throw new Error('no data.json'); return r.json(); })
-  .then(render)
+Promise.all([
+  fetch('data.json',{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('no data.json'); return r.json(); }),
+  fetch('history.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[])
+])
+  .then(([D,H])=>{ D._history=Array.isArray(H)?H:[]; render(D); })
   .catch(()=>{ render(FALLBACK); const b=$('provBadge'); if(b){ b.textContent="sample data"; b.title="Showing embedded sample — data.json not found. Deploy the repo or run fetch.py to see live data."; } });
 
 </script>
