@@ -2,12 +2,11 @@ name: Update BTC Compass
 
 on:
   schedule:
-    # 00:00 UTC daily. GitHub cron is not second-precise (can lag 0–15 min under load) —
-    # that's fine: it runs on the daily close that just settled.
-    - cron: "0 0 * * *"
+    # Runs once per hour. GitHub cron can lag under load.
+    - cron: "0 * * * *"
   workflow_dispatch:        # lets you trigger a run by hand from the Actions tab
   push:
-    branches: [main]        # rebuild on commits (e.g. after editing manual.json)
+    branches: [main]        # rebuild on commits
 
 permissions:
   contents: write           # to commit data.json
