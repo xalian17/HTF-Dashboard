@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-23T19:29:07Z",
+  "generated": "2026-06-24T03:33:08Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -8,23 +8,23 @@
   },
   "raw": {
     "week": "Jun 22 2026",
-    "dayOfWeek": 2,
+    "dayOfWeek": 3,
     "year": 5,
-    "price": 62411.99,
-    "vwapSigma": -1.353,
-    "rsi": 34.8,
-    "dev200": -0.1,
+    "price": 62764.73,
+    "vwapSigma": -1.305,
+    "rsi": 35.1,
+    "dev200": 0.5,
     "above50W": false,
     "ma3550": "below",
-    "p35": -20.9,
-    "z35": -1.19,
-    "p50": -30.5,
-    "z50": -1.37,
-    "sth": 71512.34,
-    "lth": 49169.19,
-    "mvrvZ": 0.344,
-    "nupl": 0.1722,
-    "avgBuyPrice": 52994.83,
+    "p35": -20.5,
+    "z35": -1.17,
+    "p50": -30.1,
+    "z50": -1.36,
+    "sth": 71317.74,
+    "lth": 49156.21,
+    "mvrvZ": 0.3673,
+    "nupl": 0.1558,
+    "avgBuyPrice": 52960.34,
     "event": {
       "type": "none",
       "weeks": 0
@@ -36,8 +36,8 @@
       "zone": "VALUE / PULLBACK"
     },
     "w200": {
-      "score": 2,
-      "zone": "AT / BELOW FLOOR"
+      "score": 1,
+      "zone": "NEAR FLOOR"
     },
     "rsi": {
       "score": 1,
@@ -50,12 +50,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 26.933126211759827
+      "prem": 27.68423358920471
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -12.725565965258578
+      "prem": -11.992822543170888
     },
     "ev": {
       "contrib": 0.0,
@@ -64,14 +64,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 3,
+    "valueCore": 2,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 6.35,
+    "composite": 5.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -83,7 +83,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Strong",
+        "label": "Supportive",
         "color": "green"
       },
       "trend": {
@@ -102,6 +102,7 @@
       "VWAP σ improves toward neutral"
     ],
     "weaken": [
+      "price loses the 200W decisively",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates",
       "STH stays underwater as trend weakens"
