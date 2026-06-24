@@ -53,8 +53,10 @@ def report(name, series, score_fn, recent_cutoff=None, dates=None):
         print(f"    score {sc:+d}: {buckets[sc]:4d}  ({100*buckets[sc]/total:5.1f}%)  {bar}")
 
     if recent_cutoff is not None and dates is not None:
-        d = pd.to_datetime(pd.Series(dates))
-        mask = (d >= pd.Timestamp(recent_cutoff)).values
+        # Coerce both sides to UTC: price dates are tz-aware (datetime64[us, UTC]),
+        # on-chain dates are tz-naive (epoch-ms, already UTC). utc=True normalizes both.
+        d = pd.to_datetime(pd.Series(dates), utc=True)
+        mask = (d >= pd.Timestamp(recent_cutoff, tz="UTC")).values
         sr = s[mask[:len(s)]] if len(mask) >= len(s) else s
         sr = pd.Series(sr, dtype="float64").dropna()
         if len(sr):
