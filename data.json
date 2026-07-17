@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T02:32:11Z",
+  "generated": "2026-07-17T02:34:26Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Jul 13 2026",
-    "dayOfWeek": 4,
+    "dayOfWeek": 5,
     "year": 5,
-    "price": 64623.11,
-    "vwapSigma": -0.882,
-    "rsi": 39.6,
-    "dev200": 2.4,
+    "price": 63512.0,
+    "vwapSigma": -1.016,
+    "rsi": 38.2,
+    "dev200": 0.7,
     "above50W": false,
     "ma3550": "below",
-    "p35": -14.4,
-    "z35": -0.96,
-    "p50": -25.3,
-    "z50": -1.24,
+    "p35": -15.8,
+    "z35": -1.02,
+    "p50": -26.6,
+    "z50": -1.28,
     "sth": 68174.86,
     "lth": 49354.52,
-    "mvrvZ": 0.414,
-    "nupl": 0.1901,
-    "avgBuyPrice": 52452.83,
+    "mvrvZ": 0.4093,
+    "nupl": 0.1787,
+    "avgBuyPrice": 52457.61,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,8 +37,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 0,
-      "zone": "AT VALUE"
+      "score": 1,
+      "zone": "VALUE / PULLBACK"
     },
     "w200": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 30.936558596862064
+      "prem": 28.685275431713265
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -5.209765007218204
+      "prem": -6.839559333161816
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 1,
+    "valueCore": 2,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 4.35,
+    "composite": 5.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Accumulation",
+    "phase": "Bottoming Conditions / Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
