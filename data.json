@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-17T02:34:26Z",
+  "generated": "2026-07-18T02:25:44Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Jul 13 2026",
-    "dayOfWeek": 5,
+    "dayOfWeek": 6,
     "year": 5,
-    "price": 63512.0,
-    "vwapSigma": -1.016,
-    "rsi": 38.2,
-    "dev200": 0.7,
+    "price": 64001.81,
+    "vwapSigma": -0.95,
+    "rsi": 38.7,
+    "dev200": 1.4,
     "above50W": false,
     "ma3550": "below",
-    "p35": -15.8,
-    "z35": -1.02,
-    "p50": -26.6,
-    "z50": -1.28,
-    "sth": 68174.86,
-    "lth": 49354.52,
-    "mvrvZ": 0.4093,
-    "nupl": 0.1787,
-    "avgBuyPrice": 52457.61,
+    "p35": -15.2,
+    "z35": -0.99,
+    "p50": -26.0,
+    "z50": -1.26,
+    "sth": 68143.8,
+    "lth": 49345.29,
+    "mvrvZ": 0.3799,
+    "nupl": 0.1805,
+    "avgBuyPrice": 52444.96,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,8 +37,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 1,
-      "zone": "VALUE / PULLBACK"
+      "score": 0,
+      "zone": "AT VALUE"
     },
     "w200": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 28.685275431713265
+      "prem": 29.701963449804424
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -6.839559333161816
+      "prem": -6.078307931169091
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 2,
+    "valueCore": 1,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 5.35,
+    "composite": 4.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Bottoming Conditions / Accumulation",
+    "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
