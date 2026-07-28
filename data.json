@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-27T02:51:17Z",
+  "generated": "2026-07-28T02:28:58Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Jul 27 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 65187.2,
-    "vwapSigma": -0.78,
-    "rsi": 40.4,
-    "dev200": 2.6,
+    "price": 63250.31,
+    "vwapSigma": -1.023,
+    "rsi": 38.6,
+    "dev200": -0.5,
     "above50W": false,
     "ma3550": "below",
-    "p35": -12.1,
-    "z35": -0.9,
-    "p50": -22.8,
-    "z50": -1.18,
+    "p35": -14.7,
+    "z35": -1.0,
+    "p50": -25.0,
+    "z50": -1.25,
     "sth": 68104.73,
     "lth": 49448.09,
-    "mvrvZ": 0.3954,
-    "nupl": 0.1977,
-    "avgBuyPrice": 52468.49,
+    "mvrvZ": 0.4299,
+    "nupl": 0.1793,
+    "avgBuyPrice": 52460.75,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,12 +37,12 @@
   },
   "scored": {
     "vwap": {
-      "score": 0,
-      "zone": "AT VALUE"
+      "score": 1,
+      "zone": "VALUE / PULLBACK"
     },
     "w200": {
-      "score": 1,
-      "zone": "NEAR FLOOR"
+      "score": 2,
+      "zone": "AT / BELOW FLOOR"
     },
     "rsi": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 31.829561060902467
+      "prem": 27.91254424589504
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -4.283887477418968
+      "prem": -7.127874965512671
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 1,
+    "valueCore": 3,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 4.35,
+    "composite": 6.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Accumulation",
+    "phase": "Bottoming Conditions / Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
@@ -88,7 +88,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Supportive",
+        "label": "Strong",
         "color": "green"
       },
       "trend": {
@@ -107,7 +107,6 @@
       "VWAP σ improves toward neutral"
     ],
     "weaken": [
-      "price loses the 200W decisively",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates",
       "STH stays underwater as trend weakens"
