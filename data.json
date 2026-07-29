@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-28T02:28:58Z",
+  "generated": "2026-07-29T02:33:10Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Jul 27 2026",
-    "dayOfWeek": 2,
+    "dayOfWeek": 3,
     "year": 5,
-    "price": 63250.31,
-    "vwapSigma": -1.023,
-    "rsi": 38.6,
-    "dev200": -0.5,
+    "price": 63976.0,
+    "vwapSigma": -0.928,
+    "rsi": 39.2,
+    "dev200": 0.7,
     "above50W": false,
     "ma3550": "below",
-    "p35": -14.7,
-    "z35": -1.0,
-    "p50": -25.0,
-    "z50": -1.25,
-    "sth": 68104.73,
-    "lth": 49448.09,
-    "mvrvZ": 0.4299,
-    "nupl": 0.1793,
-    "avgBuyPrice": 52460.75,
+    "p35": -13.7,
+    "z35": -0.96,
+    "p50": -24.2,
+    "z50": -1.22,
+    "sth": 68058.7,
+    "lth": 49430.61,
+    "mvrvZ": 0.381,
+    "nupl": 0.1798,
+    "avgBuyPrice": 52441.81,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,12 +37,12 @@
   },
   "scored": {
     "vwap": {
-      "score": 1,
-      "zone": "VALUE / PULLBACK"
+      "score": 0,
+      "zone": "AT VALUE"
     },
     "w200": {
-      "score": 2,
-      "zone": "AT / BELOW FLOOR"
+      "score": 1,
+      "zone": "NEAR FLOOR"
     },
     "rsi": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 27.91254424589504
+      "prem": 29.42587599060582
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -7.127874965512671
+      "prem": -5.998792219069715
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 3,
+    "valueCore": 1,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 6.35,
+    "composite": 4.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Bottoming Conditions / Accumulation",
+    "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
@@ -88,7 +88,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Strong",
+        "label": "Supportive",
         "color": "green"
       },
       "trend": {
@@ -107,6 +107,7 @@
       "VWAP σ improves toward neutral"
     ],
     "weaken": [
+      "price loses the 200W decisively",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates",
       "STH stays underwater as trend weakens"
