@@ -1,10 +1,10 @@
 {
-  "generated": "2026-08-02T02:42:20Z",
+  "generated": "2026-08-03T02:43:04Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
     "zLookback": 200,
-    "provisional": false,
+    "provisional": true,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -12,24 +12,24 @@
     "fallbackMetrics": []
   },
   "raw": {
-    "week": "Jul 27 2026",
-    "dayOfWeek": 7,
+    "week": "Aug 03 2026",
+    "dayOfWeek": 1,
     "year": 5,
-    "price": 63348.0,
-    "vwapSigma": -0.993,
-    "rsi": 38.6,
-    "dev200": -0.3,
+    "price": 63200.83,
+    "vwapSigma": -1.011,
+    "rsi": 38.5,
+    "dev200": -0.9,
     "above50W": false,
     "ma3550": "below",
-    "p35": -14.5,
-    "z35": -0.99,
-    "p50": -24.9,
-    "z50": -1.25,
-    "sth": 67755.72,
-    "lth": 49275.57,
-    "mvrvZ": 0.3471,
-    "nupl": 0.1661,
-    "avgBuyPrice": 52382.33,
+    "p35": -13.8,
+    "z35": -0.97,
+    "p50": -24.2,
+    "z50": -1.23,
+    "sth": 67739.47,
+    "lth": 49255.35,
+    "mvrvZ": 0.3469,
+    "nupl": 0.1757,
+    "avgBuyPrice": 52367.36,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,8 +37,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 0,
-      "zone": "AT VALUE"
+      "score": 1,
+      "zone": "VALUE / PULLBACK"
     },
     "w200": {
       "score": 2,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 28.558634633754608
+      "prem": 28.312619847387154
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -6.505310547950782
+      "prem": -6.70014099608397
     },
     "ev": {
       "contrib": 0.0,
@@ -69,14 +69,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 2,
+    "valueCore": 3,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 5.35,
+    "composite": 6.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -88,7 +88,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Supportive",
+        "label": "Strong",
         "color": "green"
       },
       "trend": {
