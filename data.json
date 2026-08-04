@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-03T02:43:04Z",
+  "generated": "2026-08-04T02:27:18Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Aug 03 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 63200.83,
-    "vwapSigma": -1.011,
-    "rsi": 38.5,
-    "dev200": -0.9,
+    "price": 63694.28,
+    "vwapSigma": -0.944,
+    "rsi": 39.1,
+    "dev200": -0.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -13.8,
-    "z35": -0.97,
-    "p50": -24.2,
-    "z50": -1.23,
+    "p35": -13.2,
+    "z35": -0.95,
+    "p50": -23.6,
+    "z50": -1.22,
     "sth": 67739.47,
     "lth": 49255.35,
-    "mvrvZ": 0.3469,
-    "nupl": 0.1757,
-    "avgBuyPrice": 52367.36,
+    "mvrvZ": 0.3705,
+    "nupl": 0.1759,
+    "avgBuyPrice": 52349.9,
     "event": {
       "type": "none",
       "weeks": 0
@@ -37,8 +37,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 1,
-      "zone": "VALUE / PULLBACK"
+      "score": 0,
+      "zone": "AT VALUE"
     },
     "w200": {
       "score": 2,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 28.312619847387154
+      "prem": 29.31443995423848
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -6.70014099608397
+      "prem": -5.971688293398225
     },
     "ev": {
       "contrib": 0.0,
@@ -69,14 +69,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 3,
+    "valueCore": 2,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 6.35,
+    "composite": 5.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -88,7 +88,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Strong",
+        "label": "Supportive",
         "color": "green"
       },
       "trend": {
