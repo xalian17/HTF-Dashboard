@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-17T01:11:21Z",
+  "generated": "2026-08-18T01:09:10Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Aug 17 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 63092.18,
-    "vwapSigma": -0.995,
-    "rsi": 39.1,
-    "dev200": -1.8,
+    "price": 64316.01,
+    "vwapSigma": -0.836,
+    "rsi": 41.1,
+    "dev200": 0.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -12.3,
-    "z35": -0.93,
-    "p50": -22.6,
-    "z50": -1.2,
-    "sth": 67241.3,
-    "lth": 49146.58,
-    "mvrvZ": 0.3577,
-    "nupl": 0.1714,
-    "avgBuyPrice": 52270.35,
+    "p35": -10.7,
+    "z35": -0.86,
+    "p50": -21.1,
+    "z50": -1.16,
+    "sth": 67241.43,
+    "lth": 49127.2,
+    "mvrvZ": 0.3592,
+    "nupl": 0.1694,
+    "avgBuyPrice": 52243.94,
     "event": {
       "type": "none",
       "weeks": 0
@@ -41,8 +41,8 @@
       "zone": "AT VALUE"
     },
     "w200": {
-      "score": 2,
-      "zone": "AT / BELOW FLOOR"
+      "score": 1,
+      "zone": "NEAR FLOOR"
     },
     "rsi": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 28.375524807626483
+      "prem": 30.917312608900982
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -6.170493431864054
+      "prem": -4.350621335685445
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 2,
+    "valueCore": 1,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 5.35,
+    "composite": 4.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Bottoming Conditions / Accumulation",
+    "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
@@ -107,6 +107,7 @@
       "VWAP σ improves toward neutral"
     ],
     "weaken": [
+      "price loses the 200W decisively",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates",
       "STH stays underwater as trend weakens"
