@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-20T01:09:33Z",
+  "generated": "2026-08-21T01:13:35Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Aug 17 2026",
-    "dayOfWeek": 4,
+    "dayOfWeek": 5,
     "year": 5,
-    "price": 69350.0,
-    "vwapSigma": -0.191,
-    "rsi": 48.1,
-    "dev200": 7.9,
+    "price": 73981.98,
+    "vwapSigma": 0.402,
+    "rsi": 53.2,
+    "dev200": 15.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -3.9,
-    "z35": -0.59,
-    "p50": -15.1,
-    "z50": -0.96,
-    "sth": 67201.93,
-    "lth": 49109.79,
-    "mvrvZ": 0.407,
-    "nupl": 0.1931,
-    "avgBuyPrice": 52230.99,
+    "p35": 2.4,
+    "z35": -0.34,
+    "p50": -9.5,
+    "z50": -0.79,
+    "sth": 67243.51,
+    "lth": 49112.24,
+    "mvrvZ": 0.4146,
+    "nupl": 0.2452,
+    "avgBuyPrice": 52255.99,
     "event": {
       "type": "none",
       "weeks": 0
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 41.21420596585732
+      "prem": 50.63857808155361
     },
     "sth": {
-      "score": 1,
-      "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 3.1964409355505152
+      "score": 0,
+      "zone": "HEALTHY",
+      "prem": 10.020996821849426
     },
     "ev": {
       "contrib": 0.0,
@@ -72,13 +72,13 @@
     "valueCore": 1,
     "trendCore": 0.0,
     "trendGated": 0.0,
-    "chainCore": 2.5,
-    "sthWeighted": 0.5,
+    "chainCore": 2.0,
+    "sthWeighted": 0.0,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 3.5,
-    "call": "ACCUMULATE",
-    "callKind": "pos",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "callKind": "zero",
     "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
@@ -103,7 +103,6 @@
     "strengthen": [
       "BTC reclaims the 50W",
       "BTC reclaims the 35W",
-      "VWAP σ improves toward neutral",
       "on-chain value stays supportive"
     ],
     "weaken": [
