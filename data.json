@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-04T03:05:09Z",
+  "generated": "2026-09-05T03:07:03Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Aug 31 2026",
-    "dayOfWeek": 5,
+    "dayOfWeek": 6,
     "year": 5,
-    "price": 80884.01,
-    "vwapSigma": 1.245,
-    "rsi": 59.5,
-    "dev200": 24.7,
-    "above50W": true,
-    "ma3550": "above",
-    "p35": 12.7,
-    "z35": 0.06,
-    "p50": 0.6,
-    "z50": -0.48,
+    "price": 79555.72,
+    "vwapSigma": 1.069,
+    "rsi": 58.3,
+    "dev200": 22.6,
+    "above50W": false,
+    "ma3550": "below",
+    "p35": 10.9,
+    "z35": -0.01,
+    "p50": -1.0,
+    "z50": -0.53,
     "sth": 69979.57,
     "lth": 48917.67,
-    "mvrvZ": 0.8098,
-    "nupl": 0.3514,
-    "avgBuyPrice": 52714.93,
+    "mvrvZ": 0.9454,
+    "nupl": 0.3387,
+    "avgBuyPrice": 52734.28,
     "event": {
       "type": "none",
       "weeks": 0
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 65.34722524601028
+      "prem": 62.63186697158716
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 15.582319239743804
+      "prem": 13.684208119598317
     },
     "ev": {
       "contrib": 0.0,
@@ -74,17 +74,17 @@
     "trendGated": 0.0,
     "chainCore": 2.0,
     "sthWeighted": 0.0,
-    "mult": 1.15,
-    "multLabel": "Bull · trend buys ×1.15",
+    "mult": 0.85,
+    "multLabel": "Bear · trend buys ×0.85",
     "composite": 3.0,
     "call": "NEUTRAL",
     "callKind": "zero",
-    "phase": "Early Expansion",
+    "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "High",
-      "qualifier": "all axes aligned",
-      "dot": "green"
+      "tier": "Moderate-high",
+      "qualifier": "trend not confirmed",
+      "dot": "amber"
     },
     "axisStates": {
       "value": {
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Neutral",
-        "color": "grey"
+        "label": "Weak · below 50W",
+        "color": "amber"
       },
       "chain": {
         "label": "Supportive",
@@ -101,7 +101,8 @@
       }
     },
     "strengthen": [
-      "price holds above the 50W",
+      "BTC reclaims the 50W",
+      "BTC reclaims the 35W",
       "on-chain value stays supportive"
     ],
     "weaken": [
@@ -109,7 +110,7 @@
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates"
     ],
-    "bull": true,
+    "bull": false,
     "reclaim": false,
     "watching": false
   }
