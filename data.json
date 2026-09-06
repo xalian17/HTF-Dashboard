@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-05T03:07:03Z",
+  "generated": "2026-09-06T03:06:53Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
     "zLookback": 200,
-    "provisional": true,
+    "provisional": false,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Aug 31 2026",
-    "dayOfWeek": 6,
+    "dayOfWeek": 7,
     "year": 5,
-    "price": 79555.72,
-    "vwapSigma": 1.069,
-    "rsi": 58.3,
-    "dev200": 22.6,
+    "price": 79918.21,
+    "vwapSigma": 1.114,
+    "rsi": 58.6,
+    "dev200": 23.2,
     "above50W": false,
     "ma3550": "below",
-    "p35": 10.9,
-    "z35": -0.01,
-    "p50": -1.0,
-    "z50": -0.53,
+    "p35": 11.4,
+    "z35": 0.01,
+    "p50": -0.6,
+    "z50": -0.52,
     "sth": 69979.57,
     "lth": 48917.67,
-    "mvrvZ": 0.9454,
-    "nupl": 0.3387,
-    "avgBuyPrice": 52734.28,
+    "mvrvZ": 0.8941,
+    "nupl": 0.3393,
+    "avgBuyPrice": 52759.53,
     "event": {
       "type": "none",
       "weeks": 0
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 62.63186697158716
+      "prem": 63.37288754758763
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 13.684208119598317
+      "prem": 14.202202157000965
     },
     "ev": {
       "contrib": 0.0,
