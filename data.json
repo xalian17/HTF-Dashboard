@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T03:22:08Z",
+  "generated": "2026-09-19T03:18:19Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Sep 14 2026",
-    "dayOfWeek": 5,
+    "dayOfWeek": 6,
     "year": 5,
-    "price": 77386.08,
-    "vwapSigma": 0.759,
-    "rsi": 55.2,
-    "dev200": 18.2,
-    "above50W": false,
-    "ma3550": "below",
-    "p35": 9.2,
-    "z35": -0.1,
-    "p50": -1.7,
-    "z50": -0.58,
-    "sth": 71207.8,
-    "lth": 48795.43,
-    "mvrvZ": 0.7902,
-    "nupl": 0.3159,
-    "avgBuyPrice": 52806.05,
+    "price": 81212.77,
+    "vwapSigma": 1.247,
+    "rsi": 58.8,
+    "dev200": 24.0,
+    "above50W": true,
+    "ma3550": "above",
+    "p35": 14.4,
+    "z35": 0.11,
+    "p50": 3.0,
+    "z50": -0.42,
+    "sth": 71216.61,
+    "lth": 48809.3,
+    "mvrvZ": 0.8061,
+    "nupl": 0.3166,
+    "avgBuyPrice": 52810.74,
     "event": {
       "type": "none",
       "weeks": 0
@@ -38,7 +38,7 @@
   "scored": {
     "vwap": {
       "score": 0,
-      "zone": "AT VALUE"
+      "zone": "CONSTRUCTIVE TREND"
     },
     "w200": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 58.59288462054746
+      "prem": 66.3879014859873
     },
     "sth": {
-      "score": 1,
-      "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 8.676409045076516
+      "score": 0,
+      "zone": "HEALTHY",
+      "prem": 14.036276087839617
     },
     "ev": {
       "contrib": 0.0,
@@ -72,19 +72,19 @@
     "valueCore": 1,
     "trendCore": 0.0,
     "trendGated": 0.0,
-    "chainCore": 2.5,
-    "sthWeighted": 0.5,
-    "mult": 0.85,
-    "multLabel": "Bear · trend buys ×0.85",
-    "composite": 3.5,
-    "call": "ACCUMULATE",
-    "callKind": "pos",
-    "phase": "Accumulation",
+    "chainCore": 2.0,
+    "sthWeighted": 0.0,
+    "mult": 1.15,
+    "multLabel": "Bull · trend buys ×1.15",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "callKind": "zero",
+    "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "Moderate-high",
-      "qualifier": "trend not confirmed",
-      "dot": "amber"
+      "tier": "High",
+      "qualifier": "all axes aligned",
+      "dot": "green"
     },
     "axisStates": {
       "value": {
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Weak · below 50W",
-        "color": "amber"
+        "label": "Neutral",
+        "color": "grey"
       },
       "chain": {
         "label": "Supportive",
@@ -101,8 +101,7 @@
       }
     },
     "strengthen": [
-      "BTC reclaims the 50W",
-      "BTC reclaims the 35W",
+      "price holds above the 50W",
       "on-chain value stays supportive"
     ],
     "weaken": [
@@ -110,7 +109,7 @@
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates"
     ],
-    "bull": false,
+    "bull": true,
     "reclaim": false,
     "watching": false
   }
