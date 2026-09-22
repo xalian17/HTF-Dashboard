@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T03:30:27Z",
+  "generated": "2026-09-22T03:29:20Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Sep 21 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 81468.01,
-    "vwapSigma": 1.275,
-    "rsi": 59.0,
-    "dev200": 23.8,
+    "price": 85594.01,
+    "vwapSigma": 1.789,
+    "rsi": 62.5,
+    "dev200": 30.0,
     "above50W": true,
     "ma3550": "above",
-    "p35": 15.0,
-    "z35": 0.13,
-    "p50": 4.2,
-    "z50": -0.39,
-    "sth": 71262.19,
-    "lth": 48786.81,
-    "mvrvZ": 0.7931,
-    "nupl": 0.3259,
-    "avgBuyPrice": 52792.53,
+    "p35": 20.6,
+    "z35": 0.36,
+    "p50": 9.4,
+    "z50": -0.22,
+    "sth": 71295.15,
+    "lth": 48786.03,
+    "mvrvZ": 0.8422,
+    "nupl": 0.3019,
+    "avgBuyPrice": 52822.44,
     "event": {
       "type": "none",
       "weeks": 0
@@ -45,8 +45,8 @@
       "zone": "NEAR FLOOR"
     },
     "rsi": {
-      "score": 0,
-      "zone": "NEUTRAL"
+      "score": -1,
+      "zone": "HEATED"
     },
     "mvrv": {
       "score": 1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 66.98777804902596
+      "prem": 75.44778699968002
     },
     "sth": {
-      "score": 0,
-      "zone": "HEALTHY",
-      "prem": 14.321507660654254
+      "score": -1,
+      "zone": "HEATED",
+      "prem": 20.055866352760333
     },
     "ev": {
       "contrib": 0.0,
@@ -70,21 +70,21 @@
     },
     "reBonus": 0,
     "valueCore": 1,
-    "trendCore": 0.0,
-    "trendGated": 0.0,
-    "chainCore": 2.0,
-    "sthWeighted": 0.0,
-    "mult": 1.15,
+    "trendCore": -1.0,
+    "trendGated": -1.0,
+    "chainCore": 1.5,
+    "sthWeighted": -0.5,
+    "mult": 1.0,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 3.0,
+    "composite": 1.5,
     "call": "NEUTRAL",
     "callKind": "zero",
     "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "High",
-      "qualifier": "all axes aligned",
-      "dot": "green"
+      "tier": "Low",
+      "qualifier": "evidence mixed · no clear edge",
+      "dot": "red"
     },
     "axisStates": {
       "value": {
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Neutral",
-        "color": "grey"
+        "label": "Weak",
+        "color": "amber"
       },
       "chain": {
         "label": "Supportive",
