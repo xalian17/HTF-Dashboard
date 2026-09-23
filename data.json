@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T03:29:20Z",
+  "generated": "2026-09-23T03:29:51Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Sep 21 2026",
-    "dayOfWeek": 2,
+    "dayOfWeek": 3,
     "year": 5,
-    "price": 85594.01,
-    "vwapSigma": 1.789,
-    "rsi": 62.5,
-    "dev200": 30.0,
+    "price": 86691.94,
+    "vwapSigma": 1.915,
+    "rsi": 63.3,
+    "dev200": 31.7,
     "above50W": true,
     "ma3550": "above",
-    "p35": 20.6,
-    "z35": 0.36,
-    "p50": 9.4,
-    "z50": -0.22,
-    "sth": 71295.15,
-    "lth": 48786.03,
-    "mvrvZ": 0.8422,
-    "nupl": 0.3019,
-    "avgBuyPrice": 52822.44,
+    "p35": 22.1,
+    "z35": 0.42,
+    "p50": 10.8,
+    "z50": -0.18,
+    "sth": 71350.43,
+    "lth": 48770.21,
+    "mvrvZ": 0.7545,
+    "nupl": 0.3063,
+    "avgBuyPrice": 52784.89,
     "event": {
       "type": "none",
       "weeks": 0
@@ -41,8 +41,8 @@
       "zone": "CONSTRUCTIVE TREND"
     },
     "w200": {
-      "score": 1,
-      "zone": "NEAR FLOOR"
+      "score": 0,
+      "zone": "MID-CYCLE"
     },
     "rsi": {
       "score": -1,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 75.44778699968002
+      "prem": 77.75592928552082
     },
     "sth": {
       "score": -1,
       "zone": "HEATED",
-      "prem": 20.055866352760333
+      "prem": 21.501636360145284
     },
     "ev": {
       "contrib": 0.0,
@@ -69,17 +69,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 1,
+    "valueCore": 0,
     "trendCore": -1.0,
     "trendGated": -1.0,
     "chainCore": 1.5,
     "sthWeighted": -0.5,
     "mult": 1.0,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 1.5,
+    "composite": 0.5,
     "call": "NEUTRAL",
     "callKind": "zero",
-    "phase": "Early Expansion",
+    "phase": "Mid-Cycle Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Low",
@@ -88,8 +88,8 @@
     },
     "axisStates": {
       "value": {
-        "label": "Supportive",
-        "color": "green"
+        "label": "Neutral",
+        "color": "grey"
       },
       "trend": {
         "label": "Weak",
