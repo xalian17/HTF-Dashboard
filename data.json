@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T03:51:51Z",
+  "generated": "2026-09-29T04:26:08Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Sep 28 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 83428.68,
-    "vwapSigma": 1.456,
-    "rsi": 60.2,
-    "dev200": 26.1,
+    "price": 83250.66,
+    "vwapSigma": 1.424,
+    "rsi": 59.9,
+    "dev200": 25.8,
     "above50W": true,
     "ma3550": "above",
-    "p35": 17.3,
-    "z35": 0.22,
-    "p50": 7.4,
-    "z50": -0.3,
-    "sth": 72158.48,
-    "lth": 48722.61,
-    "mvrvZ": 0.9336,
-    "nupl": 0.389,
-    "avgBuyPrice": 52917.18,
+    "p35": 17.1,
+    "z35": 0.21,
+    "p50": 7.1,
+    "z50": -0.31,
+    "sth": 72763.08,
+    "lth": 48751.38,
+    "mvrvZ": 1.11,
+    "nupl": 0.3848,
+    "avgBuyPrice": 53073.85,
     "event": {
       "type": "none",
       "weeks": 0
@@ -45,22 +45,22 @@
       "zone": "NEAR FLOOR"
     },
     "rsi": {
-      "score": -1,
-      "zone": "HEATED"
+      "score": 0,
+      "zone": "NEUTRAL"
     },
     "mvrv": {
-      "score": 1,
-      "zone": "CHEAP"
+      "score": 0,
+      "zone": "FAIR VALUE"
     },
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 71.23195986421908
+      "prem": 70.76575063105908
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 15.618677111823853
+      "prem": 14.413326098895208
     },
     "ev": {
       "contrib": 0.0,
@@ -70,11 +70,11 @@
     },
     "reBonus": 0,
     "valueCore": 1,
-    "trendCore": -1.0,
-    "trendGated": -1.0,
-    "chainCore": 2.0,
+    "trendCore": 0.0,
+    "trendGated": 0.0,
+    "chainCore": 1.0,
     "sthWeighted": 0.0,
-    "mult": 1.0,
+    "mult": 1.15,
     "multLabel": "Bull · trend buys ×1.15",
     "composite": 2.0,
     "call": "NEUTRAL",
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Weak",
-        "color": "amber"
+        "label": "Neutral",
+        "color": "grey"
       },
       "chain": {
         "label": "Supportive",
