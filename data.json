@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-29T04:26:08Z",
+  "generated": "2026-09-30T04:09:50Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Sep 28 2026",
-    "dayOfWeek": 2,
+    "dayOfWeek": 3,
     "year": 5,
-    "price": 83250.66,
-    "vwapSigma": 1.424,
-    "rsi": 59.9,
-    "dev200": 25.8,
+    "price": 83313.36,
+    "vwapSigma": 1.426,
+    "rsi": 60.0,
+    "dev200": 25.9,
     "above50W": true,
     "ma3550": "above",
-    "p35": 17.1,
+    "p35": 17.2,
     "z35": 0.21,
-    "p50": 7.1,
+    "p50": 7.2,
     "z50": -0.31,
-    "sth": 72763.08,
-    "lth": 48751.38,
-    "mvrvZ": 1.11,
-    "nupl": 0.3848,
-    "avgBuyPrice": 53073.85,
+    "sth": 72797.88,
+    "lth": 48777.7,
+    "mvrvZ": 1.0948,
+    "nupl": 0.371,
+    "avgBuyPrice": 53092.97,
     "event": {
       "type": "none",
       "weeks": 0
@@ -45,8 +45,8 @@
       "zone": "NEAR FLOOR"
     },
     "rsi": {
-      "score": 0,
-      "zone": "NEUTRAL"
+      "score": -1,
+      "zone": "HEATED"
     },
     "mvrv": {
       "score": 0,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 70.76575063105908
+      "prem": 70.80214934283495
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 14.413326098895208
+      "prem": 14.444761303488507
     },
     "ev": {
       "contrib": 0.0,
@@ -70,21 +70,21 @@
     },
     "reBonus": 0,
     "valueCore": 1,
-    "trendCore": 0.0,
-    "trendGated": 0.0,
+    "trendCore": -1.0,
+    "trendGated": -1.0,
     "chainCore": 1.0,
     "sthWeighted": 0.0,
-    "mult": 1.15,
+    "mult": 1.0,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 2.0,
+    "composite": 1.0,
     "call": "NEUTRAL",
     "callKind": "zero",
     "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "High",
-      "qualifier": "all axes aligned",
-      "dot": "green"
+      "tier": "Low",
+      "qualifier": "evidence mixed · no clear edge",
+      "dot": "red"
     },
     "axisStates": {
       "value": {
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Neutral",
-        "color": "grey"
+        "label": "Weak",
+        "color": "amber"
       },
       "chain": {
         "label": "Supportive",
