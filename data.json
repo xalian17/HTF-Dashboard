@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-05T04:15:30Z",
+  "generated": "2026-10-06T05:03:38Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Oct 05 2026",
-    "dayOfWeek": 1,
+    "dayOfWeek": 2,
     "year": 5,
-    "price": 85934.39,
-    "vwapSigma": 1.702,
-    "rsi": 62.4,
-    "dev200": 29.2,
+    "price": 85587.59,
+    "vwapSigma": 1.649,
+    "rsi": 61.9,
+    "dev200": 28.6,
     "above50W": true,
     "ma3550": "above",
-    "p35": 19.9,
-    "z35": 0.32,
-    "p50": 11.3,
-    "z50": -0.18,
-    "sth": 73204.94,
-    "lth": 48768.01,
-    "mvrvZ": 1.0316,
-    "nupl": 0.3637,
-    "avgBuyPrice": 53157.82,
+    "p35": 19.5,
+    "z35": 0.3,
+    "p50": 10.9,
+    "z50": -0.19,
+    "sth": 73382.99,
+    "lth": 48763.32,
+    "mvrvZ": 0.9998,
+    "nupl": 0.3638,
+    "avgBuyPrice": 53214.97,
     "event": {
       "type": "none",
       "weeks": 0
@@ -49,18 +49,18 @@
       "zone": "HEATED"
     },
     "mvrv": {
-      "score": 0,
-      "zone": "FAIR VALUE"
+      "score": 1,
+      "zone": "CHEAP"
     },
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 76.21057328359306
+      "prem": 75.5163307174327
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 17.388785510923157
+      "prem": 16.631374655080133
     },
     "ev": {
       "contrib": 0.0,
@@ -72,19 +72,19 @@
     "valueCore": 1,
     "trendCore": -1.0,
     "trendGated": -1.0,
-    "chainCore": 1.0,
+    "chainCore": 2.0,
     "sthWeighted": 0.0,
     "mult": 1.0,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 1.0,
+    "composite": 2.0,
     "call": "NEUTRAL",
     "callKind": "zero",
     "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "Low",
-      "qualifier": "evidence mixed · no clear edge",
-      "dot": "red"
+      "tier": "High",
+      "qualifier": "all axes aligned",
+      "dot": "green"
     },
     "axisStates": {
       "value": {
