@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T04:30:35Z",
+  "generated": "2026-10-08T04:41:31Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Oct 05 2026",
-    "dayOfWeek": 3,
+    "dayOfWeek": 4,
     "year": 5,
-    "price": 84138.0,
-    "vwapSigma": 1.462,
-    "rsi": 60.0,
-    "dev200": 26.5,
+    "price": 82556.01,
+    "vwapSigma": 1.259,
+    "rsi": 57.9,
+    "dev200": 24.1,
     "above50W": true,
     "ma3550": "above",
-    "p35": 17.5,
-    "z35": 0.22,
-    "p50": 9.0,
-    "z50": -0.26,
-    "sth": 73467.89,
-    "lth": 48741.02,
-    "mvrvZ": 1.0021,
-    "nupl": 0.3633,
-    "avgBuyPrice": 53233.86,
+    "p35": 15.4,
+    "z35": 0.13,
+    "p50": 7.0,
+    "z50": -0.32,
+    "sth": 73604.8,
+    "lth": 48755.28,
+    "mvrvZ": 1.0001,
+    "nupl": 0.3721,
+    "avgBuyPrice": 53247.35,
     "event": {
       "type": "none",
       "weeks": 0
@@ -45,8 +45,8 @@
       "zone": "NEAR FLOOR"
     },
     "rsi": {
-      "score": -1,
-      "zone": "HEATED"
+      "score": 0,
+      "zone": "NEUTRAL"
     },
     "mvrv": {
       "score": 0,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 72.6225671928901
+      "prem": 69.32732208696166
     },
     "sth": {
       "score": 0,
       "zone": "HEALTHY",
-      "prem": 14.523501355490144
+      "prem": 12.161176988457267
     },
     "ev": {
       "contrib": 0.0,
@@ -70,21 +70,21 @@
     },
     "reBonus": 0,
     "valueCore": 1,
-    "trendCore": -1.0,
-    "trendGated": -1.0,
+    "trendCore": 0.0,
+    "trendGated": 0.0,
     "chainCore": 1.0,
     "sthWeighted": 0.0,
-    "mult": 1.0,
+    "mult": 1.15,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 1.0,
+    "composite": 2.0,
     "call": "NEUTRAL",
     "callKind": "zero",
     "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "Low",
-      "qualifier": "evidence mixed · no clear edge",
-      "dot": "red"
+      "tier": "High",
+      "qualifier": "all axes aligned",
+      "dot": "green"
     },
     "axisStates": {
       "value": {
@@ -92,8 +92,8 @@
         "color": "green"
       },
       "trend": {
-        "label": "Weak",
-        "color": "amber"
+        "label": "Neutral",
+        "color": "grey"
       },
       "chain": {
         "label": "Supportive",
