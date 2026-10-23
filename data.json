@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T03:26:48Z",
+  "generated": "2026-10-23T03:32:00Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "SMA",
@@ -13,23 +13,23 @@
   },
   "raw": {
     "week": "Oct 19 2026",
-    "dayOfWeek": 4,
+    "dayOfWeek": 5,
     "year": 5,
-    "price": 82806.92,
-    "vwapSigma": 1.232,
-    "rsi": 58.0,
-    "dev200": 23.3,
+    "price": 81842.01,
+    "vwapSigma": 1.109,
+    "rsi": 56.9,
+    "dev200": 21.8,
     "above50W": true,
     "ma3550": "above",
-    "p35": 14.4,
-    "z35": 0.07,
-    "p50": 8.7,
-    "z50": -0.29,
-    "sth": 74568.39,
-    "lth": 48667.19,
-    "mvrvZ": 0.9432,
-    "nupl": 0.35,
-    "avgBuyPrice": 53454.59,
+    "p35": 13.1,
+    "z35": 0.01,
+    "p50": 7.5,
+    "z50": -0.33,
+    "sth": 74639.33,
+    "lth": 48671.52,
+    "mvrvZ": 0.9227,
+    "nupl": 0.3446,
+    "avgBuyPrice": 53500.94,
     "event": {
       "type": "none",
       "weeks": 0
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 70.14937579095894
+      "prem": 68.15174459314196
     },
     "sth": {
-      "score": 0,
-      "zone": "HEALTHY",
-      "prem": 11.048287350712549
+      "score": 1,
+      "zone": "AT / BELOW STH · SUPPORT",
+      "prem": 9.649979441133771
     },
     "ev": {
       "contrib": 0.0,
@@ -72,13 +72,13 @@
     "valueCore": 1,
     "trendCore": 0.0,
     "trendGated": 0.0,
-    "chainCore": 2.0,
-    "sthWeighted": 0.0,
+    "chainCore": 2.5,
+    "sthWeighted": 0.5,
     "mult": 1.15,
     "multLabel": "Bull · trend buys ×1.15",
-    "composite": 3.0,
-    "call": "NEUTRAL",
-    "callKind": "zero",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "callKind": "pos",
     "phase": "Early Expansion",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
