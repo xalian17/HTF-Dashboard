@@ -78,7 +78,7 @@ RSI_PERIOD = 14
 
 OUT_PATH = "data.json"
 HISTORY_PATH = "history.json"
-HISTORY_MAX = 12              # weekly points kept in the history strip
+HISTORY_MAX = 26              # weekly points kept in the history strip
 
 
 # ======================================================================
