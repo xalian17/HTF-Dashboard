@@ -157,9 +157,9 @@ def main():
     try:
         df = price_frame()
         dates = df["open_time"]
-        ma200 = df["close"].rolling(200).mean()
+        ma200 = fetch.moving_avg(df["close"], fetch.MA_PERIODS["ma200"])  # follows fetch.MA_TYPE
         dev200 = ((df["close"] / ma200 - 1) * 100).values
-        report("200W distance %", dev200, lambda v: scoring.score_200w(v)["score"], cutoff, dates)
+        report(f"200W {fetch.MA_TYPE} distance %", dev200, lambda v: scoring.score_200w(v)["score"], cutoff, dates)
 
         delta = df["close"].diff()
         gain, loss = delta.clip(lower=0), -delta.clip(upper=0)

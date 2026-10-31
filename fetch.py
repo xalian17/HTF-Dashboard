@@ -65,8 +65,9 @@ CYCLE_LOW_YEARS = [2018, 2022]
 # VWAP re-anchors every Jan 1 of the current year (annual reset). No cycle anchor needed.
 
 # ---- moving averages ----
-MA_TYPE   = "SMA"              # "SMA" | "EMA" | "WMA". Default SMA (canonical 200W).
-                              # NOTE: your MA study favored WMA on the 9/20 — switch here if wanted.
+MA_TYPE   = "EMA"              # "SMA" | "EMA" | "WMA". Switched SMA -> EMA (Oct 2026).
+                              # EMA is seeded TradingView-style (SMA of the first N bars), so values
+                              # match ta.ema() on BINANCE:BTCUSDT 1W.
 MA_PERIODS = {"ma35": 35, "ma50": 50, "ma200": 200}
 
 # ---- z-score window for the 35/50 distance bands ----
@@ -172,6 +173,33 @@ def fetch_onchain(probe=False):
 # Indicators  (pandas)
 # ======================================================================
 
+def moving_avg(series, period, ma_type=None):
+    """MA used for the 35W / 50W / 200W. Shared with calibrate.py so both use the same math.
+
+    EMA matches Pine's ta.ema(): seeded with the SMA of the first `period` bars, then
+    alpha = 2/(period+1). NaN before that, same warm-up as the SMA. (pandas' plain
+    ewm(adjust=False) seeds on the very first bar instead, which on Binance history
+    starting Aug 2017 leaves the 200W EMA visibly biased toward the 2017 seed.)
+    """
+    import numpy as np
+    import pandas as pd
+
+    ma_type = (ma_type or MA_TYPE).upper()
+    if ma_type == "EMA":
+        vals = series.to_numpy(dtype=float)
+        out = np.full(len(vals), np.nan)
+        if len(vals) >= period:
+            alpha = 2.0 / (period + 1)
+            out[period - 1] = vals[:period].mean()
+            for i in range(period, len(vals)):
+                out[i] = alpha * vals[i] + (1 - alpha) * out[i - 1]
+        return pd.Series(out, index=series.index)
+    if ma_type == "WMA":
+        w = np.arange(1, period + 1)
+        return series.rolling(period).apply(lambda x: np.dot(x, w) / w.sum(), raw=True)
+    return series.rolling(period).mean()  # SMA
+
+
 def compute_indicators(klines):
     import numpy as np
     import pandas as pd
@@ -180,14 +208,6 @@ def compute_indicators(klines):
     close = df["close"]
 
     # --- moving averages ---
-    def moving_avg(series, period):
-        if MA_TYPE == "EMA":
-            return series.ewm(span=period, adjust=False).mean()
-        if MA_TYPE == "WMA":
-            w = np.arange(1, period + 1)
-            return series.rolling(period).apply(lambda x: np.dot(x, w) / w.sum(), raw=True)
-        return series.rolling(period).mean()  # SMA
-
     ma35  = moving_avg(close, MA_PERIODS["ma35"])
     ma50  = moving_avg(close, MA_PERIODS["ma50"])
     ma200 = moving_avg(close, MA_PERIODS["ma200"])

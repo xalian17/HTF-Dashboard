@@ -377,7 +377,7 @@
         <div class="name"><span class="t">W1 35 / 50 / 200</span><span class="s">Δ PRICE · Z-BANDS (35/50) · 200W FLOOR</span></div>
         <div class="val"><span class="scoretag" id="maScore">—</span></div>
       </div>
-      <div class="ma-colhead"><span class="c-k">MA</span><span class="c-pct">Δ price</span><span class="c-z">z / score</span><span class="c-st">state</span></div>
+      <div class="ma-colhead"><span class="c-k" id="maTypeHead">MA</span><span class="c-pct">Δ price</span><span class="c-z">z / score</span><span class="c-st">state</span></div>
       <div class="ma-rows">
         <div class="ma-row"><span class="ma-k">35W</span><span class="ma-pct" id="ma35pct">—</span><span class="ma-z" id="ma35z">—</span><span class="ma-state" id="ma35state">—</span></div>
         <div class="ma-row"><span class="ma-k">50W</span><span class="ma-pct" id="ma50pct">—</span><span class="ma-z" id="ma50z">—</span><span class="ma-state" id="ma50state">—</span></div>
@@ -655,6 +655,7 @@ function render(D){
   $('rsiMark').style.left=clamp(d.rsi,1,99)+"%";
 
   // MAs — % distance + z (precomputed in data.json), 200W score
+  $('maTypeHead').textContent=meta.maType||"MA";
   $('maScore').outerHTML=`<span class="scoretag ${A.bull?'s-pos':'s-neg'}" id="maScore">${A.bull?'BULL':'BEAR'}</span>`;
   const pctStr=p=>(p>=0?"+":"")+(Math.round(p*10)/10)+"%";
   const zClass=z=>z>=1.5?"z-hi":z<=-1.5?"z-lo":"z-mid";
@@ -772,7 +773,7 @@ const FALLBACK={
   "generated": "2026-06-24T12:05:35Z",
   "meta": {
     "anchor": "2022-11-20",
-    "maType": "SMA",
+    "maType": "EMA",
     "zLookback": 200,
     "provisional": true,
     "dataQuality": {
