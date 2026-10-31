@@ -1,0 +1,36 @@
+name: Backtest
+
+# Manual only. Read-only: replays the scoring over history and prints how BTC did
+# after each call. Changes nothing on the dashboard. Full week-by-week table is
+# attached to the run as the "backtest" artifact (backtest.csv).
+# Uses 3 BGeometrics calls — don't run it right after another workflow.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run backtest
+        run: python backtest.py
+
+      - name: Save week-by-week results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest
+          path: backtest.csv
+          if-no-files-found: ignore
