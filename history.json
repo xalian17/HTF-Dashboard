@@ -1,9 +1,146 @@
 [
   {
-    "week": "Oct 26 2026",
-    "date": "2026-10-31T22:10:52Z",
+    "week": "Jun 22 2026",
+    "date": "2026-06-29T00:00:00Z",
+    "composite": 6.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Jun 29 2026",
+    "date": "2026-07-06T00:00:00Z",
+    "composite": 6.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Jul 06 2026",
+    "date": "2026-07-13T00:00:00Z",
+    "composite": 6.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Jul 13 2026",
+    "date": "2026-07-20T00:00:00Z",
+    "composite": 5.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Jul 20 2026",
+    "date": "2026-07-27T00:00:00Z",
+    "composite": 5.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Jul 27 2026",
+    "date": "2026-08-03T00:00:00Z",
+    "composite": 5.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Aug 03 2026",
+    "date": "2026-08-10T00:00:00Z",
+    "composite": 5.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Aug 10 2026",
+    "date": "2026-08-17T00:00:00Z",
+    "composite": 6.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Aug 17 2026",
+    "date": "2026-08-24T00:00:00Z",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Aug 24 2026",
+    "date": "2026-08-31T00:00:00Z",
+    "composite": 4.15,
+    "call": "ACCUMULATE",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Aug 31 2026",
+    "date": "2026-09-07T00:00:00Z",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Sep 07 2026",
+    "date": "2026-09-14T00:00:00Z",
     "composite": 3.5,
     "call": "ACCUMULATE",
-    "phase": "Accumulation"
+    "phase": "Accumulation",
+    "backfilled": true
+  },
+  {
+    "week": "Sep 14 2026",
+    "date": "2026-09-21T00:00:00Z",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Sep 21 2026",
+    "date": "2026-09-28T00:00:00Z",
+    "composite": 1.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Sep 28 2026",
+    "date": "2026-10-05T00:00:00Z",
+    "composite": 1.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Oct 05 2026",
+    "date": "2026-10-12T00:00:00Z",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Oct 12 2026",
+    "date": "2026-10-19T00:00:00Z",
+    "composite": 3.0,
+    "call": "NEUTRAL",
+    "phase": "Early Expansion",
+    "backfilled": true
+  },
+  {
+    "week": "Oct 19 2026",
+    "date": "2026-10-26T00:00:00Z",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "phase": "Early Expansion",
+    "backfilled": true
   }
 ]
