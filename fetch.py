@@ -336,6 +336,9 @@ def update_history(payload):
         "composite": round(payload["scored"]["composite"], 2),
         "call": payload["scored"]["call"],
         "phase": payload["scored"]["phase"],
+        "valuation": payload["scored"].get("valuation"),
+        "valScore": payload["scored"].get("valScore"),
+        "posture": payload["scored"].get("posture"),
     }
     try:
         with open(HISTORY_PATH) as f:
@@ -352,6 +355,25 @@ def update_history(payload):
     with open(HISTORY_PATH, "w") as f:
         json.dump(hist, f, indent=2, ensure_ascii=False)
     return hist
+
+
+def change_since_last_close(week, scored):
+    """Compare this week's valuation/posture to the previous week's final read in history.json.
+    Returns None if there is no previous week with those fields yet."""
+    try:
+        with open(HISTORY_PATH) as fh:
+            hist = json.load(fh)
+    except Exception:  # noqa: BLE001
+        return None
+    prev = [h for h in hist if h.get("week") != week and h.get("valuation")]
+    if not prev:
+        return None
+    p = prev[-1]
+    return {
+        "sinceWeek": p["week"],
+        "valuation": None if p["valuation"] == scored["valuation"] else [p["valuation"], scored["valuation"]],
+        "posture": None if p.get("posture") == scored["posture"] else [p.get("posture"), scored["posture"]],
+    }
 
 
 def build(raw_overrides=None):
@@ -417,8 +439,11 @@ def build(raw_overrides=None):
 
     scored = scoring.aggregate(score_input)
 
+    change = change_since_last_close(raw["week"], scored)
+
     return {
         "generated": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "change": change,
         "meta": {
             "anchor": ind.get("_anchor"),
             "maType": MA_TYPE,
