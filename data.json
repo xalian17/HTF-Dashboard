@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T23:05:35Z",
+  "generated": "2026-10-31T23:20:36Z",
   "change": {
     "sinceWeek": "Oct 19 2026",
     "valuation": null,
@@ -23,8 +23,8 @@
     "week": "Oct 26 2026",
     "dayOfWeek": 6,
     "year": 5,
-    "price": 77548.04,
-    "vwapSigma": 0.568,
+    "price": 77530.08,
+    "vwapSigma": 0.565,
     "rsi": 51.3,
     "dev200": 11.6,
     "above50W": false,
@@ -63,12 +63,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 59.59270008038489
+      "prem": 59.55573867048409
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 2.280119552720561
+      "prem": 2.2564316433012266
     },
     "ev": {
       "contrib": 0.0,
