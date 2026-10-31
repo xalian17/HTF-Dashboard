@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T22:35:28Z",
+  "generated": "2026-10-31T22:36:09Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "EMA",
@@ -15,7 +15,7 @@
     "week": "Oct 26 2026",
     "dayOfWeek": 6,
     "year": 5,
-    "price": 77656.04,
+    "price": 77658.49,
     "vwapSigma": 0.581,
     "rsi": 51.4,
     "dev200": 11.7,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 59.81496245618034
+      "prem": 59.82000451933498
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 2.4225635514559585
+      "prem": 2.4257949199458118
     },
     "ev": {
       "contrib": 0.0,
