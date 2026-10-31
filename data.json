@@ -1,5 +1,6 @@
 {
-  "generated": "2026-10-31T22:43:48Z",
+  "generated": "2026-10-31T22:56:21Z",
+  "change": null,
   "meta": {
     "anchor": "2026-01-01",
     "maType": "EMA",
@@ -15,15 +16,15 @@
     "week": "Oct 26 2026",
     "dayOfWeek": 6,
     "year": 5,
-    "price": 77663.26,
-    "vwapSigma": 0.582,
-    "rsi": 51.4,
-    "dev200": 11.7,
+    "price": 77542.01,
+    "vwapSigma": 0.567,
+    "rsi": 51.3,
+    "dev200": 11.6,
     "above50W": false,
     "ma3550": "below",
-    "p35": 0.8,
-    "z35": -0.49,
-    "p50": -1.1,
+    "p35": 0.6,
+    "z35": -0.5,
+    "p50": -1.3,
     "z50": -0.63,
     "sth": 75819.27,
     "lth": 48591.22,
@@ -55,12 +56,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 59.829821107599265
+      "prem": 59.58029043106963
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 2.4320861965566154
+      "prem": 2.2721664294578225
     },
     "ev": {
       "contrib": 0.0,
@@ -101,17 +102,22 @@
       }
     },
     "strengthen": [
-      "BTC reclaims the 50W",
+      "BTC reclaims the 50W (posture → Favorable)",
       "BTC reclaims the 35W",
       "on-chain value stays supportive"
     ],
     "weaken": [
-      "price loses the 200W decisively",
+      "valuation slips to Fair while still below the 50W (→ Avoid)",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates"
     ],
     "bull": false,
     "reclaim": false,
-    "watching": false
+    "watching": false,
+    "valuation": "Cheap",
+    "valScore": 3.5,
+    "valDistance": "1.0 above the Fair line",
+    "posture": "Cautious",
+    "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
   }
 }
