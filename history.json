@@ -5,6 +5,9 @@
     "composite": 6.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 5.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -13,6 +16,9 @@
     "composite": 6.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 5.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -21,6 +27,9 @@
     "composite": 6.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 5.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -29,6 +38,9 @@
     "composite": 5.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 4.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -37,6 +49,9 @@
     "composite": 5.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 4.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -45,6 +60,9 @@
     "composite": 5.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 4.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -53,6 +71,9 @@
     "composite": 5.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 4.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -61,6 +82,9 @@
     "composite": 6.35,
     "call": "ACCUMULATE",
     "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 5.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -69,6 +93,9 @@
     "composite": 3.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -77,6 +104,9 @@
     "composite": 4.15,
     "call": "ACCUMULATE",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -85,6 +115,9 @@
     "composite": 3.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -93,6 +126,9 @@
     "composite": 3.5,
     "call": "ACCUMULATE",
     "phase": "Accumulation",
+    "valuation": "Cheap",
+    "valScore": 3.5,
+    "posture": "Cautious",
     "backfilled": true
   },
   {
@@ -101,6 +137,9 @@
     "composite": 3.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -109,6 +148,9 @@
     "composite": 1.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Fair",
+    "valScore": 2.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -117,6 +159,9 @@
     "composite": 1.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Fair",
+    "valScore": 2.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -125,6 +170,9 @@
     "composite": 3.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -133,6 +181,9 @@
     "composite": 3.0,
     "call": "NEUTRAL",
     "phase": "Early Expansion",
+    "valuation": "Cheap",
+    "valScore": 3.0,
+    "posture": "Favorable",
     "backfilled": true
   },
   {
@@ -141,16 +192,9 @@
     "composite": 3.5,
     "call": "ACCUMULATE",
     "phase": "Early Expansion",
-    "backfilled": true
-  },
-  {
-    "week": "Oct 26 2026",
-    "date": "2026-10-31T23:01:59Z",
-    "composite": 3.5,
-    "call": "ACCUMULATE",
-    "phase": "Accumulation",
     "valuation": "Cheap",
     "valScore": 3.5,
-    "posture": "Cautious"
+    "posture": "Favorable",
+    "backfilled": true
   }
 ]
