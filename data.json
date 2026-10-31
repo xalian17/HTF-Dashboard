@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T22:10:52Z",
+  "generated": "2026-10-31T22:13:34Z",
   "meta": {
     "anchor": "2026-01-01",
     "maType": "EMA",
@@ -15,16 +15,16 @@
     "week": "Oct 26 2026",
     "dayOfWeek": 6,
     "year": 5,
-    "price": 77704.0,
-    "vwapSigma": 0.587,
-    "rsi": 51.5,
-    "dev200": 11.8,
+    "price": 77657.46,
+    "vwapSigma": 0.581,
+    "rsi": 51.4,
+    "dev200": 11.7,
     "above50W": false,
     "ma3550": "below",
     "p35": 0.8,
     "z35": -0.49,
     "p50": -1.1,
-    "z50": -0.62,
+    "z50": -0.63,
     "sth": 75819.27,
     "lth": 48591.22,
     "mvrvZ": 0.7585,
@@ -55,12 +55,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 59.91366341491322
+      "prem": 59.81788479482508
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 2.485819238301823
+      "prem": 2.424436426254184
     },
     "ev": {
       "contrib": 0.0,

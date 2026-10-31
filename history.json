@@ -142,5 +142,12 @@
     "call": "ACCUMULATE",
     "phase": "Early Expansion",
     "backfilled": true
+  },
+  {
+    "week": "Oct 26 2026",
+    "date": "2026-10-31T22:13:34Z",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "phase": "Accumulation"
   }
 ]
