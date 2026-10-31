@@ -1,0 +1,44 @@
+name: Backfill History
+
+# Manual only. Rebuilds history.json for every closed week since the dashboard
+# went live and commits it. The page picks it up on the next "Update BTC Compass"
+# run (daily 00:00 UTC). Not auto-triggered: BGeometrics' free tier is ~8 req/hr and
+# backfill + update back-to-back would be 10, pushing on-chain into fallback.
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "First week to rebuild (Monday, YYYY-MM-DD)"
+        required: false
+        default: "2026-06-22"
+
+permissions:
+  contents: write     # commit history.json
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Rebuild history.json
+        run: python backfill.py --start "${{ inputs.start }}"
+
+      - name: Commit history.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add history.json
+          git diff --staged --quiet && { echo "history.json unchanged"; exit 0; }
+          git commit -m "history: backfill from ${{ inputs.start }}"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
