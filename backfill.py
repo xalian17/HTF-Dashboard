@@ -162,9 +162,13 @@ def main():
             "composite": round(s["composite"], 2),
             "call": s["call"],
             "phase": s["phase"],
+            "valuation": s["valuation"],
+            "valScore": s["valScore"],
+            "posture": s["posture"],
             "backfilled": True,
         })
-        print(f"  {ind['week']}: {s['call']:<14s} {s['composite']:+.2f}  ({s['phase']})")
+        print(f"  {ind['week']}: {s['valuation']:<9s} {s['valScore']:+5.1f} · {s['posture']:<9s} | "
+              f"{s['call']:<14s} {s['composite']:+.2f}")
 
     if not hist:
         sys.exit("No closed weeks in range — nothing written.")
