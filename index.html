@@ -67,6 +67,17 @@
   .hist-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
   .hist-bar-wrap{height:58px;display:flex;align-items:flex-end;width:100%;justify-content:center}
   .hist-bar{width:62%;max-width:24px;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s ease}
+  /* valuation ladder colors */
+  .hb-gtfi{background:#2F7BFF;box-shadow:0 0 10px rgba(47,123,255,0.55)}
+  .hb-ramp{background:#39FF14;box-shadow:0 0 10px rgba(57,255,20,0.55)}
+  .hb-cheap{background:#B9F5C8}
+  .hb-noise{background:#5B6577}
+  .hb-warn{background:#E5484D}
+  .hb-out{background:linear-gradient(135deg,#3a3d44 0%,#0b0c0f 45%,#000 60%,#2b2e35 100%);
+    border:1px solid #8A8F99;box-shadow:inset 1px 1px 0 rgba(255,255,255,0.35),0 0 8px rgba(200,205,215,0.35)}
+  .hist-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-family:var(--mono);font-size:9.5px;color:var(--text-3)}
+  .hist-legend span{display:inline-flex;align-items:center;gap:6px}
+  .hist-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
   .hist-val{font-family:var(--mono);font-size:9px;color:var(--text-2)}
   .hist-wk{font-family:var(--mono);font-size:8px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   .hist-empty{font-family:var(--mono);font-size:11px;color:var(--text-3);padding:18px 0;text-align:center;width:100%}
@@ -507,6 +518,14 @@
         <span class="hist-trend" id="histTrend">—</span>
       </div>
       <div class="hist-strip" id="histStrip"></div>
+      <div class="hist-legend">
+        <span><i class="hb-gtfi"></i>+5 & up · GTF in</span>
+        <span><i class="hb-ramp"></i>+4 to +4.9 · ramp up</span>
+        <span><i class="hb-cheap"></i>+2.5 to +3.9 · cheap</span>
+        <span><i class="hb-noise"></i>−1.9 to +2.4 · noise</span>
+        <span><i class="hb-warn"></i>−2 to −2.9 · heads up</span>
+        <span><i class="hb-out"></i>−3 & below · get out</span>
+      </div>
     </div>
   </section>
 
@@ -576,14 +595,14 @@ function renderHistory(hist){
   trendEl.textContent=tLabel; trendEl.style.color=tColor;
   // bars: height by |composite|, color by verdict
   const maxAbs=Math.max(4,...comps.map(c=>Math.abs(c)));
-  const kindColor=v=>v==="Cheap"?"var(--jade)":v==="Expensive"?"var(--red)":"var(--text-3)";
+  const band=s=>s>=5?"hb-gtfi":s>=4?"hb-ramp":s>=2.5?"hb-cheap":s>-2?"hb-noise":s>-3?"hb-warn":"hb-out";
   strip.innerHTML=hist.map(h=>{
     const c=h.valScore;
     const hpct=Math.round(Math.abs(c)/maxAbs*100);
     const wk=(h.week||"").replace(/\s+\d{4}$/,"");
     const sgnv=(c>=0?"+":"")+c;
     return `<div class="hist-col" title="${h.week} · ${h.valuation} (${sgnv}) · posture ${h.posture||"—"}">`
-      +`<div class="hist-bar-wrap"><div class="hist-bar" style="height:${hpct}%;background:${kindColor(h.valuation)}"></div></div>`
+      +`<div class="hist-bar-wrap"><div class="hist-bar ${band(c)}" style="height:${hpct}%"></div></div>`
       +`<div class="hist-val">${sgnv}</div><div class="hist-wk">${wk}</div></div>`;
   }).join("");
 }
