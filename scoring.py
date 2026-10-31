@@ -27,6 +27,40 @@ from typing import Dict, Any
 
 
 # ----------------------------------------------------------------------
+# HEADLINE: VALUATION + POSTURE  (Nov 2026 split, from backtest results)
+# ----------------------------------------------------------------------
+# valuation score = value_core + chain_core (the two ungated axes)
+VAL_CHEAP_AT = 2.5        # >= this  -> Cheap
+VAL_EXPENSIVE_AT = -2.5   # <= this  -> Expensive
+# Posture = whether trend supports acting on the valuation. Backtest (2015-2026):
+#   cheap + below 50W  -> still worked over 26-52w, but deeper interim drawdowns
+#   NOT cheap + below 50W -> worst setup in the test (median -22% at +13w)
+POSTURE_TEXT = {
+    "Favorable": "above the 50W — trend supports acting on the valuation",
+    "Cautious":  "below the 50W but cheap — historically worked, expect a deeper dip first",
+    "Avoid":     "below the 50W and not cheap — weakest setup in the backtest",
+    "Cautious-expensive": "above the 50W but expensive — trend intact, value isn't",
+}
+
+
+def valuation_posture(value_core: float, chain_core: float, above50w: bool) -> Dict[str, Any]:
+    score = round(value_core + chain_core, 2)
+    if score >= VAL_CHEAP_AT:
+        val, dist = "Cheap", f"{score - VAL_CHEAP_AT:.1f} above the Fair line"
+    elif score <= VAL_EXPENSIVE_AT:
+        val, dist = "Expensive", f"{VAL_EXPENSIVE_AT - score:.1f} below the Fair line"
+    else:
+        val = "Fair"
+        dist = f"{VAL_CHEAP_AT - score:.1f} from Cheap · {score - VAL_EXPENSIVE_AT:.1f} from Expensive"
+    if above50w:
+        posture, key = ("Cautious", "Cautious-expensive") if val == "Expensive" else ("Favorable", "Favorable")
+    else:
+        posture, key = ("Cautious", "Cautious") if val == "Cheap" else ("Avoid", "Avoid")
+    return {"valuation": val, "valScore": score, "valDistance": dist,
+            "posture": posture, "postureNote": POSTURE_TEXT[key]}
+
+
+# ----------------------------------------------------------------------
 # VALUE axis
 # ----------------------------------------------------------------------
 
@@ -269,7 +303,9 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     # --- what would strengthen / weaken this read (scored-state changes, never price levels) ---
     strengthen, weaken = [], []
     # strengthen = would push the read more constructive
-    strengthen.append("BTC reclaims the 50W" if not bull else "price holds above the 50W")
+    strengthen.append("BTC reclaims the 50W (posture → Favorable)" if not bull else "price holds above the 50W")
+    if d["dev200"] <= 0:
+        strengthen.append("price at/below the 200W — historically deeper value, not a breakdown")
     if d["ma3550"] in ("below", "watching"):
         strengthen.append("BTC reclaims the 35W")
     if d["rsi"] < 45:
@@ -279,8 +315,11 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
     strengthen.append("on-chain value stays supportive" if chain_core >= 0 else "on-chain value turns supportive")
 
     # weaken = would push the read more defensive (priority order)
-    if d["dev200"] > 0:
-        weaken.append("price loses the 200W decisively")
+    vp = valuation_posture(value_core, chain_core, bull)
+    if not bull and vp["valuation"] == "Cheap":
+        weaken.append("valuation slips to Fair while still below the 50W (→ Avoid)")
+    if bull:
+        weaken.append("price loses the 50W")
     if d["mvrvZ"] >= 0:
         weaken.append("MVRV deteriorates without stabilizing")
     if ev["type"] == "none":
@@ -320,6 +359,8 @@ def aggregate(d: Dict[str, Any]) -> Dict[str, Any]:
         "confidence": confidence, "axisStates": axis_states,
         "strengthen": strengthen, "weaken": weaken,
         "bull": bull, "reclaim": reclaim, "watching": watching,
+        # headline (valuation + posture)
+        **vp,
     }
 
 
