@@ -94,6 +94,13 @@
   .verdict .sub b{color:var(--text);font-size:13px}
   .verdict .split{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-bottom:18px;letter-spacing:0.02em}
   .verdict .split .tg{color:var(--text-2)} .verdict .split .cg{color:var(--gold)}
+  .chg{font-family:var(--mono);font-size:11px;padding:6px 10px;border-radius:6px;margin-bottom:16px;align-self:flex-start;border:1px solid var(--line);color:var(--text-3)}
+  .chg.on{color:var(--gold);border-color:rgba(224,168,46,0.45);background:rgba(224,168,46,0.10);font-weight:600}
+  .posture-block{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;max-width:300px}
+  .posture-block .k{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase}
+  .posture-block .pv{font-size:24px;font-weight:700;letter-spacing:-0.01em;line-height:1.05}
+  .posture-block .pn{font-family:var(--mono);font-size:11px;color:var(--text-2);line-height:1.45}
+  @media (max-width:760px){.hero-top{flex-direction:column}.posture-block{align-items:flex-start;text-align:left}}
   .ctx{display:flex;flex-direction:column;gap:9px;margin-top:auto}
   .ctx .row{display:flex;align-items:center;gap:10px}
   .ctx .k{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--text-3);text-transform:uppercase;width:58px;flex-shrink:0}
@@ -130,7 +137,7 @@
   .agree-seg{flex:1;height:6px;border-radius:3px;background:var(--surface-2);transition:background .4s ease}
   .conf-line{display:flex;align-items:center;gap:9px;padding-top:13px;border-top:1px solid var(--line)}
   .conf-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-  .conf-tier{font-family:var(--disp);font-size:14px;font-weight:600}
+  .conf-tier{font-family:var(--disp);font-size:14px;font-weight:600;white-space:nowrap}
   .conf-qual{font-family:var(--mono);font-size:11px;color:var(--text-2)}
   .interp-right{display:flex;flex-direction:column;gap:16px}
   .sw-head.sw-up{color:var(--jade)}
@@ -289,12 +296,18 @@
     <div class="card hero-card">
       <div class="hero-top">
         <div class="verdict">
-          <div class="eyebrow">Composite Read</div>
+          <div class="eyebrow">Valuation</div>
           <div class="call" id="vCall">—</div>
-          <div class="sub">composite <b id="vComposite">—</b></div>
+          <div class="sub">score <b id="vValScore">—</b> · <span id="vValDist">—</span></div>
+          <div class="chg" id="vChange">—</div>
           <div class="split" id="vSplit">—</div>
         </div>
         <div class="ctx hero-ctx">
+          <div class="posture-block">
+            <span class="k">Posture</span>
+            <span class="pv" id="vPosture">—</span>
+            <span class="pn" id="vPostureNote">—</span>
+          </div>
           <div class="row"><span class="k">Regime</span><span class="pill" id="vRegime">—</span></div>
           <div class="cycle-note" id="vCycleNote"></div>
         </div>
@@ -302,19 +315,14 @@
       <div class="phase-line">Macro phase&nbsp;·&nbsp;<span id="vPhase">—</span></div>
       <div class="meter-wrap2">
         <div class="meter-track">
-          <div class="meter-zero"></div>
-          <div class="meter-bound" style="left:16.7%"></div>
-          <div class="meter-bound" style="left:35.4%"></div>
-          <div class="meter-bound" style="left:64.6%"></div>
-          <div class="meter-bound" style="left:83.3%"></div>
+          <div class="meter-bound" style="left:36.1%"></div>
+          <div class="meter-bound" style="left:63.9%"></div>
           <div class="meter-marker" id="mMarker" style="left:50%"></div>
         </div>
         <div class="meter-scale2">
-          <span style="left:8%;transform:translateX(-50%)">AGGR SELL</span>
-          <span style="left:26%;transform:translateX(-50%)">DISTRIBUTE</span>
-          <span class="mid" style="left:50%;transform:translateX(-50%)">NEUTRAL</span>
-          <span style="left:74%;transform:translateX(-50%)">ACCUMULATE</span>
-          <span style="left:92%;transform:translateX(-50%)">AGGR BUY</span>
+          <span style="left:18%;transform:translateX(-50%)">EXPENSIVE</span>
+          <span class="mid" style="left:50%;transform:translateX(-50%)">FAIR</span>
+          <span style="left:82%;transform:translateX(-50%)">CHEAP</span>
         </div>
       </div>
     </div>
@@ -495,7 +503,7 @@
   <section class="hist">
     <div class="card">
       <div class="hist-head">
-        <span class="hist-title">Macro Read · recent weeks</span>
+        <span class="hist-title">Valuation · recent weeks</span>
         <span class="hist-trend" id="histTrend">—</span>
       </div>
       <div class="hist-strip" id="histStrip"></div>
@@ -548,29 +556,34 @@ function renderHistory(hist){
     strip.innerHTML='<div class="hist-empty">No history yet — this strip fills in weekly as the dashboard runs.</div>';
     trendEl.textContent=''; return;
   }
-  // item 3: improving / stable / weakening (slope of composite over recent weekly points)
-  const comps=hist.map(h=>typeof h.composite==="number"?h.composite:0);
+  // cheaper / steady / pricier: latest valuation score vs mean of prior 3 weeks (±1)
+  hist=hist.filter(h=>typeof h.valScore==="number");
+  if(hist.length===0){
+    strip.innerHTML='<div class="hist-empty">Valuation history is rebuilding — run “Backfill History” once to fill it.</div>';
+    trendEl.textContent=''; return;
+  }
+  const comps=hist.map(h=>h.valScore);
   let tLabel="building history…", tColor="var(--text-3)";
   if(comps.length>=4){
     const latest=comps[comps.length-1];
     const prior=comps.slice(-4,-1);
     const mean=prior.reduce((a,b)=>a+b,0)/prior.length;
     const diff=latest-mean;
-    if(diff>1){tLabel="improving \u2197";tColor="var(--jade-bright)";}
-    else if(diff<-1){tLabel="weakening \u2198";tColor="var(--red-bright)";}
-    else{tLabel="stable \u2192";tColor="var(--text)";}
+    if(diff>1){tLabel="getting cheaper \u2197";tColor="var(--jade-bright)";}
+    else if(diff<-1){tLabel="getting pricier \u2198";tColor="var(--red-bright)";}
+    else{tLabel="steady \u2192";tColor="var(--text)";}
   }
   trendEl.textContent=tLabel; trendEl.style.color=tColor;
   // bars: height by |composite|, color by verdict
   const maxAbs=Math.max(4,...comps.map(c=>Math.abs(c)));
-  const kindColor=call=>/ACCUM/.test(call)?"var(--jade)":/(SELL|DISTRIB)/.test(call)?"var(--red)":"var(--text-3)";
+  const kindColor=v=>v==="Cheap"?"var(--jade)":v==="Expensive"?"var(--red)":"var(--text-3)";
   strip.innerHTML=hist.map(h=>{
-    const c=typeof h.composite==="number"?h.composite:0;
+    const c=h.valScore;
     const hpct=Math.round(Math.abs(c)/maxAbs*100);
     const wk=(h.week||"").replace(/\s+\d{4}$/,"");
     const sgnv=(c>=0?"+":"")+c;
-    return `<div class="hist-col" title="${h.week} · ${h.call||""} (${sgnv})">`
-      +`<div class="hist-bar-wrap"><div class="hist-bar" style="height:${hpct}%;background:${kindColor(h.call||"")}"></div></div>`
+    return `<div class="hist-col" title="${h.week} · ${h.valuation} (${sgnv}) · posture ${h.posture||"—"}">`
+      +`<div class="hist-bar-wrap"><div class="hist-bar" style="height:${hpct}%;background:${kindColor(h.valuation)}"></div></div>`
       +`<div class="hist-val">${sgnv}</div><div class="hist-wk">${wk}</div></div>`;
   }).join("");
 }
@@ -611,10 +624,29 @@ function render(D){
   if (D.generated){ prov.title="Generated "+D.generated+" UTC. Gauges refresh daily on the week-to-date candle; MSB and 35-reclaim lock only on the weekly close."; }
 
   // verdict
-  $('vCall').textContent=A.call;
-  $('vCall').style.color=A.callKind==="pos"?"var(--jade-bright)":A.callKind==="neg"?"var(--red-bright)":"var(--text)";
-  $('vComposite').textContent=sgn(A.composite);
-  $('vSplit').innerHTML=`<span class="tg">value ${sgn(A.valueCore)}</span> · <span class="tg">trend (gated) ${sgn(A.trendGated)}</span> · <span class="cg">on-chain ${sgn(A.chainCore)}</span>`;
+  // headline: valuation + posture (falls back to the old composite call if fields are missing)
+  const valColor=v=>v==="Cheap"?"var(--jade-bright)":v==="Expensive"?"var(--red-bright)":"var(--text)";
+  const posColor=p=>p==="Favorable"?"var(--jade-bright)":p==="Avoid"?"var(--red-bright)":"var(--gold)";
+  if(A.valuation){
+    $('vCall').textContent=A.valuation.toUpperCase(); $('vCall').style.color=valColor(A.valuation);
+    $('vValScore').textContent=sgn(A.valScore); $('vValDist').textContent=A.valDistance||"";
+    $('vPosture').textContent=A.posture.toUpperCase(); $('vPosture').style.color=posColor(A.posture);
+    $('vPostureNote').textContent=A.postureNote||"";
+  } else {
+    $('vCall').textContent=A.call; $('vValScore').textContent=sgn(A.composite); $('vValDist').textContent="";
+    $('vPosture').textContent="—"; $('vPostureNote').textContent="";
+  }
+  // change flag vs last weekly close
+  const ch=D.change, chEl=$('vChange');
+  const wkShort=w=>(w||"").replace(/\s\d{4}$/,"");
+  if(!ch){ chEl.className="chg"; chEl.textContent="change vs last close: building history…"; }
+  else if(ch.valuation||ch.posture){
+    const parts=[];
+    if(ch.valuation) parts.push(`valuation ${ch.valuation[0]} → ${ch.valuation[1]}`);
+    if(ch.posture) parts.push(`posture ${ch.posture[0]} → ${ch.posture[1]}`);
+    chEl.className="chg on"; chEl.textContent=`● CHANGED vs last week (${wkShort(ch.sinceWeek)}): `+parts.join(" · ");
+  } else { chEl.className="chg"; chEl.textContent=`no change vs last week (${wkShort(ch.sinceWeek)})`; }
+  $('vSplit').innerHTML=`<span class="tg">value ${sgn(A.valueCore)}</span> + <span class="cg">on-chain ${sgn(A.chainCore)}</span> = valuation · <span class="tg">old composite ${sgn(A.composite)} (${A.call})</span>`;
   const reg=$('vRegime'); reg.className="pill "+(A.bull?"bull":"bear");
   reg.textContent=A.bull?"BULL · above 50W":"BEAR · below 50W";
   $('vPhase').textContent=A.phase;
@@ -634,15 +666,19 @@ function render(D){
   setAxis('evValDot','evVal','agV',ax.value);
   setAxis('evTrendDot','evTrend','agT',ax.trend);
   setAxis('evChainDot','evChain','agC',ax.chain);
-  const cf=A.confidence||{tier:"—",qualifier:"",dot:"grey"};
-  $('confDot').style.background=dotColor(cf.dot);
-  $('confTier').textContent=cf.tier; $('confTier').style.color=dotColor(cf.dot);
-  $('confQual').textContent=cf.qualifier?("· "+cf.qualifier):"";
+  // (confidence tier removed — backtest showed it was the 50W in disguise; posture replaces it)
+  if(A.posture){
+    const pc=A.posture==="Favorable"?"green":A.posture==="Avoid"?"red":"amber";
+    $('confDot').style.background=dotColor(pc);
+    $('confTier').textContent="Posture · "+A.posture; $('confTier').style.color=dotColor(pc);
+    $('confQual').textContent=A.postureNote?("· "+A.postureNote):"";
+  }
   $('swStrengthen').innerHTML=(A.strengthen&&A.strengthen.length?A.strengthen:["—"]).map(s=>`<li>${s}</li>`).join("");
   $('swWeaken').innerHTML=(A.weaken&&A.weaken.length?A.weaken:["—"]).map(s=>`<li>${s}</li>`).join("");
 
   // tactical meter (-12..+12)
-  $('mMarker').style.left=clamp((A.composite+12)/24*100,2,98)+"%";
+  const vs=(typeof A.valScore==="number")?A.valScore:A.composite;
+  $('mMarker').style.left=clamp((vs+9)/18*100,2,98)+"%";
 
   // VWAP
   $('vwapVal').textContent=sgn(d.vwapSigma)+"σ"; $('vwapVal').style.color=col(A.vwap.score);
@@ -765,14 +801,14 @@ function render(D){
        +term("Composite",A.composite,"result");
   $('rowTotal').innerHTML=rtot;
 
-  $('bNote').innerHTML=`<b>Three axes:</b> <b>Value</b> (VWAP + 200W) and <b>On-Chain</b> (MVRV + LTH + ½·STH) are ungated — cheapness counts even below the 50W, which is where cycle bottoms live. Only <b>Trend</b> (RSI + structure + reclaim) is gated by the 50W (×1.15 bull / ×0.85 bear). STH shows its full score as a heat warning but contributes half to the composite, so it can't triple-count cost-basis extremes alongside LTH and MVRV.<br><br><b>This is a cycle/bias read, not an entry trigger.</b> Accumulate = conditions favor building exposure over time; Distribute = favor reducing risk. It reads cheap or extended early — often by months — and does not time entries.`;
+  $('bNote').innerHTML=`<b>Headline = Valuation + Posture.</b> <b>Valuation</b> = Value (VWAP + 200W) + On-Chain (MVRV + LTH + ½·STH): Cheap at +2.5 or above, Expensive at −2.5 or below, Fair in between. <b>Posture</b> = does the trend support acting on it: above the 50W → Favorable; below the 50W and Cheap → Cautious (historically worked over 26–52 weeks, with deeper dips first); below the 50W and not Cheap → Avoid (weakest setup in the 2015–2026 backtest). The old composite (with the trend axis gated ×1.15 / ×0.85) is still computed and shown below for continuity, but no longer drives the headline.<br><br><b>This is a cycle/bias read, not an entry trigger.</b> Mid-week values are provisional; the read that counts is after the weekly close.`;
 }
 
 // ---- load data.json; fall back to embedded sample for local file:// viewing ----
 const FALLBACK={
-  "generated": "2026-06-24T12:05:35Z",
+  "generated": "2026-10-31T22:43:48Z",
   "meta": {
-    "anchor": "2022-11-20",
+    "anchor": "2026-01-01",
     "maType": "EMA",
     "zLookback": 200,
     "provisional": true,
@@ -783,24 +819,24 @@ const FALLBACK={
     "fallbackMetrics": []
   },
   "raw": {
-    "week": "Jun 22 2026",
-    "dayOfWeek": 4,
+    "week": "Oct 26 2026",
+    "dayOfWeek": 6,
     "year": 5,
-    "price": 118200,
-    "vwapSigma": 0.8,
-    "rsi": 58.0,
-    "dev200": 85.0,
-    "above50W": true,
-    "ma3550": "above",
-    "p35": 12.9,
-    "z35": 1.04,
-    "p50": 22.6,
-    "z50": 0.98,
-    "sth": 95000,
-    "lth": 58000,
-    "mvrvZ": 2.2,
-    "nupl": 0.55,
-    "avgBuyPrice": 72000,
+    "price": 77663.26,
+    "vwapSigma": 0.582,
+    "rsi": 51.4,
+    "dev200": 11.7,
+    "above50W": false,
+    "ma3550": "below",
+    "p35": 0.8,
+    "z35": -0.49,
+    "p50": -1.1,
+    "z50": -0.63,
+    "sth": 75819.27,
+    "lth": 48591.22,
+    "mvrvZ": 0.7585,
+    "nupl": 0.3017,
+    "avgBuyPrice": 54020.73,
     "event": {
       "type": "none",
       "weeks": 0
@@ -812,26 +848,26 @@ const FALLBACK={
       "zone": "AT VALUE"
     },
     "w200": {
-      "score": 0,
-      "zone": "MID-CYCLE"
+      "score": 1,
+      "zone": "NEAR FLOOR"
     },
     "rsi": {
       "score": 0,
       "zone": "NEUTRAL"
     },
     "mvrv": {
-      "score": 0,
-      "zone": "FAIR VALUE"
+      "score": 1,
+      "zone": "CHEAP"
     },
     "lth": {
-      "score": 0,
-      "zone": "BULL-CYCLE EXPANSION",
-      "prem": 103.79310344827589
+      "score": 1,
+      "zone": "CONSTRUCTIVE VALUE",
+      "prem": 59.829821107599265
     },
     "sth": {
-      "score": -1,
-      "zone": "HEATED",
-      "prem": 24.421052631578945
+      "score": 1,
+      "zone": "AT / BELOW STH · SUPPORT",
+      "prem": 2.4320861965566154
     },
     "ev": {
       "contrib": 0.0,
@@ -840,49 +876,60 @@ const FALLBACK={
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 0,
+    "valueCore": 1,
     "trendCore": 0.0,
     "trendGated": 0.0,
-    "chainCore": -0.5,
-    "sthWeighted": -0.5,
-    "mult": 1.15,
-    "multLabel": "Bull · trend buys ×1.15",
-    "composite": -0.5,
-    "call": "NEUTRAL",
-    "callKind": "zero",
-    "phase": "Mid-Cycle Expansion",
+    "chainCore": 2.5,
+    "sthWeighted": 0.5,
+    "mult": 0.85,
+    "multLabel": "Bear · trend buys ×0.85",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "callKind": "pos",
+    "phase": "Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
-      "tier": "Low",
-      "qualifier": "evidence mixed · no clear edge",
-      "dot": "red"
+      "tier": "Moderate-high",
+      "qualifier": "trend not confirmed",
+      "dot": "amber"
     },
     "axisStates": {
       "value": {
-        "label": "Neutral",
-        "color": "grey"
+        "label": "Supportive",
+        "color": "green"
       },
       "trend": {
-        "label": "Neutral",
-        "color": "grey"
+        "label": "Weak · below 50W",
+        "color": "amber"
       },
       "chain": {
-        "label": "Weak",
-        "color": "amber"
+        "label": "Supportive",
+        "color": "green"
       }
     },
     "strengthen": [
-      "price holds above the 50W",
-      "on-chain value turns supportive"
+      "BTC reclaims the 50W (posture → Favorable)",
+      "BTC reclaims the 35W",
+      "on-chain value stays supportive"
     ],
     "weaken": [
-      "price loses the 200W decisively",
+      "valuation slips to Fair while still below the 50W (→ Avoid)",
       "MVRV deteriorates without stabilizing",
       "a manual MSB activates"
     ],
-    "bull": true,
+    "bull": false,
     "reclaim": false,
-    "watching": false
+    "watching": false,
+    "valuation": "Cheap",
+    "valScore": 3.5,
+    "valDistance": "1.0 above the Fair line",
+    "posture": "Cautious",
+    "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
+  },
+  "change": {
+    "sinceWeek": "Oct 19 2026",
+    "valuation": null,
+    "posture": null
   }
 };
 
