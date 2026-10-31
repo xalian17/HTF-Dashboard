@@ -145,6 +145,7 @@ def replay(klines, series):
             "above50W": ind["above50W"], "dev200": ind["dev200"], "rsi": ind["rsi"],
             "value": value_px, "full": False,
             "call": None, "composite": np.nan, "trend": np.nan, "chain": np.nan, "confidence": None,
+            "valScore": np.nan,
         }
         last_day = (wk_open + timedelta(days=6)).date()
         oc = {n: value_asof(series[n], last_day) for n in ("mvrvZ", "sth", "lth")}
@@ -156,7 +157,8 @@ def replay(klines, series):
                 "year": fetch.cycle_year(wk_open), "event": {"type": "none", "weeks": 0},
             })
             row.update(full=True, call=sc["call"], composite=sc["composite"], trend=sc["trendGated"],
-                       chain=sc["chainCore"], confidence=sc["confidence"]["tier"])
+                       chain=sc["chainCore"], confidence=sc["confidence"]["tier"],
+                       valScore=sc["valScore"])
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -279,7 +281,37 @@ def report(all_df, source):
         m = e & (p["value"] >= 1)
         if m.any():
             print(stats_line(f"{name} · value >= +1", p[m], episodes(m)))
+    # ---------------- PART C: line in the sand ----------------
+    print("\nPART C — LINE IN THE SAND: results for every week AT OR BEYOND each threshold.")
+    print("Look for where returns jump / drawdowns shrink (buy side) or returns turn negative /")
+    print("drawdowns deepen (sell side) — AND the episode count is still more than a couple.")
+    if not df.empty:
+        scan(df, "valScore", [2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 7], ">=",
+             "C1) VALUATION score >= X  — BUY side (Nov 2022 -> now, one cycle)")
+        scan(df, "valScore", [-1, -2, -2.5, -3, -4, -5, -6], "<=",
+             "C2) VALUATION score <= X  — SELL side (Nov 2022 -> now; few expensive weeks in this window)")
+        scan(df, "composite", [3.5, 4, 5, 6, 7, 8], ">=",
+             "C3) old COMPOSITE >= X  — buy side, for comparison")
+        scan(df, "composite", [-1, -2, -3, -4, -5, -7], "<=",
+             "C4) old COMPOSITE <= X  — sell side, for comparison")
+    scan(p, "value", [1, 2, 3, 4], ">=",
+         "C5) PRICE-ONLY value score (VWAP + 200W) >= X  — buy side, 2015 -> now, 3 cycles")
+    scan(p, "value", [-1, -2, -3, -4], "<=",
+         "C6) PRICE-ONLY value score (VWAP + 200W) <= X  — sell side, 2015 -> now (includes 2017 & 2021 tops)")
     print("\nIn-sample test, overlapping windows — treat as evidence, not proof.")
+
+
+def scan(d, col, thresholds, op, title):
+    header(title)
+    print(stats_line("ALL WEEKS (baseline)", d))
+    v = d[col]
+    for x in thresholds:
+        m = (v >= x) if op == ">=" else (v <= x)
+        m = m.fillna(False)
+        if m.any():
+            print(stats_line(f"{col} {op} {x:+g}", d[m], episodes(m)))
+        else:
+            print(f"  {col + ' ' + op + ' ' + format(x, '+g'):<36s}    0      (never happened)")
 
 
 def main():
