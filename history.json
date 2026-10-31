@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "week": "Oct 26 2026",
+    "date": "2026-10-31T21:59:56Z",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "phase": "Accumulation"
+  }
+]
