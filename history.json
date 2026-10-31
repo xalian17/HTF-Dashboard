@@ -196,5 +196,15 @@
     "valScore": 3.5,
     "posture": "Favorable",
     "backfilled": true
+  },
+  {
+    "week": "Oct 26 2026",
+    "date": "2026-10-31T23:05:35Z",
+    "composite": 3.5,
+    "call": "ACCUMULATE",
+    "phase": "Accumulation",
+    "valuation": "Cheap",
+    "valScore": 3.5,
+    "posture": "Cautious"
   }
 ]
