@@ -209,12 +209,12 @@
   },
   {
     "week": "Nov 02 2026",
-    "date": "2026-11-04T04:58:01Z",
+    "date": "2026-11-05T05:18:17Z",
     "composite": 3.5,
     "call": "ACCUMULATE",
-    "phase": "Accumulation",
+    "phase": "Early Expansion",
     "valuation": "Cheap",
     "valScore": 3.5,
-    "posture": "Cautious"
+    "posture": "Favorable"
   }
 ]
