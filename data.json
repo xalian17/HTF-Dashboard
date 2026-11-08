@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-07T04:48:05Z",
+  "generated": "2026-11-08T04:38:55Z",
   "change": {
     "sinceWeek": "Oct 26 2026",
     "valuation": null,
@@ -9,7 +9,7 @@
     "anchor": "2026-01-01",
     "maType": "EMA",
     "zLookback": 200,
-    "provisional": true,
+    "provisional": false,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -18,23 +18,23 @@
   },
   "raw": {
     "week": "Nov 02 2026",
-    "dayOfWeek": 6,
+    "dayOfWeek": 7,
     "year": 5,
-    "price": 75852.47,
-    "vwapSigma": 0.349,
-    "rsi": 49.1,
-    "dev200": 9.0,
+    "price": 75930.01,
+    "vwapSigma": 0.359,
+    "rsi": 49.2,
+    "dev200": 9.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -1.5,
+    "p35": -1.4,
     "z35": -0.62,
-    "p50": -3.3,
+    "p50": -3.2,
     "z50": -0.73,
-    "sth": 75788.91,
-    "lth": 48916.14,
-    "mvrvZ": 0.7647,
-    "nupl": 0.304,
-    "avgBuyPrice": 53994.61,
+    "sth": 75795.65,
+    "lth": 48863.19,
+    "mvrvZ": 0.7846,
+    "nupl": 0.31,
+    "avgBuyPrice": 53944.46,
     "event": {
       "type": "none",
       "weeks": 0
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 55.06634415552823
+      "prem": 55.39306786969904
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 0.08386451263120431
+      "prem": 0.17726610959862832
     },
     "ev": {
       "contrib": 0.0,
