@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-08T04:38:55Z",
+  "generated": "2026-11-09T04:49:12Z",
   "change": {
-    "sinceWeek": "Oct 26 2026",
+    "sinceWeek": "Nov 02 2026",
     "valuation": null,
     "posture": null
   },
@@ -9,7 +9,7 @@
     "anchor": "2026-01-01",
     "maType": "EMA",
     "zLookback": 200,
-    "provisional": false,
+    "provisional": true,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -17,24 +17,24 @@
     "fallbackMetrics": []
   },
   "raw": {
-    "week": "Nov 02 2026",
-    "dayOfWeek": 7,
+    "week": "Nov 09 2026",
+    "dayOfWeek": 1,
     "year": 5,
-    "price": 75930.01,
-    "vwapSigma": 0.359,
-    "rsi": 49.2,
-    "dev200": 9.1,
+    "price": 74874.62,
+    "vwapSigma": 0.228,
+    "rsi": 48.0,
+    "dev200": 7.6,
     "above50W": false,
     "ma3550": "below",
-    "p35": -1.4,
-    "z35": -0.62,
-    "p50": -3.2,
-    "z50": -0.73,
-    "sth": 75795.65,
-    "lth": 48863.19,
-    "mvrvZ": 0.7846,
-    "nupl": 0.31,
-    "avgBuyPrice": 53944.46,
+    "p35": -2.6,
+    "z35": -0.68,
+    "p50": -4.4,
+    "z50": -0.78,
+    "sth": 75725.01,
+    "lth": 48818.26,
+    "mvrvZ": 0.7402,
+    "nupl": 0.2973,
+    "avgBuyPrice": 53972.4,
     "event": {
       "type": "none",
       "weeks": 0
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 55.39306786969904
+      "prem": 53.37420874893941
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": 0.17726610959862832
+      "prem": -1.1229975407068271
     },
     "ev": {
       "contrib": 0.0,
@@ -113,7 +113,8 @@
     "weaken": [
       "valuation slips to Fair while still below the 50W (→ Avoid)",
       "MVRV deteriorates without stabilizing",
-      "a manual MSB activates"
+      "a manual MSB activates",
+      "STH stays underwater as trend weakens"
     ],
     "bull": false,
     "reclaim": false,
