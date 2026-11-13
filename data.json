@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-12T05:53:37Z",
+  "generated": "2026-11-13T05:15:39Z",
   "change": {
     "sinceWeek": "Nov 02 2026",
     "valuation": null,
@@ -18,23 +18,23 @@
   },
   "raw": {
     "week": "Nov 09 2026",
-    "dayOfWeek": 4,
+    "dayOfWeek": 5,
     "year": 5,
-    "price": 73594.05,
-    "vwapSigma": 0.068,
-    "rsi": 46.5,
-    "dev200": 5.7,
+    "price": 68717.68,
+    "vwapSigma": -0.539,
+    "rsi": 41.5,
+    "dev200": -1.2,
     "above50W": false,
     "ma3550": "below",
-    "p35": -4.2,
-    "z35": -0.76,
-    "p50": -5.9,
-    "z50": -0.85,
-    "sth": 75910.86,
-    "lth": 48752.54,
-    "mvrvZ": 0.7153,
-    "nupl": 0.2905,
-    "avgBuyPrice": 53947.12,
+    "p35": -10.2,
+    "z35": -1.08,
+    "p50": -12.0,
+    "z50": -1.11,
+    "sth": 75831.37,
+    "lth": 48738.21,
+    "mvrvZ": 0.7132,
+    "nupl": 0.2902,
+    "avgBuyPrice": 53904.62,
     "event": {
       "type": "none",
       "weeks": 0
@@ -46,12 +46,12 @@
       "zone": "AT VALUE"
     },
     "w200": {
-      "score": 1,
-      "zone": "NEAR FLOOR"
+      "score": 2,
+      "zone": "AT / BELOW FLOOR"
     },
     "rsi": {
-      "score": 0,
-      "zone": "NEUTRAL"
+      "score": 1,
+      "zone": "ACCUMULATE"
     },
     "mvrv": {
       "score": 1,
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 50.95428874064818
+      "prem": 40.99344231148414
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -3.052013901568229
+      "prem": -9.380932983275924
     },
     "ev": {
       "contrib": 0.0,
@@ -74,17 +74,17 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 1,
-    "trendCore": 0.0,
-    "trendGated": 0.0,
+    "valueCore": 2,
+    "trendCore": 1.0,
+    "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 3.5,
+    "composite": 5.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
-    "phase": "Accumulation",
+    "phase": "Bottoming Conditions / Accumulation",
     "cycleNote": "Cycle timing: convention-dependent · atypical / lower confidence",
     "confidence": {
       "tier": "Moderate-high",
@@ -107,8 +107,9 @@
     },
     "strengthen": [
       "BTC reclaims the 50W (posture → Favorable)",
+      "price at/below the 200W — historically deeper value, not a breakdown",
       "BTC reclaims the 35W",
-      "on-chain value stays supportive"
+      "RSI recovers toward 45–50"
     ],
     "weaken": [
       "valuation slips to Fair while still below the 50W (→ Avoid)",
@@ -120,8 +121,8 @@
     "reclaim": false,
     "watching": false,
     "valuation": "Cheap",
-    "valScore": 3.5,
-    "valDistance": "1.0 above the Fair line",
+    "valScore": 4.5,
+    "valDistance": "2.0 above the Fair line",
     "posture": "Cautious",
     "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
   }

@@ -219,12 +219,12 @@
   },
   {
     "week": "Nov 09 2026",
-    "date": "2026-11-12T05:53:37Z",
-    "composite": 3.5,
+    "date": "2026-11-13T05:15:39Z",
+    "composite": 5.35,
     "call": "ACCUMULATE",
-    "phase": "Accumulation",
+    "phase": "Bottoming Conditions / Accumulation",
     "valuation": "Cheap",
-    "valScore": 3.5,
+    "valScore": 4.5,
     "posture": "Cautious"
   }
 ]
