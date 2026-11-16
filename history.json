@@ -226,5 +226,15 @@
     "valuation": "Cheap",
     "valScore": 4.5,
     "posture": "Cautious"
+  },
+  {
+    "week": "Nov 16 2026",
+    "date": "2026-11-16T04:55:38Z",
+    "composite": 6.35,
+    "call": "ACCUMULATE",
+    "phase": "Bottoming Conditions / Accumulation",
+    "valuation": "Cheap",
+    "valScore": 5.5,
+    "posture": "Cautious"
   }
 ]

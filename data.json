@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-15T04:57:50Z",
+  "generated": "2026-11-16T04:55:38Z",
   "change": {
-    "sinceWeek": "Nov 02 2026",
+    "sinceWeek": "Nov 09 2026",
     "valuation": null,
     "posture": null
   },
@@ -9,7 +9,7 @@
     "anchor": "2026-01-01",
     "maType": "EMA",
     "zLookback": 200,
-    "provisional": false,
+    "provisional": true,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -17,24 +17,24 @@
     "fallbackMetrics": []
   },
   "raw": {
-    "week": "Nov 09 2026",
-    "dayOfWeek": 7,
+    "week": "Nov 16 2026",
+    "dayOfWeek": 1,
     "year": 5,
-    "price": 64965.45,
-    "vwapSigma": -0.998,
-    "rsi": 38.3,
-    "dev200": -6.5,
+    "price": 64814.68,
+    "vwapSigma": -1.015,
+    "rsi": 38.1,
+    "dev200": -6.7,
     "above50W": false,
     "ma3550": "below",
-    "p35": -14.9,
-    "z35": -1.32,
-    "p50": -16.6,
-    "z50": -1.3,
-    "sth": 75857.29,
-    "lth": 48726.83,
-    "mvrvZ": 0.6908,
-    "nupl": 0.2836,
-    "avgBuyPrice": 53910.18,
+    "p35": -14.4,
+    "z35": -1.28,
+    "p50": -16.3,
+    "z50": -1.28,
+    "sth": 75785.94,
+    "lth": 48706.01,
+    "mvrvZ": 0.6928,
+    "nupl": 0.2843,
+    "avgBuyPrice": 53875.61,
     "event": {
       "type": "none",
       "weeks": 0
@@ -42,8 +42,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 0,
-      "zone": "AT VALUE"
+      "score": 1,
+      "zone": "VALUE / PULLBACK"
     },
     "w200": {
       "score": 2,
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 33.325828911915664
+      "prem": 33.07326960266299
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -14.358329964068052
+      "prem": -14.476643029036785
     },
     "ev": {
       "contrib": 0.0,
@@ -74,14 +74,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 2,
+    "valueCore": 3,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 5.35,
+    "composite": 6.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -93,7 +93,7 @@
     },
     "axisStates": {
       "value": {
-        "label": "Supportive",
+        "label": "Strong",
         "color": "green"
       },
       "trend": {
@@ -121,8 +121,8 @@
     "reclaim": false,
     "watching": false,
     "valuation": "Cheap",
-    "valScore": 4.5,
-    "valDistance": "2.0 above the Fair line",
+    "valScore": 5.5,
+    "valDistance": "3.0 above the Fair line",
     "posture": "Cautious",
     "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
   }
