@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-20T05:51:18Z",
+  "generated": "2026-11-21T05:46:07Z",
   "change": {
     "sinceWeek": "Nov 09 2026",
     "valuation": null,
@@ -18,23 +18,23 @@
   },
   "raw": {
     "week": "Nov 16 2026",
-    "dayOfWeek": 5,
+    "dayOfWeek": 6,
     "year": 5,
-    "price": 61884.01,
-    "vwapSigma": -1.358,
-    "rsi": 35.8,
-    "dev200": -10.9,
+    "price": 55854.83,
+    "vwapSigma": -2.05,
+    "rsi": 31.9,
+    "dev200": -19.5,
     "above50W": false,
     "ma3550": "below",
-    "p35": -18.1,
-    "z35": -1.47,
-    "p50": -19.9,
-    "z50": -1.44,
-    "sth": 75041.76,
-    "lth": 48618.8,
-    "mvrvZ": 0.4712,
-    "nupl": 0.2131,
-    "avgBuyPrice": 53749.84,
+    "p35": -25.7,
+    "z35": -1.86,
+    "p50": -27.5,
+    "z50": -1.76,
+    "sth": 75049.06,
+    "lth": 48621.59,
+    "mvrvZ": 0.338,
+    "nupl": 0.1628,
+    "avgBuyPrice": 53715.81,
     "event": {
       "type": "none",
       "weeks": 0
@@ -42,8 +42,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 1,
-      "zone": "VALUE / PULLBACK"
+      "score": 2,
+      "zone": "DEEP VALUE"
     },
     "w200": {
       "score": 2,
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 27.284116432326577
+      "prem": 14.876601114854537
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -17.53390378903692
+      "prem": -25.575576829343362
     },
     "ev": {
       "contrib": 0.0,
@@ -74,14 +74,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 3,
+    "valueCore": 4,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 6.35,
+    "composite": 7.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -121,8 +121,8 @@
     "reclaim": false,
     "watching": false,
     "valuation": "Cheap",
-    "valScore": 5.5,
-    "valDistance": "3.0 above the Fair line",
+    "valScore": 6.5,
+    "valDistance": "4.0 above the Fair line",
     "posture": "Cautious",
     "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
   }
