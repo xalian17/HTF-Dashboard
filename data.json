@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-21T05:46:07Z",
+  "generated": "2026-11-22T05:16:41Z",
   "change": {
     "sinceWeek": "Nov 09 2026",
     "valuation": null,
@@ -9,7 +9,7 @@
     "anchor": "2026-01-01",
     "maType": "EMA",
     "zLookback": 200,
-    "provisional": true,
+    "provisional": false,
     "dataQuality": {
       "price": "live",
       "onchain": "live"
@@ -18,23 +18,23 @@
   },
   "raw": {
     "week": "Nov 16 2026",
-    "dayOfWeek": 6,
+    "dayOfWeek": 7,
     "year": 5,
-    "price": 55854.83,
-    "vwapSigma": -2.05,
-    "rsi": 31.9,
-    "dev200": -19.5,
+    "price": 58959.99,
+    "vwapSigma": -1.663,
+    "rsi": 33.8,
+    "dev200": -15.1,
     "above50W": false,
     "ma3550": "below",
-    "p35": -25.7,
-    "z35": -1.86,
-    "p50": -27.5,
-    "z50": -1.76,
-    "sth": 75049.06,
-    "lth": 48621.59,
-    "mvrvZ": 0.338,
-    "nupl": 0.1628,
-    "avgBuyPrice": 53715.81,
+    "p35": -21.8,
+    "z35": -1.66,
+    "p50": -23.6,
+    "z50": -1.59,
+    "sth": 74780.03,
+    "lth": 48571.93,
+    "mvrvZ": 0.3784,
+    "nupl": 0.1789,
+    "avgBuyPrice": 53657.6,
     "event": {
       "type": "none",
       "weeks": 0
@@ -42,8 +42,8 @@
   },
   "scored": {
     "vwap": {
-      "score": 2,
-      "zone": "DEEP VALUE"
+      "score": 1,
+      "zone": "VALUE / PULLBACK"
     },
     "w200": {
       "score": 2,
@@ -60,12 +60,12 @@
     "lth": {
       "score": 1,
       "zone": "CONSTRUCTIVE VALUE",
-      "prem": 14.876601114854537
+      "prem": 21.386961564014427
     },
     "sth": {
       "score": 1,
       "zone": "AT / BELOW STH · SUPPORT",
-      "prem": -25.575576829343362
+      "prem": -21.155434144650652
     },
     "ev": {
       "contrib": 0.0,
@@ -74,14 +74,14 @@
       "weeks": 0
     },
     "reBonus": 0,
-    "valueCore": 4,
+    "valueCore": 3,
     "trendCore": 1.0,
     "trendGated": 0.85,
     "chainCore": 2.5,
     "sthWeighted": 0.5,
     "mult": 0.85,
     "multLabel": "Bear · trend buys ×0.85",
-    "composite": 7.35,
+    "composite": 6.35,
     "call": "ACCUMULATE",
     "callKind": "pos",
     "phase": "Bottoming Conditions / Accumulation",
@@ -121,8 +121,8 @@
     "reclaim": false,
     "watching": false,
     "valuation": "Cheap",
-    "valScore": 6.5,
-    "valDistance": "4.0 above the Fair line",
+    "valScore": 5.5,
+    "valDistance": "3.0 above the Fair line",
     "posture": "Cautious",
     "postureNote": "below the 50W but cheap — historically worked, expect a deeper dip first"
   }
